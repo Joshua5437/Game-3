@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scripts/enemy.gd"
+}, {
+"base": "Object",
+"class": "EnemyType",
+"language": "GDScript",
+"path": "res://scripts/enemyType.gd"
+}, {
 "base": "Reference",
 "class": "Pathfinder",
 "language": "GDScript",
@@ -25,6 +35,8 @@ _global_script_classes=[ {
 "path": "res://scripts/reallyRandomFunctions.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
+"EnemyType": "",
 "Pathfinder": "",
 "PriorityQueue": "",
 "ReallyRandomFunctions": ""

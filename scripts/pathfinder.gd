@@ -54,4 +54,16 @@ static func get_neighbors( currentLoc: Vector2):
 		Vector2(currentLoc.x, currentLoc.y+1),
 	]
 	
-	
+#creates a path that enemies can follow
+#uses non cumulative weights because we really only care about how slow it is to move to a tile
+#for things like speed
+static func tracePath(vector_map: Array, non_cumulative_weight_map: Array, start_loc: Vector2):
+	var next_loc := [
+		{
+		"vector": vector_map[start_loc.x][start_loc.y],
+		"weight": non_cumulative_weight_map[start_loc.x][start_loc.y],
+		}
+	]
+	if (next_loc[0]["vector"] != start_loc):
+		next_loc.append_array(tracePath(vector_map, non_cumulative_weight_map, next_loc[0]["vector"]))
+	return next_loc

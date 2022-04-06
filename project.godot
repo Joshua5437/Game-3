@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Pathfinder",
+"language": "GDScript",
+"path": "res://scripts/pathfinder.gd"
+}, {
+"base": "Object",
+"class": "PriorityQueue",
+"language": "GDScript",
+"path": "res://scripts/priorityQueue.gd"
+}, {
+"base": "Reference",
+"class": "ReallyRandomFunctions",
+"language": "GDScript",
+"path": "res://scripts/reallyRandomFunctions.gd"
+} ]
+_global_script_class_icons={
+"Pathfinder": "",
+"PriorityQueue": "",
+"ReallyRandomFunctions": ""
+}
+
 [application]
 
 config/name="Game3"

@@ -1,9 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/camera.gd" type="Script" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
 [ext_resource path="res://tower.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Images/New Castle Image.png" type="Texture" id=5]
+[ext_resource path="res://Images/Magic Tower.png" type="Texture" id=6]
+[ext_resource path="res://Images/Farm.png" type="Texture" id=7]
+[ext_resource path="res://Images/Mine.png" type="Texture" id=8]
+[ext_resource path="res://scripts/Econ #2.gd" type="Script" id=9]
+[ext_resource path="res://scripts/Econ #1.gd" type="Script" id=10]
+[ext_resource path="res://scripts/Econ #1 Button.gd" type="Script" id=11]
+[ext_resource path="res://scripts/Econ #2 Button.gd" type="Script" id=12]
+[ext_resource path="res://scripts/Defense Tower.gd" type="Script" id=13]
+[ext_resource path="res://scripts/Defense Tower Button.gd" type="Script" id=14]
+[ext_resource path="res://Sound Effects/Click Sound Effect.mp3" type="AudioStream" id=15]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -19,3 +30,74 @@ limit_top = 0
 limit_right = 1024
 limit_bottom = 1024
 script = ExtResource( 2 )
+
+[node name="Castle Objects" type="Node2D" parent="."]
+
+[node name="Castle" type="Sprite" parent="Castle Objects"]
+position = Vector2( 704, 250 )
+scale = Vector2( 0.654948, 0.606412 )
+texture = ExtResource( 5 )
+
+[node name="Econ #1" type="Sprite" parent="Castle Objects"]
+visible = false
+position = Vector2( 604, 344 )
+scale = Vector2( 0.147084, 0.178298 )
+texture = ExtResource( 7 )
+script = ExtResource( 10 )
+
+[node name="Econ #2" type="Sprite" parent="Castle Objects"]
+visible = false
+position = Vector2( 808, 346 )
+scale = Vector2( 0.376152, 0.436828 )
+texture = ExtResource( 8 )
+script = ExtResource( 9 )
+
+[node name="Defense Tower" type="Sprite" parent="Castle Objects"]
+visible = false
+position = Vector2( 704, 117 )
+scale = Vector2( 0.273551, 0.232287 )
+texture = ExtResource( 6 )
+script = ExtResource( 13 )
+
+[node name="Econ #1 Button" type="Button" parent="Castle Objects"]
+margin_left = 567.0
+margin_top = 333.0
+margin_right = 646.0
+margin_bottom = 353.0
+text = "Add Tower"
+script = ExtResource( 11 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Castle Objects/Econ #1 Button"]
+stream = ExtResource( 15 )
+
+[node name="Econ #2 Button" type="Button" parent="Castle Objects"]
+margin_left = 769.0
+margin_top = 335.0
+margin_right = 848.0
+margin_bottom = 355.0
+text = "Add Tower"
+script = ExtResource( 12 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Castle Objects/Econ #2 Button"]
+stream = ExtResource( 15 )
+
+[node name="Defense Tower Button" type="Button" parent="Castle Objects"]
+margin_left = 642.0
+margin_top = 122.0
+margin_right = 778.0
+margin_bottom = 142.0
+text = "Add Defense Tower"
+script = ExtResource( 14 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Castle Objects/Defense Tower Button"]
+stream = ExtResource( 15 )
+
+[connection signal="pressed" from="Castle Objects/Econ #1 Button" to="Castle Objects/Econ #1" method="_on_Econ_1_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Econ #1 Button" to="Castle Objects/Econ #1 Button" method="_on_Econ_1_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Econ #1 Button" to="Castle Objects/Econ #1 Button/AudioStreamPlayer" method="_on_Econ_1_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Econ #2 Button" to="Castle Objects/Econ #2" method="_on_Econ_2_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Econ #2 Button" to="Castle Objects/Econ #2 Button" method="_on_Econ_2_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Econ #2 Button" to="Castle Objects/Econ #1 Button/AudioStreamPlayer" method="_on_Econ_2_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Defense Tower Button" to="Castle Objects/Defense Tower" method="_on_Defense_Tower_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Defense Tower Button" to="Castle Objects/Defense Tower Button" method="_on_Defense_Tower_Button_pressed"]
+[connection signal="pressed" from="Castle Objects/Defense Tower Button" to="Castle Objects/Econ #1 Button/AudioStreamPlayer" method="_on_Defense_Tower_Button_pressed"]

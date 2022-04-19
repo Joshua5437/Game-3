@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 104.0
 
-[node name="Tower" type="Node2D"]
+[node name="Tower" type="Node2D" groups=["towers"]]
 script = ExtResource( 2 )
 bullet = ExtResource( 3 )
 

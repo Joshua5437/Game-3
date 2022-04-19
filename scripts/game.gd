@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var map = $Map
+onready var map = $Navigation/Map
 
 # Used to place the towers on the map
 export(PackedScene) var tower

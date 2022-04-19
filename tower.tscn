@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://tiles.png" type="Texture" id=1]
 [ext_resource path="res://scripts/tower.gd" type="Script" id=2]
+[ext_resource path="res://bullet.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 88.0
+radius = 104.0
 
 [node name="Tower" type="Node2D"]
 script = ExtResource( 2 )
+bullet = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -20,4 +22,9 @@ frame = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 shape = SubResource( 1 )
 
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="Range" to="." method="_on_Range_area_entered"]
+[connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_Range_body_exited"]

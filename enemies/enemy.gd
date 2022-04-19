@@ -16,6 +16,8 @@ var attacking = false
 var attack_damage = 1
 onready var attack_timer = $AttackTimer
 
+export var health = 3
+
 func _ready():
 	# Waits for other nodes to setup first
 	yield(get_tree(), "idle_frame")
@@ -63,6 +65,13 @@ func generate_new_path():
 	# Get path to the tower
 	path = nav.get_simple_path(global_position, target.global_position, false)
 
+# Reduces the health based on amount of hits. Will queue free if 
+# health reaches zero
+func damage(hits):
+	health -= hits
+	if health <= 0:
+		queue_free()
+
 func _on_building_destruction():
 	target = null
 
@@ -72,7 +81,6 @@ func _on_DamageArea_body_entered(body):
 	
 	if target == body:
 		attacking = true
-
 
 func _on_DamageArea_body_exited(body):
 	if body == self:

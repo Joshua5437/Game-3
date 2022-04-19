@@ -16,6 +16,10 @@ var tracked_enemies = []
 var current_target : Node2D = null
 
 func _process(delta):
+	# Picks a target to shoot if the target does not exist
+	if current_target == null and not tracked_enemies.empty():
+		current_target = tracked_enemies[0]
+	
 	# Shoot at the target, if it exists
 	if current_target != null and reload_timer.is_stopped():
 		shoot(current_target.position)
@@ -39,6 +43,7 @@ func _on_Range_body_entered(body):
 func _on_Range_body_exited(body):
 	# Removes enemy from list of track enemies
 	if body.is_in_group("enemies"):
+		current_target = null
 		tracked_enemies.erase(body)
 
 func damage(hits):

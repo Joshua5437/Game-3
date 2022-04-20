@@ -33,6 +33,11 @@ func _physics_process(delta):
 		attack_timer.start()
 		target.damage(attack_damage)
 	
+	# Picks a new target if target is destroyed
+	if target != null and target.destroyed:
+		attacking = false
+		pick_target()
+	
 	# Moves towards the tower to attack
 	if not attacking:
 		move_to_target()
@@ -52,16 +57,25 @@ func move_to_target():
 		velocity = direction * speed
 		velocity = move_and_slide(velocity) 
 
-func generate_new_path():
-	# Picks a tower to go to
+func pick_target():
 	var towers = get_tree().get_nodes_in_group("towers")
 	
-	# Breaks if there are no towers to go to
-	if towers.empty():
-		return
+	# Reset target and path
+	target = null
+	path = []
 	
-	# Set the first tower as the target (should be replaced with something better)
-	target = towers[0]
+	for tower in towers:
+		if not tower.destroyed:
+			target = tower
+			break
+
+func generate_new_path():
+	# Picks a target
+	pick_target()
+	
+	# Will not generate path since target is empty
+	if target == null:
+		return
 	
 	# Get path to the tower
 	path = nav.get_simple_path(global_position, target.global_position, false)

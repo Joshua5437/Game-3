@@ -1,0 +1,9 @@
+extends "res://buildings/building.gd"
+
+signal gold_produced(amount)
+
+var gold_production_amount = 5
+
+func _on_ProduceTimer_timeout():
+	if not destroyed:
+		emit_signal("gold_produced", gold_production_amount)

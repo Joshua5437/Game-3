@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://buildings/tower/tower.gd" type="Script" id=1]
+[ext_resource path="res://buildings/bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://buildings/building.tscn" type="PackedScene" id=3]
+[ext_resource path="res://buildings/tower/tower_stats.tres" type="Resource" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 104.0
+
+[node name="Tower" groups=["towers"] instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+stats = ExtResource( 4 )
+bullet = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+frame = 4
+
+[node name="Range" type="Area2D" parent="." index="2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range" index="0"]
+shape = SubResource( 1 )
+
+[node name="ReloadTimer" type="Timer" parent="." index="3"]
+one_shot = true
+
+[connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_Range_body_exited"]

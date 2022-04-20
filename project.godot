@@ -57,17 +57,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Game3"
-run/main_scene="res://mainMenu.tscn"
+run/main_scene="res://mainScene.tscn"
 config/icon="res://icon.png"
-
-[display]
-
-window/size/width=1280
-window/size/height=720
-window/size/test_width=1280
-window/size/test_height=720
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
 
 [physics]
 

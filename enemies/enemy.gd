@@ -3,7 +3,7 @@ extends KinematicBody2D
 const THRESHOLD = 16
 
 # Enemy navigation
-var nav : Navigation2D = null
+var map = null
 var path = []
 
 # Movement
@@ -26,8 +26,9 @@ func _ready():
 	#yield(get_tree(), "idle_frame")
 	
 	# Get navigation node for navigation purposes
-	if get_tree().has_group("navigation"):
-		nav = get_tree().get_nodes_in_group("navigation")[0]
+	
+	map = get_tree().get_nodes_in_group("Map")[0]
+	print(map)
 
 func _physics_process(delta):
 	# Attacks the tower if the enemy is close
@@ -80,7 +81,8 @@ func generate_new_path():
 		return
 	
 	# Get path to the tower
-	path = nav.get_simple_path(global_position, target.global_position, false)
+	print(map)
+	path = map.get_path_to_point(global_position, target.global_position)
 
 # Reduces the health based on amount of hits. Will queue free if 
 # health reaches zero

@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var map = $Navigation/Map
+onready var map = $Map
 onready var ui = $CanvasLayer/mainUI
 
 # Used to place the towers on the map

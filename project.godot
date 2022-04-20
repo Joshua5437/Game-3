@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "BuildingStats",
 "language": "GDScript",
-"path": "res://buildings/building.gd"
+"path": "res://buildings/building_stats.gd"
 }, {
 "base": "Resource",
 "class": "ConstructionStats",
 "language": "GDScript",
-"path": "res://buildings/construction.gd"
+"path": "res://buildings/construction_stats.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Enemy",

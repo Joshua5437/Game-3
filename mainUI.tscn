@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://images/bowicon.png" type="Texture" id=3]
 [ext_resource path="res://images/mageicon.png" type="Texture" id=4]
 [ext_resource path="res://images/wallicon.png" type="Texture" id=5]
+[ext_resource path="res://images/farmicon.png" type="Texture" id=6]
+[ext_resource path="res://alagard.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://ui.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -18,18 +21,19 @@ default_font = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 34
-font_data = ExtResource( 2 )
+font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 30
-font_data = ExtResource( 1 )
+font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=6]
-font_data = ExtResource( 2 )
+font_data = ExtResource( 7 )
 
 [node name="mainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 8 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -63,9 +67,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Gold" type="Label" parent="TopPanel/CenterContainer"]
-margin_left = 577.0
-margin_right = 703.0
-margin_bottom = 39.0
+margin_left = 587.0
+margin_top = 5.0
+margin_right = 692.0
+margin_bottom = 34.0
 custom_fonts/font = SubResource( 5 )
 text = "Gold: 50"
 
@@ -80,27 +85,36 @@ text = "Wave: 1"
 [node name="Buildings" type="Panel" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -500.0
-margin_right = 132.0
+margin_top = -146.0
+margin_right = 157.0
 
 [node name="GridContainer" type="GridContainer" parent="Buildings"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 columns = 2
 
-[node name="Bow" type="TextureRect" parent="Buildings/GridContainer"]
-margin_right = 64.0
-margin_bottom = 64.0
-texture = ExtResource( 3 )
+[node name="Bow" type="Button" parent="Buildings/GridContainer"]
+margin_right = 76.0
+margin_bottom = 70.0
+icon = ExtResource( 3 )
 
-[node name="Mage" type="TextureRect" parent="Buildings/GridContainer"]
-margin_left = 68.0
-margin_right = 132.0
-margin_bottom = 64.0
-texture = ExtResource( 4 )
+[node name="Farm" type="Button" parent="Buildings/GridContainer"]
+margin_left = 80.0
+margin_right = 156.0
+margin_bottom = 70.0
+icon = ExtResource( 6 )
 
-[node name="Wall" type="TextureRect" parent="Buildings/GridContainer"]
-margin_top = 68.0
-margin_right = 64.0
-margin_bottom = 132.0
-texture = ExtResource( 5 )
+[node name="Mage" type="Button" parent="Buildings/GridContainer"]
+margin_top = 74.0
+margin_right = 76.0
+margin_bottom = 144.0
+disabled = true
+icon = ExtResource( 4 )
+
+[node name="Tower" type="Button" parent="Buildings/GridContainer"]
+margin_left = 80.0
+margin_top = 74.0
+margin_right = 156.0
+margin_bottom = 144.0
+disabled = true
+icon = ExtResource( 5 )

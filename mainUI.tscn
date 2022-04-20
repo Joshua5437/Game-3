@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://images/bowicon.png" type="Texture" id=3]
+[ext_resource path="res://images/mageicon.png" type="Texture" id=4]
+[ext_resource path="res://images/wallicon.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 11
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 34
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 2 )
+
+[node name="mainUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -100.0
+margin_top = -100.0
+
+[node name="StartWave" type="Button" parent="MarginContainer"]
+margin_right = 100.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 1 )
+
+[node name="Label" type="Label" parent="MarginContainer/StartWave"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "Start Wave"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="TopPanel" type="Panel" parent="."]
+anchor_right = 1.0
+margin_bottom = 40.0
+
+[node name="CenterContainer" type="CenterContainer" parent="TopPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Gold" type="Label" parent="TopPanel/CenterContainer"]
+margin_left = 577.0
+margin_right = 703.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 5 )
+text = "Gold: 50"
+
+[node name="Wave" type="Label" parent="TopPanel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 6 )
+text = "Wave: 1"
+
+[node name="Buildings" type="Panel" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -500.0
+margin_right = 132.0
+
+[node name="GridContainer" type="GridContainer" parent="Buildings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+columns = 2
+
+[node name="Bow" type="TextureRect" parent="Buildings/GridContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture = ExtResource( 3 )
+
+[node name="Mage" type="TextureRect" parent="Buildings/GridContainer"]
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+texture = ExtResource( 4 )
+
+[node name="Wall" type="TextureRect" parent="Buildings/GridContainer"]
+margin_top = 68.0
+margin_right = 64.0
+margin_bottom = 132.0
+texture = ExtResource( 5 )

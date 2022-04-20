@@ -15,6 +15,7 @@ var wave := 1;
 # Enemy waves
 export(NodePath) var wave_spawn_position
 export(PackedScene) var wave_spawn_enemy
+var tracked_enemies = []
 var spawn_button_pressed = false
 
 func _ready():
@@ -75,10 +76,33 @@ func _on_Map_placed_building(building):
 
 func _spawn_wave():
 	spawn_button_pressed = true
-	wave += 1
 	var spawn_position_node = get_node(wave_spawn_position)
-	var new_enemy = wave_spawn_enemy.instance()
 	
-	new_enemy.position = spawn_position_node.position
-	add_child(new_enemy)
+	# Spawns a wave of enemies
+	for i in range(wave + 1):
+		var new_enemy = wave_spawn_enemy.instance()
+		new_enemy.position = spawn_position_node.position
+		
+		tracked_enemies.push_back(new_enemy)
+		new_enemy.connect("die", self, "_handle_enemy_death")
+		
+		add_child(new_enemy)
+		
+		# Prevents weird movement with enemies
+		yield(get_tree().create_timer(1), "timeout")
+	
+	# Increment the wave
+	wave += 1
+	
+	# Updates UI
 	ui.update_wave(wave)
+
+func _handle_enemy_death(enemy):
+	print("enemy death")
+	tracked_enemies.erase(enemy)
+	
+	if tracked_enemies.empty():
+		var farms = get_tree().get_nodes_in_group("farm")
+		for farm in farms:
+			gold += farm.gold_production_amount
+		ui.update_gold_amount(gold)

@@ -18,6 +18,8 @@ onready var attack_timer = $AttackTimer
 
 export var health = 3
 
+signal die(enemy)
+
 func _ready():
 	# Waits for other nodes to setup first
 	# Commented because of the wave system
@@ -85,6 +87,7 @@ func generate_new_path():
 func damage(hits):
 	health -= hits
 	if health <= 0:
+		emit_signal("die", self)
 		queue_free()
 
 func _on_building_destruction():

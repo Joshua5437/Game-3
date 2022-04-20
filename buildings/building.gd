@@ -5,4 +5,7 @@ export(Resource) var stats
 func damage(hits):
 	stats.health -= hits
 	if stats.health <= 0:
-		queue_free()
+		die()
+
+func die():
+	queue_free()

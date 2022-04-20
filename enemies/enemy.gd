@@ -20,7 +20,8 @@ export var health = 3
 
 func _ready():
 	# Waits for other nodes to setup first
-	yield(get_tree(), "idle_frame")
+	# Commented because of the wave system
+	#yield(get_tree(), "idle_frame")
 	
 	# Get navigation node for navigation purposes
 	if get_tree().has_group("navigation"):

@@ -12,6 +12,8 @@
 script = ExtResource( 3 )
 constructions = [ ExtResource( 6 ), ExtResource( 4 ) ]
 gold = 50
+wave_spawn_position = NodePath("WaveSpawnPosition")
+wave_spawn_enemy = ExtResource( 5 )
 
 [node name="Navigation" type="Navigation2D" parent="." groups=["navigation"]]
 
@@ -33,6 +35,9 @@ position = Vector2( 520, 376 )
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 456, 376 )
+
+[node name="WaveSpawnPosition" type="Position2D" parent="."]
+position = Vector2( 504, 584 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var map = $Navigation/Map
+onready var ui = $CanvasLayer/UserInterface
 
 # Used to place the towers on the map
 export(Array) var constructions
@@ -8,6 +9,10 @@ var current_construction = null
 
 # Player stats
 export(int) var gold = 100 # Represents player's cash balance
+
+func _ready():
+	# This will show accruate information about gold balance
+	ui.update_gold_amount(gold)
 
 func _process(_delta):
 	# Get global mouse position
@@ -26,15 +31,17 @@ func _process(_delta):
 		and current_construction != null \
 		and gold - current_construction.stats.price >= 0:
 		
+		# Substract from balance and update UI
 		gold -= current_construction.stats.price
-		print("placed tower | gold: %s" % gold)
+		ui.update_gold_amount(gold)
+		
 		map.place_building(global_mouse_position, current_construction.scene)
 
+# Used for signal call. Bascially increases the gold amount and updates UI
 func _on_gold_produced(amount):
 	gold += amount
-	print("gold: %s" % gold)
+	ui.update_gold_amount(gold)
 
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
-		print("placed t")
 		building.connect("gold_produced", self, "_on_gold_produced")

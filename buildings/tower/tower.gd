@@ -16,7 +16,7 @@ func _process(delta):
 		current_target = tracked_enemies[0]
 	
 	# Shoot at the target, if it exists
-	if current_target != null and reload_timer.is_stopped():
+	if current_target != null and reload_timer.is_stopped() and not destroyed:
 		shoot(current_target.position)
 		reload_timer.start()
 

@@ -8,7 +8,8 @@ export(Array) var constructions
 var current_construction = null
 
 # Player stats
-export(int) var gold = 100 # Represents player's cash balance
+# Represents player's cash balance
+export(int) var gold = 100 setget set_gold
 
 # Enemy waves
 export(NodePath) var wave_spawn_position
@@ -52,6 +53,11 @@ func _process(_delta):
 		ui.update_gold_amount(gold)
 		
 		map.place_building(global_mouse_position, current_construction.scene)
+
+func set_gold(value):
+	gold = value
+	if ui != null:
+		ui.update_gold_amount(gold)
 
 # Used for signal call. Bascially increases the gold amount and updates UI
 func _on_gold_produced(amount):

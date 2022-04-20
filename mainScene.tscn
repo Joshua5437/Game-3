@@ -28,14 +28,6 @@ limit_right = 1024
 limit_bottom = 1024
 script = ExtResource( 2 )
 
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 520, 376 )
-
-[node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 456, 376 )
-
 [node name="WaveSpawnPosition" type="Position2D" parent="."]
 position = Vector2( 504, 584 )
 

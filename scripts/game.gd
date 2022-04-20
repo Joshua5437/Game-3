@@ -75,10 +75,19 @@ func _on_Map_placed_building(building):
 
 func _spawn_wave():
 	spawn_button_pressed = true
-	wave += 1
 	var spawn_position_node = get_node(wave_spawn_position)
-	var new_enemy = wave_spawn_enemy.instance()
 	
-	new_enemy.position = spawn_position_node.position
-	add_child(new_enemy)
+	# Spawns a wave of enemies
+	for i in range(wave + 1):
+		var new_enemy = wave_spawn_enemy.instance()
+		new_enemy.position = spawn_position_node.position
+		add_child(new_enemy)
+		
+		# Prevents weird movement with enemies
+		yield(get_tree().create_timer(1), "timeout")
+	
+	# Increment the wave
+	wave += 1
+	
+	# Updates UI
 	ui.update_wave(wave)

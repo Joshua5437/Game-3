@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "BuildingStats",
+"language": "GDScript",
+"path": "res://buildings/building.gd"
+}, {
+"base": "Resource",
+"class": "ConstructionStats",
+"language": "GDScript",
+"path": "res://buildings/construction.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
@@ -35,6 +45,8 @@ _global_script_classes=[ {
 "path": "res://scripts/reallyRandomFunctions.gd"
 } ]
 _global_script_class_icons={
+"BuildingStats": "",
+"ConstructionStats": "",
 "Enemy": "",
 "EnemyType": "",
 "Pathfinder": "",

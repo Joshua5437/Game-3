@@ -10,7 +10,7 @@ onready var range_area = $Range
 onready var reload_timer = $ReloadTimer
 
 export(PackedScene) var bullet
-export(int) var health = 5
+export(Resource) var stats
 
 var tracked_enemies = []
 var current_target : Node2D = null
@@ -47,6 +47,6 @@ func _on_Range_body_exited(body):
 		tracked_enemies.erase(body)
 
 func damage(hits):
-	health -= hits
-	if health <= 0:
+	stats.health -= hits
+	if stats.health <= 0:
 		queue_free()

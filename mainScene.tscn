@@ -3,12 +3,13 @@
 [ext_resource path="res://map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/camera.gd" type="Script" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
-[ext_resource path="res://tower.tscn" type="PackedScene" id=4]
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://buildings/tower_construction_stats.tres" type="Resource" id=6]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
-tower = ExtResource( 4 )
+construction = ExtResource( 6 )
+gold = 50
 
 [node name="Navigation" type="Navigation2D" parent="." groups=["navigation"]]
 
@@ -27,3 +28,6 @@ script = ExtResource( 2 )
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 520, 376 )
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 456, 376 )

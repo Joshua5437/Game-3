@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var map = $Navigation/Map
-onready var ui = $CanvasLayer/UserInterface
+onready var ui = $CanvasLayer/mainUI
 
 # Used to place the towers on the map
 export(Array) var constructions
@@ -10,6 +10,7 @@ var current_construction = null
 # Player stats
 # Represents player's cash balance
 export(int) var gold = 100 setget set_gold
+var wave := 1;
 
 # Enemy waves
 export(NodePath) var wave_spawn_position
@@ -19,7 +20,12 @@ var spawn_button_pressed = false
 func _ready():
 	# This will show accruate information about gold balance
 	ui.update_gold_amount(gold)
-
+	ui.update_wave(wave)
+	
+	#probably a better way to do this (barely understand the signal system in godot)
+	ui.get_node("Buildings/GridContainer/Bow").connect("pressed", self, "_select_bow")
+	ui.get_node("Buildings/GridContainer/Farm").connect("pressed", self, "_select_farm")
+	ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
 func _process(_delta):
 	# Get global mouse position
 	var global_mouse_position = get_global_mouse_position()
@@ -27,18 +33,13 @@ func _process(_delta):
 	
 	# Choose a tower to construct based on the numeric keys
 	if Input.is_key_pressed(KEY_1) and num_constructions >= 1:
-		current_construction = constructions[0]
+		_select_bow()
 	if Input.is_key_pressed(KEY_2) and num_constructions >= 2:
-		current_construction = constructions[1]
+		_select_farm()
 	
 	# Spawns enemies (meant for presentation and testing)
 	if Input.is_key_pressed(KEY_Q) and not spawn_button_pressed:
-		spawn_button_pressed = true
-		var spawn_position_node = get_node(wave_spawn_position)
-		var new_enemy = wave_spawn_enemy.instance()
-		
-		new_enemy.position = spawn_position_node.position
-		add_child(new_enemy)
+		_spawn_wave()
 	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
 		spawn_button_pressed = false
 	
@@ -64,6 +65,20 @@ func _on_gold_produced(amount):
 	gold += amount
 	ui.update_gold_amount(gold)
 
+func _select_bow():
+	current_construction = constructions[0]
+func _select_farm():
+	current_construction = constructions[1]
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
 		building.connect("gold_produced", self, "_on_gold_produced")
+
+func _spawn_wave():
+	spawn_button_pressed = true
+	wave += 1
+	var spawn_position_node = get_node(wave_spawn_position)
+	var new_enemy = wave_spawn_enemy.instance()
+	
+	new_enemy.position = spawn_position_node.position
+	add_child(new_enemy)
+	ui.update_wave(wave)

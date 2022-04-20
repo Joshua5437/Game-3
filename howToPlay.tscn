@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/Merriweather-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/howToPlay.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 2 )
+
+[node name="HowToPlay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -277.0
+margin_top = 122.0
+margin_right = 277.0
+margin_bottom = 259.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 554.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 1 )
+text = "How to Play"
+align = 1
+
+[node name="Text" type="Label" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 554.0
+margin_bottom = 268.0
+custom_fonts/font = SubResource( 2 )
+text = "The demo is fairly simple. Click on one of the available buildings to choose it to place or press 1 for a bow and 2 to for a farm. Then click on the map where to place the building. Enemies will try to destroy the building, and you can click to rebuild it, for a cost. Farms produce money while bows shoot at the enemy. Press start wave or Q to spawn another enemy."
+autowrap = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -37.0
+margin_top = -157.0
+margin_right = 38.0
+margin_bottom = -130.0
+
+[node name="GoBack" type="Button" parent="VBoxContainer2"]
+margin_right = 75.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 3 )
+text = "Go back"
+
+[connection signal="pressed" from="VBoxContainer2/GoBack" to="." method="_on_Button_pressed"]

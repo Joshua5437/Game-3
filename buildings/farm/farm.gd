@@ -2,7 +2,7 @@ extends "res://buildings/building.gd"
 
 signal gold_produced(amount)
 
-var gold_production_amount = 5
+var gold_production_amount = 20
 
 func _on_ProduceTimer_timeout():
 	if not destroyed:

@@ -3,6 +3,8 @@ extends Node2D
 onready var ground = $Ground
 onready var buildings = $Buildings
 
+signal placed_building(building)
+
 const NO_BUILDING = -1
 
 # Returns if there is a building on the map
@@ -34,3 +36,5 @@ func place_building(world_position, building):
 	var building_instance = building.instance()
 	building_instance.global_position = world_coord
 	add_child(building_instance)
+	
+	emit_signal("placed_building", building_instance)

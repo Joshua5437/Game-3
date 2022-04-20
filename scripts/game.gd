@@ -29,4 +29,12 @@ func _process(_delta):
 		gold -= current_construction.stats.price
 		print("placed tower | gold: %s" % gold)
 		map.place_building(global_mouse_position, current_construction.scene)
-	
+
+func _on_gold_produced(amount):
+	gold += amount
+	print("gold: %s" % gold)
+
+func _on_Map_placed_building(building):
+	if building.has_signal("gold_produced"):
+		print("placed t")
+		building.connect("gold_produced", self, "_on_gold_produced")

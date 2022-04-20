@@ -1,16 +1,11 @@
-extends Node2D
+extends "res://buildings/building.gd"
 # TODOs:
-# - Needs to shoot at enemies if they are in range
-# - Needs stats (look at custom resources on Godot documentation if you want to implement this
-# way, but you do not have to if you have a better idea)
-# - Needs better texture
-# - Need to look at how Godot scene are inherited
+# - Needs better texture for all
 
 onready var range_area = $Range
 onready var reload_timer = $ReloadTimer
 
 export(PackedScene) var bullet
-export(Resource) var stats
 
 var tracked_enemies = []
 var current_target : Node2D = null
@@ -45,8 +40,3 @@ func _on_Range_body_exited(body):
 	if body.is_in_group("enemies"):
 		current_target = null
 		tracked_enemies.erase(body)
-
-func damage(hits):
-	stats.health -= hits
-	if stats.health <= 0:
-		queue_free()

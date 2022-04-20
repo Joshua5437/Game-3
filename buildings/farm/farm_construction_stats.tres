@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://buildings/construction_stats.gd" type="Script" id=1]
-[ext_resource path="res://buildings/farm_stats.tres" type="Resource" id=2]
-[ext_resource path="res://buildings/tower.tscn" type="PackedScene" id=3]
+[ext_resource path="res://buildings/farm/farm_stats.tres" type="Resource" id=2]
+[ext_resource path="res://buildings/farm/farm.tscn" type="PackedScene" id=3]
 
 [resource]
 script = ExtResource( 1 )

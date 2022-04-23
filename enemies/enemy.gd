@@ -93,7 +93,7 @@ func pick_target():
 		towers += towers_to_add
 		for i in range(towers_to_add.size()):
 			#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
-			tower_weights.append(MAX_INT-1)
+			tower_weights.append(MAX_INT/2)
 		
 	if towers.size() == 0:
 		target = null

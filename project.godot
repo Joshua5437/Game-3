@@ -19,15 +19,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/construction_stats.gd"
 }, {
-"base": "KinematicBody2D",
-"class": "Enemy",
-"language": "GDScript",
-"path": "res://scripts/enemy.gd"
-}, {
 "base": "Object",
 "class": "EnemyType",
 "language": "GDScript",
-"path": "res://scripts/enemyType.gd"
+"path": "res://enemies/enemyType.gd"
 }, {
 "base": "Reference",
 "class": "Pathfinder",
@@ -47,7 +42,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BuildingStats": "",
 "ConstructionStats": "",
-"Enemy": "",
 "EnemyType": "",
 "Pathfinder": "",
 "PriorityQueue": "",
@@ -59,6 +53,15 @@ _global_script_class_icons={
 config/name="Game3"
 run/main_scene="res://mainScene.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [physics]
 

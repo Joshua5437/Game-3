@@ -10,7 +10,7 @@ onready var astar = AStar2D.new()
 
 const MAP_SIZE = 64
 const CENTER_OFFSET = Vector2(8,8)
-
+const CELL_SIZE = 16
 
 #map weights for the pathfinding
 
@@ -80,3 +80,6 @@ func get_path_to_point(from: Vector2, to: Vector2):
 	var from_id = astar.get_closest_point(from)
 	var to_id = astar.get_closest_point(to)
 	return astar.get_point_path(from_id, to_id)
+	
+func get_cell_weight(world_position: Vector2):
+	return map_weights[ground.get_cell(world_position.x/CELL_SIZE, world_position.y/CELL_SIZE)]

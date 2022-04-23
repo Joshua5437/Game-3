@@ -18,7 +18,16 @@ export(PackedScene) var wave_spawn_enemy
 var tracked_enemies = []
 var spawn_button_pressed = false
 
+
+var enemy_types = [
+	EnemyType.new("Skeleton", 3, 100, 1, 1, .5, [{"name": "towers", "weight": 1}]),
+	EnemyType.new("Kobold", 1, 200, 1, 1, .5, [{"name": "towers", "weight": 1}]),
+]
+var rng : RandomNumberGenerator
+
 func _ready():
+	
+	rng = RandomNumberGenerator.new()
 	# This will show accruate information about gold balance
 	ui.update_gold_amount(gold)
 	ui.update_wave(wave)
@@ -81,6 +90,7 @@ func _spawn_wave():
 	# Spawns a wave of enemies
 	for i in range(wave + 1):
 		var new_enemy = wave_spawn_enemy.instance()
+		new_enemy.set_enemy_type(enemy_types[rng.randi_range(0,enemy_types.size()-1)])
 		new_enemy.position = spawn_position_node.position
 		
 		tracked_enemies.push_back(new_enemy)

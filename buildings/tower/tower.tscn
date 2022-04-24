@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://buildings/tower/tower.gd" type="Script" id=1]
 [ext_resource path="res://buildings/bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://buildings/building.tscn" type="PackedScene" id=3]
 [ext_resource path="res://buildings/tower/tower_stats.tres" type="Resource" id=4]
+[ext_resource path="res://shaders/flash.gdshader" type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifer = 0.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 104.0
@@ -14,6 +21,7 @@ stats = ExtResource( 4 )
 bullet = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource( 2 )
 frame = 4
 
 [node name="Range" type="Area2D" parent="." index="2"]

@@ -16,8 +16,7 @@ extents = Vector2( 8, 8 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
-[node name="Building" type="StaticBody2D" groups=["buildings"]]
-input_pickable = true
+[node name="Building" type="Area2D" groups=["buildings"]]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

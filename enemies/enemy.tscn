@@ -7,7 +7,7 @@
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 14.0
 
 [node name="Enemy" type="KinematicBody2D" groups=["enemies"]]
 script = ExtResource( 2 )
@@ -30,5 +30,5 @@ shape = SubResource( 2 )
 wait_time = 0.5
 one_shot = true
 
-[connection signal="body_entered" from="DamageArea" to="." method="_on_DamageArea_body_entered"]
-[connection signal="body_exited" from="DamageArea" to="." method="_on_DamageArea_body_exited"]
+[connection signal="area_entered" from="DamageArea" to="." method="_on_DamageArea_area_entered"]
+[connection signal="area_exited" from="DamageArea" to="." method="_on_DamageArea_area_exited"]

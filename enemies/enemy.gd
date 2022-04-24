@@ -136,20 +136,20 @@ func damage(hits):
 func _on_building_destruction():
 	target = null
 
-func _on_DamageArea_body_entered(body):
-	if body == self:
-		return
-	
-	if target == body:
-		attacking = true
-
-func _on_DamageArea_body_exited(body):
-	if body == self:
-		return
-	
-	if target == body:
-		attacking = false
-		target = null
-
 func _on_pathfinding_changed():
 	generate_new_path()
+
+func _on_DamageArea_area_entered(area):
+	if area == self:
+		return
+	
+	if target == area:
+		attacking = true
+
+func _on_DamageArea_area_exited(area):
+	if area == self:
+		return
+	
+	if target == area:
+		attacking = false
+		target = null

@@ -83,3 +83,24 @@ func get_path_to_point(from: Vector2, to: Vector2):
 	
 func get_cell_weight(world_position: Vector2):
 	return map_weights[ground.get_cell(world_position.x/CELL_SIZE, world_position.y/CELL_SIZE)]
+
+# Return random position on the map edge
+func randomize_edge_position():
+	var edge_num = randi() % 4
+	var grid_pos : Vector2
+	match edge_num:
+		# North
+		0:
+			grid_pos = Vector2(randi() % MAP_SIZE, 0)
+		# East
+		1:
+			grid_pos = Vector2(MAP_SIZE - 1, randi() % MAP_SIZE)
+		# South
+		2:
+			grid_pos = Vector2(randi() % MAP_SIZE, MAP_SIZE - 1)
+		# West
+		3:
+			grid_pos = Vector2(0, randi() % MAP_SIZE)
+	
+	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
+	return world_pos

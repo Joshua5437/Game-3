@@ -31,12 +31,13 @@ func _ready():
 
 func _spawn_wave():
 	var spawn_position_node = get_node(wave_spawn_position)
+	var new_position = map.randomize_edge_position()
 	
 	# Spawns a wave of enemies
 	for i in range(wave_number + 1):
 		var new_enemy = wave_spawn_enemy.instance()
 		new_enemy.set_enemy_type(enemy_types[rng.randi_range(0,enemy_types.size()-1)])
-		new_enemy.position = spawn_position_node.position
+		new_enemy.position = new_position
 		
 		tracked_enemies.push_back(new_enemy)
 		new_enemy.connect("die", self, "_on_enemy_death")

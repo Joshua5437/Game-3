@@ -13,7 +13,6 @@
 script = ExtResource( 3 )
 constructions = [ ExtResource( 6 ), ExtResource( 4 ) ]
 gold = 50
-wave_spawn_position = NodePath("WaveSpawnPosition")
 wave_spawn_enemy = ExtResource( 5 )
 
 [node name="Map" parent="." groups=["Map"] instance=ExtResource( 1 )]
@@ -26,14 +25,11 @@ limit_top = 0
 limit_right = 1024
 limit_bottom = 1024
 script = ExtResource( 2 )
-
-[node name="WaveSpawnPosition" type="Position2D" parent="."]
-position = Vector2( 504, 584 )
+boundary_offset = 5
 
 [node name="WaveSystem" type="Node2D" parent="."]
 script = ExtResource( 8 )
 map_path = NodePath("../Map")
-wave_spawn_position = NodePath("../WaveSpawnPosition")
 wave_spawn_enemy = ExtResource( 5 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

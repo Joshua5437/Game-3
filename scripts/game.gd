@@ -26,7 +26,7 @@ var enemy_types = [
 var rng : RandomNumberGenerator
 
 func _ready():
-	
+	randomize()
 	rng = RandomNumberGenerator.new()
 	# This will show accruate information about gold balance
 	ui.update_gold_amount(gold)

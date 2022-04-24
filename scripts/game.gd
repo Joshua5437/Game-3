@@ -61,11 +61,6 @@ func _unhandled_input(event):
 		# Places tower on the map if mosue left button is pressed
 		if event.pressed and event.button_index == BUTTON_LEFT \
 			and is_valid_placement(global_mouse_position):
-			
-			# Substract from balance and update UI
-			gold -= current_construction.stats.price
-			ui.update_gold_amount(gold)
-			
 			map.place_building(global_mouse_position, current_construction.scene)
 
 func is_valid_placement(world_position):
@@ -87,9 +82,14 @@ func _select_bow():
 	current_construction = constructions[0]
 func _select_farm():
 	current_construction = constructions[1]
+
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
 		building.connect("gold_produced", self, "_on_gold_produced")
+	
+	# Substract from balance and update UI
+	gold -= current_construction.stats.price
+	ui.update_gold_amount(gold)
 
 func _on_wave_ended():
 	var farms = get_tree().get_nodes_in_group("farm")

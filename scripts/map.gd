@@ -60,6 +60,10 @@ func place_building(world_position, building):
 	# Convert into grid coords
 	var grid_coord = buildings.world_to_map(world_position)
 	
+	# Check that the cell is ground
+	if ground.get_cellv(grid_coord) == TileMap.INVALID_CELL:
+		return
+	
 	# Overwrite the tile with different building tile (to represent the type of building, useful
 	# for saving and loading data if we ever get there)
 	buildings.set_cellv(grid_coord, 1)

@@ -15,6 +15,7 @@ var attacking = false
 onready var attack_timer = $AttackTimer
 
 export var health = 3
+var dead = false
 
 var enemy_type: EnemyType
 
@@ -126,7 +127,8 @@ func generate_new_path():
 # health reaches zero
 func damage(hits):
 	health -= hits
-	if health <= 0:
+	if health <= 0 and not dead:
+		dead = true
 		emit_signal("die", self)
 		queue_free()
 

@@ -118,3 +118,5 @@ margin_right = 156.0
 margin_bottom = 144.0
 disabled = true
 icon = ExtResource( 5 )
+
+[connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]

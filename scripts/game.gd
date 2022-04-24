@@ -26,7 +26,7 @@ var enemy_types = [
 var rng : RandomNumberGenerator
 
 func _ready():
-	
+	randomize()
 	rng = RandomNumberGenerator.new()
 	# This will show accruate information about gold balance
 	ui.update_gold_amount(gold)
@@ -35,7 +35,7 @@ func _ready():
 	#probably a better way to do this (barely understand the signal system in godot)
 	ui.get_node("Buildings/GridContainer/Bow").connect("pressed", self, "_select_bow")
 	ui.get_node("Buildings/GridContainer/Farm").connect("pressed", self, "_select_farm")
-	ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
+	#ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
 func _process(_delta):
 	# Get global mouse position
 	var global_mouse_position = get_global_mouse_position()
@@ -48,22 +48,25 @@ func _process(_delta):
 		_select_farm()
 	
 	# Spawns enemies (meant for presentation and testing)
-	if Input.is_key_pressed(KEY_Q) and not spawn_button_pressed:
-		_spawn_wave()
-	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
-		spawn_button_pressed = false
-	
-	# Places tower on the map if mosue left button is pressed
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) \
-		and map.is_building_there(global_mouse_position) \
+	# TODO: Fix wave start shortcut later
+#	if Input.is_key_pressed(KEY_Q) and not spawn_button_pressed:
+#		_spawn_wave()
+#	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
+#		spawn_button_pressed = false
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		var global_mouse_position = get_global_mouse_position()
+		
+		# Places tower on the map if mosue left button is pressed
+		if event.pressed and event.button_index == BUTTON_LEFT \
+			and is_valid_placement(global_mouse_position):
+			map.place_building(global_mouse_position, current_construction.scene)
+
+func is_valid_placement(world_position):
+	return map.is_building_there(world_position) \
 		and current_construction != null \
-		and gold - current_construction.stats.price >= 0:
-		
-		# Substract from balance and update UI
-		gold -= current_construction.stats.price
-		ui.update_gold_amount(gold)
-		
-		map.place_building(global_mouse_position, current_construction.scene)
+		and gold - current_construction.stats.price >= 0
 
 func set_gold(value):
 	gold = value
@@ -79,40 +82,17 @@ func _select_bow():
 	current_construction = constructions[0]
 func _select_farm():
 	current_construction = constructions[1]
+
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
 		building.connect("gold_produced", self, "_on_gold_produced")
+	
+	# Substract from balance and update UI
+	gold -= current_construction.stats.price
+	ui.update_gold_amount(gold)
 
-func _spawn_wave():
-	spawn_button_pressed = true
-	var spawn_position_node = get_node(wave_spawn_position)
-	
-	# Spawns a wave of enemies
-	for i in range(wave + 1):
-		var new_enemy = wave_spawn_enemy.instance()
-		new_enemy.set_enemy_type(enemy_types[rng.randi_range(0,enemy_types.size()-1)])
-		new_enemy.position = spawn_position_node.position
-		
-		tracked_enemies.push_back(new_enemy)
-		new_enemy.connect("die", self, "_handle_enemy_death")
-		
-		add_child(new_enemy)
-		
-		# Prevents weird movement with enemies
-		yield(get_tree().create_timer(1), "timeout")
-	
-	# Increment the wave
-	wave += 1
-	
-	# Updates UI
-	ui.update_wave(wave)
-
-func _handle_enemy_death(enemy):
-	print("enemy death")
-	tracked_enemies.erase(enemy)
-	
-	if tracked_enemies.empty():
-		var farms = get_tree().get_nodes_in_group("farm")
-		for farm in farms:
-			gold += farm.gold_production_amount
-		ui.update_gold_amount(gold)
+func _on_wave_ended():
+	var farms = get_tree().get_nodes_in_group("farm")
+	for farm in farms:
+		gold += farm.gold_production_amount
+	ui.update_gold_amount(gold)

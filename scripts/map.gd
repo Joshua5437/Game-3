@@ -104,3 +104,8 @@ func randomize_edge_position():
 	
 	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
 	return world_pos
+
+func get_grid_center_position(world_position):
+	var grid_pos = ground.world_to_map(world_position)
+	var new_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
+	return new_pos

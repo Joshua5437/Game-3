@@ -15,9 +15,14 @@ export (float) var edge_scroll_speed = 100.0
 export (Vector2) var map_size = Vector2(64, 64)
 export (int) var boundary_offset = 1
 
+export (NodePath) var map_path
+var map = null
+
 var dragging = false
 var mouse_start_pos = Vector2()
 var screen_start_pos = Vector2()
+
+onready var highlight_sprite = $Highlight
 
 func _ready():
 	# Establishes boundaries where the camera can move
@@ -26,6 +31,8 @@ func _ready():
 	limit_left = -new_boundary
 	limit_right = map_size.x * 16 + new_boundary
 	limit_bottom = map_size.y * 16 + new_boundary
+	
+	map = get_node(map_path)
 
 func _input(event):
 	_movement_by_middle_mouse_button(event)
@@ -33,6 +40,10 @@ func _input(event):
 func _process(delta):
 	_movement_by_keys(delta)
 	_movement_by_edge_scroll(delta)
+	
+	var global_mouse_pos = get_global_mouse_position()
+	var new_highlight_pos = map.get_grid_center_position(global_mouse_pos)
+	highlight_sprite.global_position = new_highlight_pos
 
 func _movement_by_keys(delta):
 	# Fetch keyboard input as movement and normalizes it

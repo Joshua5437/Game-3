@@ -37,6 +37,7 @@ func _ready():
 	# Get navigation node for navigation purposes
 	
 	map = get_tree().get_nodes_in_group("Map")[0]
+	map.connect("pathfinding_changed", self, "_on_pathfinding_changed")
 	
 func set_enemy_type(new_enemy_type):
 	enemy_type = new_enemy_type
@@ -149,3 +150,6 @@ func _on_DamageArea_body_exited(body):
 	if target == body:
 		attacking = false
 		target = null
+
+func _on_pathfinding_changed():
+	generate_new_path()

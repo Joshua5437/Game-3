@@ -38,6 +38,9 @@ func _process(_delta):
 	var global_mouse_position = get_global_mouse_position()
 	var num_constructions = len(constructions)
 	
+	if Input.is_action_just_pressed("deselect") and current_construction != null:
+		current_construction = null
+	
 	# Choose a tower to construct based on the numeric keys
 	# TODO: Fix building shortcuts later
 #	if Input.is_key_pressed(KEY_1) and num_constructions >= 1:

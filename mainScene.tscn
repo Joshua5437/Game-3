@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/camera.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=6]
 [ext_resource path="res://mainUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://wave_system.gd" type="Script" id=8]
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
@@ -29,9 +30,18 @@ script = ExtResource( 2 )
 [node name="WaveSpawnPosition" type="Position2D" parent="."]
 position = Vector2( 504, 584 )
 
+[node name="WaveSystem" type="Node2D" parent="."]
+script = ExtResource( 8 )
+map_path = NodePath("../Map")
+wave_spawn_position = NodePath("../WaveSpawnPosition")
+wave_spawn_enemy = ExtResource( 5 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="mainUI" parent="CanvasLayer" instance=ExtResource( 7 )]
 mouse_filter = 2
 
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]
+[connection signal="wave_ended" from="WaveSystem" to="." method="_on_wave_ended"]
+[connection signal="wave_spawned" from="WaveSystem" to="CanvasLayer/mainUI" method="update_wave"]
+[connection signal="wave_started" from="CanvasLayer/mainUI" to="WaveSystem" method="_on_wave_started"]

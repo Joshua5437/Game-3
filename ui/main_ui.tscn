@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -8,6 +8,10 @@
 [ext_resource path="res://images/farmicon.png" type="Texture" id=6]
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://ui/ui.gd" type="Script" id=8]
+[ext_resource path="res://ui/construct_button.gd" type="Script" id=9]
+[ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=10]
+[ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=11]
+[ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -97,12 +101,16 @@ columns = 2
 margin_right = 76.0
 margin_bottom = 70.0
 icon = ExtResource( 3 )
+script = ExtResource( 9 )
+construction = ExtResource( 10 )
 
 [node name="Farm" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
 margin_right = 156.0
 margin_bottom = 70.0
 icon = ExtResource( 6 )
+script = ExtResource( 9 )
+construction = ExtResource( 11 )
 
 [node name="Mage" type="Button" parent="Buildings/GridContainer"]
 margin_top = 74.0
@@ -116,7 +124,11 @@ margin_left = 80.0
 margin_top = 74.0
 margin_right = 156.0
 margin_bottom = 144.0
-disabled = true
 icon = ExtResource( 5 )
+script = ExtResource( 9 )
+construction = ExtResource( 12 )
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Tower" to="." method="_on_construction_button_pressed"]

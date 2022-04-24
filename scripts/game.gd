@@ -46,6 +46,8 @@ func _process(_delta):
 		_select_bow()
 	if Input.is_key_pressed(KEY_2) and num_constructions >= 2:
 		_select_farm()
+	if Input.is_key_pressed(KEY_3) and num_constructions >= 3:
+		current_construction = constructions[2]
 	
 	# Spawns enemies (meant for presentation and testing)
 	# TODO: Fix wave start shortcut later
@@ -66,7 +68,7 @@ func _unhandled_input(event):
 func is_valid_placement(world_position):
 	return map.is_building_there(world_position) \
 		and current_construction != null \
-		and gold - current_construction.stats.price >= 0
+		and gold - current_construction.get_price() >= 0
 
 func set_gold(value):
 	gold = value

@@ -12,7 +12,16 @@ const MAP_SIZE = 64
 const CENTER_OFFSET = Vector2(8,8)
 const CELL_SIZE = 16
 
-const CELL_NEIGHBORS = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+const CELL_NEIGHBORS = [
+	Vector2.UP, 
+	Vector2.DOWN, 
+	Vector2.LEFT, 
+	Vector2.RIGHT, 
+	Vector2(1, -1), 
+	Vector2(1, 1),
+	Vector2(-1, 1),
+	Vector2(-1, -1)
+]
 
 # Map weights for the pathfinding
 var map_weights = {

@@ -56,7 +56,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Game3"
+config/name="Keep Defense"
 run/main_scene="res://mainScene.tscn"
 config/icon="res://icon.png"
 

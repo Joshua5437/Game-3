@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=3]

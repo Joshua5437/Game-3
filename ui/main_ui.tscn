@@ -1,13 +1,13 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://images/bowicon.png" type="Texture" id=3]
 [ext_resource path="res://images/mageicon.png" type="Texture" id=4]
 [ext_resource path="res://images/wallicon.png" type="Texture" id=5]
 [ext_resource path="res://images/farmicon.png" type="Texture" id=6]
-[ext_resource path="res://alagard.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://ui.gd" type="Script" id=8]
+[ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://ui/ui.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11

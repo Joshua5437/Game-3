@@ -6,8 +6,8 @@
 [ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=4]
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=6]
-[ext_resource path="res://mainUI.tscn" type="PackedScene" id=7]
-[ext_resource path="res://wave_system.gd" type="Script" id=8]
+[ext_resource path="res://ui/main_ui.tscn" type="PackedScene" id=7]
+[ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
 [ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=9]
 
 [node name="MainScene" type="Node2D" groups=["main"]]

@@ -32,5 +32,6 @@ position = Vector2( 504, 584 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="mainUI" parent="CanvasLayer" instance=ExtResource( 7 )]
+mouse_filter = 2
 
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]

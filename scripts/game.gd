@@ -52,18 +52,25 @@ func _process(_delta):
 		_spawn_wave()
 	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
 		spawn_button_pressed = false
-	
-	# Places tower on the map if mosue left button is pressed
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) \
-		and map.is_building_there(global_mouse_position) \
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		var global_mouse_position = get_global_mouse_position()
+		
+		# Places tower on the map if mosue left button is pressed
+		if event.pressed and event.button_index == BUTTON_LEFT \
+			and is_valid_placement(global_mouse_position):
+			
+			# Substract from balance and update UI
+			gold -= current_construction.stats.price
+			ui.update_gold_amount(gold)
+			
+			map.place_building(global_mouse_position, current_construction.scene)
+
+func is_valid_placement(world_position):
+	return map.is_building_there(world_position) \
 		and current_construction != null \
-		and gold - current_construction.stats.price >= 0:
-		
-		# Substract from balance and update UI
-		gold -= current_construction.stats.price
-		ui.update_gold_amount(gold)
-		
-		map.place_building(global_mouse_position, current_construction.scene)
+		and gold - current_construction.stats.price >= 0
 
 func set_gold(value):
 	gold = value

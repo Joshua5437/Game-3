@@ -1,6 +1,7 @@
 extends Node2D
 class_name Building
 
+signal destroyed
 signal keep_destroyed
 
 const CELL_SIZE = 16
@@ -23,6 +24,7 @@ func die():
 	$Sprite.modulate = Color.red
 	if is_in_group("keep"):
 		GlobalSignals.emit_signal("keep_destroyed")
+	emit_signal("destroyed")
 	#queue_free()
 
 func rebuild():

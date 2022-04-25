@@ -90,12 +90,12 @@ func pick_target():
 			tower_weights.append(tower_type["weight"])
 		
 	#make sure that all enemies eventually target keep if they run out of other towers
-	if (towers.size()== 0):
-		var towers_to_add = get_tree().get_nodes_in_group("keep")
-		towers += towers_to_add
-		for i in range(towers_to_add.size()):
-			#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
-			tower_weights.append(MAX_INT/2)
+	#if (towers.size()== 0):
+	var towers_to_add = get_tree().get_nodes_in_group("keep")
+	towers += towers_to_add
+	for i in range(towers_to_add.size()):
+		#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
+		tower_weights.append(MAX_INT/2)
 		
 	if towers.size() == 0:
 		target = null
@@ -134,7 +134,10 @@ func damage(hits):
 		queue_free()
 
 func _on_building_destruction():
+	target.disconnect("destroyed", self, "_on_building_destruction")
+	attacking = false
 	target = null
+	generate_new_path()
 
 func _on_pathfinding_changed():
 	generate_new_path()
@@ -144,6 +147,7 @@ func _on_DamageArea_area_entered(area):
 		return
 	
 	if target == area:
+		target.connect("destroyed", self, "_on_building_destruction")
 		attacking = true
 
 func _on_DamageArea_area_exited(area):
@@ -151,5 +155,6 @@ func _on_DamageArea_area_exited(area):
 		return
 	
 	if target == area:
+		target.disconnect("destroyed", self, "_on_building_destruction")
 		attacking = false
 		target = null

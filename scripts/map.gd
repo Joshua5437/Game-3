@@ -137,3 +137,21 @@ func get_grid_center_position(world_position):
 # Returns unqiue id using cantor pairing function
 func id(vec : Vector2):
 	return (vec.x + vec.y) * (vec.x + vec.y + 1) / 2 + vec.y
+
+func preset_edge_postion(edge_num):
+	var grid_pos : Vector2
+	match edge_num:
+		# North
+		0:
+			grid_pos = Vector2(randi() % MAP_SIZE, 0)
+		# East
+		1:
+			grid_pos = Vector2(MAP_SIZE - 1, randi() % MAP_SIZE)
+		# South
+		2:
+			grid_pos = Vector2(randi() % MAP_SIZE, MAP_SIZE - 1)
+		# West
+		3:
+			grid_pos = Vector2(0, randi() % MAP_SIZE)
+	
+	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET

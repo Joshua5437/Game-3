@@ -14,10 +14,10 @@ var target = null # Where the enemy goes
 var attacking = false
 onready var attack_timer = $AttackTimer
 
-export var health = 3
+var health : int
 var dead = false
 
-var enemy_type: EnemyType
+export(Resource) var enemy_type
 
 signal die(enemy)
 

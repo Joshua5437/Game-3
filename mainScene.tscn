@@ -1,20 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
-[ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=4]
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=6]
 [ext_resource path="res://ui/main_ui.tscn" type="PackedScene" id=7]
 [ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
-[ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=9]
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
-constructions = [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 9 ) ]
 gold = 50
-wave_spawn_enemy = ExtResource( 5 )
 
 [node name="Map" parent="." groups=["Map"] instance=ExtResource( 1 )]
 

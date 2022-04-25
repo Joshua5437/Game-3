@@ -76,11 +76,6 @@ func set_gold(value):
 	if ui != null:
 		ui.update_gold_amount(gold)
 
-# Used for signal call. Bascially increases the gold amount and updates UI
-func _on_gold_produced(amount):
-	gold += amount
-	ui.update_gold_amount(gold)
-
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
 		building.connect("gold_produced", self, "_on_gold_produced")

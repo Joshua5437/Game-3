@@ -19,7 +19,3 @@ frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-
-[node name="ProduceTimer" type="Timer" parent="."]
-
-[connection signal="timeout" from="ProduceTimer" to="." method="_on_ProduceTimer_timeout"]

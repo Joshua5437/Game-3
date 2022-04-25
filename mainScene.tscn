@@ -26,6 +26,8 @@ wave_spawn_enemy = ExtResource( 5 )
 [node name="mainUI" parent="CanvasLayer" instance=ExtResource( 7 )]
 mouse_filter = 2
 
+[connection signal="game_over" from="." to="CanvasLayer/mainUI" method="display_game_over"]
+[connection signal="gold_updated" from="." to="CanvasLayer/mainUI" method="update_gold_amount"]
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]
 [connection signal="wave_ended" from="WaveSystem" to="." method="_on_wave_ended"]
 [connection signal="wave_ended" from="WaveSystem" to="CanvasLayer/mainUI" method="_on_wave_ended"]

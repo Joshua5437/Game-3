@@ -60,6 +60,10 @@ config/name="Keep Defense"
 run/main_scene="res://mainScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalSignals="*res://scripts/global_signals.gd"
+
 [display]
 
 window/size/width=1280

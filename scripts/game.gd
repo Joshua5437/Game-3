@@ -1,7 +1,9 @@
 extends Node2D
 
+signal gold_updated(gold)
+signal game_over
+
 onready var map = $Map
-onready var ui = $CanvasLayer/mainUI
 
 # Used to place the towers on the map
 export(Array) var constructions
@@ -28,9 +30,9 @@ var rng : RandomNumberGenerator
 func _ready():
 	randomize()
 	rng = RandomNumberGenerator.new()
-	# This will show accruate information about gold balance
-	ui.update_gold_amount(gold)
-	ui.update_wave(wave)
+	
+	GlobalSignals.connect("keep_destroyed", self, "game_over")
+	emit_signal("gold_updated", gold)
 
 	#ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
 func _process(_delta):
@@ -67,33 +69,50 @@ func _unhandled_input(event):
 			map.place_building(global_mouse_position, current_construction.scene)
 
 func is_valid_placement(world_position):
-	return map.is_building_there(world_position) \
-		and current_construction != null \
-		and gold - current_construction.get_price() >= 0
+	if current_construction == null:
+		return false
+	if not map.is_building_there(world_position):
+		return false
+	
+	# Bypass cost check for placing a keep
+	if current_construction.stats.type == BuildingStats.Type.Keep:
+		return true
+	
+	return gold - current_construction.get_price() >= 0
 
 func set_gold(value):
 	gold = value
-	if ui != null:
-		ui.update_gold_amount(gold)
-
-# Used for signal call. Bascially increases the gold amount and updates UI
-func _on_gold_produced(amount):
-	gold += amount
-	ui.update_gold_amount(gold)
+	emit_signal("gold_updated", gold)
 
 func _on_Map_placed_building(building):
-	if building.has_signal("gold_produced"):
-		building.connect("gold_produced", self, "_on_gold_produced")
+	var build_stats : BuildingStats = building.stats
 	
-	# Substract from balance and update UI
-	gold -= current_construction.stats.price
-	ui.update_gold_amount(gold)
+	# Substracts balance if the building is not a keep
+	if not build_stats.is_keep():
+		# Substract from balance
+		gold -= build_stats.price
+	
+	# Deselect current construction if building is a keep
+	if building.is_in_group("keep"):
+		current_construction = null
+		GlobalSignals.emit_signal("keep_placed")
+	
+	emit_signal("gold_updated", gold)
 
 func _on_wave_ended():
 	var farms = get_tree().get_nodes_in_group("farm")
 	for farm in farms:
 		gold += farm.gold_production_amount
-	ui.update_gold_amount(gold)
+	emit_signal("gold_updated", gold)
+	game_over()
 
 func _on_mainUI_construction_selected(construction_stats):
 	current_construction = construction_stats
+
+func game_over():
+	var keep = get_tree().get_nodes_in_group("keep")[0]
+	if not keep.destroyed:
+		return
+	if gold >= keep.stats.get_repair_price():
+		return
+	emit_signal("game_over")

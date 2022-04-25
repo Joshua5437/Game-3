@@ -1,9 +1,15 @@
 extends Node2D
 class_name Building
 
+signal destroyed
+signal keep_destroyed
+
 const CELL_SIZE = 16
 
+enum BuildingSize { _1x1, _2x2, _3x3 }
+
 export(Resource) var stats
+export(BuildingSize) var building_size = BuildingSize._1x1
 
 var destroyed = false
 
@@ -16,6 +22,9 @@ func damage(hits):
 func die():
 	destroyed = true
 	$Sprite.modulate = Color.red
+	if is_in_group("keep"):
+		GlobalSignals.emit_signal("keep_destroyed")
+	emit_signal("destroyed")
 	#queue_free()
 
 func rebuild():
@@ -23,18 +32,14 @@ func rebuild():
 	$Sprite.modulate = Color.white
 
 func get_grid_size():
-	var texture : Texture = $Sprite.texture
-	var texture_size = texture.get_size()
-	var frame_size = Vector2($Sprite.hframes, $Sprite.vframes)
-	
-	var grid_size = texture_size / CELL_SIZE
-	grid_size /= frame_size
-	return grid_size
+	# Enums start at zero, so the size has to be offset by one
+	var grid_size = building_size + 1
+	return Vector2(grid_size, grid_size)
 
 func _on_ClickArea_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		var game = get_tree().get_nodes_in_group("main")[0]
-		var repair_price = stats.price / 2
+		var repair_price = stats.get_repair_price()
 		var afford_repair = game.gold - repair_price >= 0
 		if event.button_index == BUTTON_RIGHT and destroyed and afford_repair:
 			game.gold -= repair_price

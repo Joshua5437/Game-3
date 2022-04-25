@@ -8,3 +8,4 @@ script = ExtResource( 1 )
 health = 5
 price = 20
 damage = 1
+type = 0

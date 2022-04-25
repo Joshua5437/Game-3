@@ -84,6 +84,10 @@ func place_building(world_position, building):
 	# Instance a new building
 	var building_instance : Building = building.instance()
 	
+	# Validate building placement first
+	if not is_building_placement_valid(grid_coord, building_instance):
+		return
+	
 	# Overwrite the tile with different building tile (to represent the type of building, useful
 	# for saving and loading data if we ever get there)
 	buildings.set_cellv(grid_coord, 1)
@@ -102,11 +106,16 @@ func place_building(world_position, building):
 	remove_point(grid_coord)
 	
 	# Remove neighbor points IF the building is 3x3
+	var used_cells = ground.get_used_cells()
 	if grid_size.x == 3 and grid_size.y == 3:
 		for neighbor in CELL_NEIGHBORS:
 			var next_cell = grid_coord + neighbor
 			if astar.has_point(id(next_cell)):
 				remove_point(next_cell)
+			
+			# Fills building slots on the building tilemap
+			if next_cell in used_cells:
+				buildings.set_cellv(next_cell, 1)
 	
 	# Convert into world coord to place our building
 	# Note: Vector is there to offset the placement of the building assuming
@@ -121,6 +130,33 @@ func place_building(world_position, building):
 	add_child(building_instance)
 	
 	emit_signal("placed_building", building_instance)
+
+func is_building_placement_valid(grid_pos : Vector2, building : Building):
+	# Get the grid size of the building
+	var grid_size = building.get_grid_size()
+	
+	# Check that grid position is not outside of the map
+	if ground.get_cellv(grid_pos) == TileMap.INVALID_CELL:
+		return false
+	
+	# Check that there is no building in the grid position
+	if buildings.get_cellv(grid_pos) != TileMap.INVALID_CELL:
+		return false
+	
+	# Assuming the cell size is 3x3, check the neighbors
+	if grid_size.x == 3 and grid_size.y == 3:
+		for neighbor in CELL_NEIGHBORS:
+			var next_cell = grid_pos + neighbor
+			
+			# Check if the neighbors have buildings placed
+			if buildings.get_cellv(next_cell) != TileMap.INVALID_CELL:
+				return false
+			
+			# Check if the neighbors are not outside of the map
+			if ground.get_cellv(next_cell) == TileMap.INVALID_CELL:
+				return false
+	
+	return true
 
 # Removes grid point from A* pathfinding
 func remove_point(grid_pos):

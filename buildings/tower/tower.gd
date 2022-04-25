@@ -29,14 +29,34 @@ func shoot(target : Vector2):
 	new_bullet.direction = global_position.direction_to(target)
 	get_parent().add_child(new_bullet)
 
+# Adds enemy to list of tracked enemies
+func _add_enemy(enemy : Node2D):
+	if not enemy.is_in_group("enemies"):
+		return
+	
+	tracked_enemies.push_back(enemy)
+	current_target = enemy
+
+# Removes enemy from list of track enemies
+func _remove_enemy(enemy : Node2D):
+	if not enemy.is_in_group("enemies"):
+		return
+	
+	current_target = null
+	tracked_enemies.erase(enemy)
+	
+	# Check if there is any enemy to kill
+	if not tracked_enemies.empty():
+		current_target = tracked_enemies[0]
+
 func _on_Range_body_entered(body):
-	# Adds enemy to list of tracked enemies
-	if body.is_in_group("enemies"):
-		tracked_enemies.push_back(body)
-		current_target = body
+	_add_enemy(body)
 
 func _on_Range_body_exited(body):
-	# Removes enemy from list of track enemies
-	if body.is_in_group("enemies"):
-		current_target = null
-		tracked_enemies.erase(body)
+	_remove_enemy(body)
+
+func _on_Range_area_entered(area):
+	_add_enemy(area)
+
+func _on_Range_area_exited(area):
+	_remove_enemy(area)

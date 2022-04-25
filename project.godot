@@ -42,6 +42,10 @@ config/name="Keep Defense"
 run/main_scene="res://mainScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalSignals="*res://scripts/global_signals.gd"
+
 [display]
 
 window/size/width=1280
@@ -102,6 +106,11 @@ deselect={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Buildings"
+2d_physics/layer_2="Enemies"
 
 [physics]
 

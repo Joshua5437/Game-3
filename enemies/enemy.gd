@@ -1,4 +1,6 @@
-extends KinematicBody2D
+extends Area2D
+# TODO: Fix the target system where it should go to the next tower assuming
+# the next tower is next to the target that was destroyed
 
 const THRESHOLD = 16
 const MAX_INT = 9223372036854775807
@@ -45,7 +47,7 @@ func set_enemy_type(new_enemy_type):
 	#but attacktimer may not be initialized yet apparently
 	#health = enemy_type.max_health
 	#attack_timer.wait_time = enemy_type.attack_delay
-func _physics_process(delta):
+func _process(delta):
 	# Attacks the tower if the enemy is close
 	if attacking and attack_timer.is_stopped() and target != null:
 		attack_timer.start()
@@ -58,9 +60,9 @@ func _physics_process(delta):
 	
 	# Moves towards the tower to attack
 	if not attacking:
-		move_to_target()
+		move_to_target(delta)
 
-func move_to_target():
+func move_to_target(delta):
 	# Generates a path if current path is already empty
 	if path.empty():
 		generate_new_path()
@@ -76,7 +78,8 @@ func move_to_target():
 		velocity = direction * (enemy_type.speed / map.get_cell_weight(global_position))
 		#otherwise
 		#velocity = direction * enemy_type.speed
-		velocity = move_and_slide(velocity) 
+		#velocity = move_and_slide(velocity) 
+		position += velocity * delta
 
 func pick_target():
 	var towers = []
@@ -90,12 +93,12 @@ func pick_target():
 			tower_weights.append(tower_type["weight"])
 		
 	#make sure that all enemies eventually target keep if they run out of other towers
-	if (towers.size()== 0):
-		var towers_to_add = get_tree().get_nodes_in_group("keep")
-		towers += towers_to_add
-		for i in range(towers_to_add.size()):
-			#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
-			tower_weights.append(MAX_INT/2)
+	#if (towers.size()== 0):
+	var towers_to_add = get_tree().get_nodes_in_group("keep")
+	towers += towers_to_add
+	for i in range(towers_to_add.size()):
+		#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
+		tower_weights.append(MAX_INT/2)
 		
 	if towers.size() == 0:
 		target = null
@@ -134,7 +137,10 @@ func damage(hits):
 		queue_free()
 
 func _on_building_destruction():
+	target.disconnect("destroyed", self, "_on_building_destruction")
+	attacking = false
 	target = null
+	generate_new_path()
 
 func _on_pathfinding_changed():
 	generate_new_path()
@@ -144,6 +150,7 @@ func _on_DamageArea_area_entered(area):
 		return
 	
 	if target == area:
+		target.connect("destroyed", self, "_on_building_destruction")
 		attacking = true
 
 func _on_DamageArea_area_exited(area):
@@ -151,5 +158,6 @@ func _on_DamageArea_area_exited(area):
 		return
 	
 	if target == area:
+		target.disconnect("destroyed", self, "_on_building_destruction")
 		attacking = false
 		target = null

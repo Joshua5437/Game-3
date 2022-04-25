@@ -1,17 +1,18 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://images/bowicon.png" type="Texture" id=3]
+[ext_resource path="res://art/bow-icon.png" type="Texture" id=3]
 [ext_resource path="res://images/mageicon.png" type="Texture" id=4]
-[ext_resource path="res://images/wallicon.png" type="Texture" id=5]
-[ext_resource path="res://images/farmicon.png" type="Texture" id=6]
+[ext_resource path="res://art/farm-icon.png" type="Texture" id=5]
+[ext_resource path="res://art/keep-icon.png" type="Texture" id=6]
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://ui/ui.gd" type="Script" id=8]
 [ext_resource path="res://ui/construct_button.gd" type="Script" id=9]
 [ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=10]
 [ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=11]
 [ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=12]
+[ext_resource path="res://ui/theme.tres" type="Theme" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -34,9 +35,14 @@ font_data = ExtResource( 7 )
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 7 )
 
+[sub_resource type="DynamicFont" id=7]
+size = 72
+font_data = ExtResource( 7 )
+
 [node name="mainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 13 )
 script = ExtResource( 8 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -51,6 +57,7 @@ margin_top = -100.0
 margin_right = 100.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 1 )
+disabled = true
 
 [node name="Label" type="Label" parent="MarginContainer/StartWave"]
 anchor_right = 1.0
@@ -89,8 +96,13 @@ text = "Wave: 1"
 [node name="Buildings" type="Panel" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -146.0
-margin_right = 157.0
+margin_left = 9.0
+margin_top = -155.0
+margin_right = 166.0
+margin_bottom = -9.0
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="GridContainer" type="GridContainer" parent="Buildings"]
 anchor_right = 1.0
@@ -99,34 +111,62 @@ columns = 2
 
 [node name="Bow" type="Button" parent="Buildings/GridContainer"]
 margin_right = 76.0
-margin_bottom = 70.0
+margin_bottom = 71.0
+hint_tooltip = "Archer Tower"
+size_flags_horizontal = 3
+size_flags_vertical = 3
 icon = ExtResource( 3 )
+expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 10 )
 
 [node name="Farm" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
 margin_right = 156.0
-margin_bottom = 70.0
-icon = ExtResource( 6 )
+margin_bottom = 71.0
+hint_tooltip = "Farm"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = ExtResource( 5 )
+expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 11 )
 
 [node name="Mage" type="Button" parent="Buildings/GridContainer"]
-margin_top = 74.0
+margin_top = 75.0
 margin_right = 76.0
-margin_bottom = 144.0
+margin_bottom = 146.0
+hint_tooltip = "Mage Tower"
+size_flags_horizontal = 3
+size_flags_vertical = 3
 disabled = true
 icon = ExtResource( 4 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
-margin_top = 74.0
+margin_top = 75.0
 margin_right = 156.0
-margin_bottom = 144.0
-icon = ExtResource( 5 )
+margin_bottom = 146.0
+hint_tooltip = "Keep"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = ExtResource( 6 )
+expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 12 )
+
+[node name="GameOver" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -174.5
+margin_top = -191.0
+margin_right = 174.5
+margin_bottom = -123.0
+custom_fonts/font = SubResource( 7 )
+text = "Game Over"
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]

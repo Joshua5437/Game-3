@@ -30,7 +30,6 @@ func _ready():
 	emit_signal("wave_spawned", wave_number)
 
 func _spawn_wave():
-	var spawn_position_node = get_node(wave_spawn_position)
 	var new_position = map.randomize_edge_position()
 	
 	# Spawns a wave of enemies

@@ -5,7 +5,7 @@ onready var ui = $CanvasLayer/mainUI
 
 # Used to place the towers on the map
 export(Array) var constructions
-var current_construction = null
+var current_construction : ConstructionStats = null
 
 # Player stats
 # Represents player's cash balance
@@ -31,21 +31,24 @@ func _ready():
 	# This will show accruate information about gold balance
 	ui.update_gold_amount(gold)
 	ui.update_wave(wave)
-	
-	#probably a better way to do this (barely understand the signal system in godot)
-	ui.get_node("Buildings/GridContainer/Bow").connect("pressed", self, "_select_bow")
-	ui.get_node("Buildings/GridContainer/Farm").connect("pressed", self, "_select_farm")
+
 	#ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
 func _process(_delta):
 	# Get global mouse position
 	var global_mouse_position = get_global_mouse_position()
 	var num_constructions = len(constructions)
 	
+	if Input.is_action_just_pressed("deselect") and current_construction != null:
+		current_construction = null
+	
 	# Choose a tower to construct based on the numeric keys
-	if Input.is_key_pressed(KEY_1) and num_constructions >= 1:
-		_select_bow()
-	if Input.is_key_pressed(KEY_2) and num_constructions >= 2:
-		_select_farm()
+	# TODO: Fix building shortcuts later
+#	if Input.is_key_pressed(KEY_1) and num_constructions >= 1:
+#		_select_bow()
+#	if Input.is_key_pressed(KEY_2) and num_constructions >= 2:
+#		_select_farm()
+#	if Input.is_key_pressed(KEY_3) and num_constructions >= 3:
+#		current_construction = constructions[2]
 	
 	# Spawns enemies (meant for presentation and testing)
 	# TODO: Fix wave start shortcut later
@@ -66,7 +69,7 @@ func _unhandled_input(event):
 func is_valid_placement(world_position):
 	return map.is_building_there(world_position) \
 		and current_construction != null \
-		and gold - current_construction.stats.price >= 0
+		and gold - current_construction.get_price() >= 0
 
 func set_gold(value):
 	gold = value
@@ -77,11 +80,6 @@ func set_gold(value):
 func _on_gold_produced(amount):
 	gold += amount
 	ui.update_gold_amount(gold)
-
-func _select_bow():
-	current_construction = constructions[0]
-func _select_farm():
-	current_construction = constructions[1]
 
 func _on_Map_placed_building(building):
 	if building.has_signal("gold_produced"):
@@ -96,3 +94,6 @@ func _on_wave_ended():
 	for farm in farms:
 		gold += farm.gold_production_amount
 	ui.update_gold_amount(gold)
+
+func _on_mainUI_construction_selected(construction_stats):
+	current_construction = construction_stats

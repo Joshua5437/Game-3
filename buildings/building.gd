@@ -3,7 +3,10 @@ class_name Building
 
 const CELL_SIZE = 16
 
+enum BuildingSize { _1x1, _2x2, _3x3 }
+
 export(Resource) var stats
+export(BuildingSize) var building_size = BuildingSize._1x1
 
 var destroyed = false
 
@@ -23,13 +26,9 @@ func rebuild():
 	$Sprite.modulate = Color.white
 
 func get_grid_size():
-	var texture : Texture = $Sprite.texture
-	var texture_size = texture.get_size()
-	var frame_size = Vector2($Sprite.hframes, $Sprite.vframes)
-	
-	var grid_size = texture_size / CELL_SIZE
-	grid_size /= frame_size
-	return grid_size
+	# Enums start at zero, so the size has to be offset by one
+	var grid_size = building_size + 1
+	return Vector2(grid_size, grid_size)
 
 func _on_ClickArea_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

@@ -19,6 +19,7 @@ extents = Vector2( 24, 24 )
 
 [node name="Keep" groups=["keep"] instance=ExtResource( 1 )]
 stats = ExtResource( 3 )
+building_size = 2
 
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 1 )

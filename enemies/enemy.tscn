@@ -9,7 +9,8 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 14.0
 
-[node name="Enemy" type="KinematicBody2D" groups=["enemies"]]
+[node name="Enemy" type="Area2D" groups=["enemies"]]
+collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

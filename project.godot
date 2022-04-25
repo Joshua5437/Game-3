@@ -125,6 +125,11 @@ deselect={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Buildings"
+2d_physics/layer_2="Enemies"
+
 [physics]
 
 common/enable_pause_aware_picking=true

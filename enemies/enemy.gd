@@ -1,4 +1,6 @@
-extends KinematicBody2D
+extends Area2D
+# TODO: Fix the target system where it should go to the next tower assuming
+# the next tower is next to the target that was destroyed
 
 const THRESHOLD = 16
 const MAX_INT = 9223372036854775807
@@ -45,7 +47,7 @@ func set_enemy_type(new_enemy_type):
 	#but attacktimer may not be initialized yet apparently
 	#health = enemy_type.max_health
 	#attack_timer.wait_time = enemy_type.attack_delay
-func _physics_process(delta):
+func _process(delta):
 	# Attacks the tower if the enemy is close
 	if attacking and attack_timer.is_stopped() and target != null:
 		attack_timer.start()
@@ -58,9 +60,9 @@ func _physics_process(delta):
 	
 	# Moves towards the tower to attack
 	if not attacking:
-		move_to_target()
+		move_to_target(delta)
 
-func move_to_target():
+func move_to_target(delta):
 	# Generates a path if current path is already empty
 	if path.empty():
 		generate_new_path()
@@ -76,7 +78,8 @@ func move_to_target():
 		velocity = direction * (enemy_type.speed / map.get_cell_weight(global_position))
 		#otherwise
 		#velocity = direction * enemy_type.speed
-		velocity = move_and_slide(velocity) 
+		#velocity = move_and_slide(velocity) 
+		position += velocity * delta
 
 func pick_target():
 	var towers = []

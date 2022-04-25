@@ -32,5 +32,7 @@ shape = SubResource( 1 )
 [node name="ReloadTimer" type="Timer" parent="." index="3"]
 one_shot = true
 
+[connection signal="area_entered" from="Range" to="." method="_on_Range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_Range_area_exited"]
 [connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]
 [connection signal="body_exited" from="Range" to="." method="_on_Range_body_exited"]

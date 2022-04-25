@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/main_menu/main.gd" type="Script" id=3]
+[ext_resource path="res://ui/theme.tres" type="Theme" id=5]
+
+[sub_resource type="DynamicFont" id=7]
+size = 101
+font_data = ExtResource( 2 )
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+script = ExtResource( 3 )
+
+[node name="Title" type="Label" parent="."]
+margin_left = 296.0
+margin_top = 128.0
+margin_right = 984.0
+margin_bottom = 256.0
+custom_fonts/font = SubResource( 7 )
+text = "Keep Defense"
+align = 1
+valign = 1
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 27.0
+margin_top = -223.0
+margin_right = 332.0
+margin_bottom = -11.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PlayButton" type="Button" parent="Buttons"]
+margin_right = 305.0
+margin_bottom = 50.0
+size_flags_vertical = 3
+text = "Play Game"
+
+[node name="HowToPlayButton" type="Button" parent="Buttons"]
+margin_top = 54.0
+margin_right = 305.0
+margin_bottom = 104.0
+size_flags_vertical = 3
+text = "How To Play"
+
+[node name="OptionsButton" type="Button" parent="Buttons"]
+margin_top = 108.0
+margin_right = 305.0
+margin_bottom = 158.0
+size_flags_vertical = 3
+text = "Options"
+
+[node name="ExitButton" type="Button" parent="Buttons"]
+margin_top = 162.0
+margin_right = 305.0
+margin_bottom = 212.0
+size_flags_vertical = 3
+text = "Exit Game"
+
+[connection signal="pressed" from="Buttons/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Buttons/HowToPlayButton" to="." method="_on_HowToPlayButton_pressed"]
+[connection signal="pressed" from="Buttons/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="Buttons/ExitButton" to="." method="_on_ExitButton_pressed"]

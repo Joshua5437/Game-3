@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -13,10 +13,18 @@
 [ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=11]
 [ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=12]
 [ext_resource path="res://ui/theme.tres" type="Theme" id=13]
+[ext_resource path="res://ui/main_menu/main_menu.tscn" type="PackedScene" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
 font_data = ExtResource( 2 )
+
+[sub_resource type="InputEventKey" id=15]
+pressed = true
+scancode = 81
+
+[sub_resource type="ShortCut" id=16]
+shortcut = SubResource( 15 )
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 1 )
@@ -35,15 +43,40 @@ font_data = ExtResource( 7 )
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=7]
-size = 72
-font_data = ExtResource( 7 )
+[sub_resource type="InputEventKey" id=7]
+pressed = true
+scancode = 49
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="InputEventKey" id=9]
+pressed = true
+scancode = 50
+
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
+
+[sub_resource type="InputEventKey" id=11]
+pressed = true
+scancode = 51
+
+[sub_resource type="ShortCut" id=12]
+shortcut = SubResource( 11 )
+
+[sub_resource type="InputEventKey" id=13]
+pressed = true
+scancode = 52
+
+[sub_resource type="ShortCut" id=14]
+shortcut = SubResource( 13 )
 
 [node name="mainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 13 )
 script = ExtResource( 8 )
+return_menu_scene = ExtResource( 14 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -58,6 +91,7 @@ margin_right = 100.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 1 )
 disabled = true
+shortcut = SubResource( 16 )
 
 [node name="Label" type="Label" parent="MarginContainer/StartWave"]
 anchor_right = 1.0
@@ -115,6 +149,7 @@ margin_bottom = 71.0
 hint_tooltip = "Archer Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 8 )
 icon = ExtResource( 3 )
 expand_icon = true
 script = ExtResource( 9 )
@@ -127,6 +162,7 @@ margin_bottom = 71.0
 hint_tooltip = "Farm"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 10 )
 icon = ExtResource( 5 )
 expand_icon = true
 script = ExtResource( 9 )
@@ -140,6 +176,7 @@ hint_tooltip = "Mage Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
 disabled = true
+shortcut = SubResource( 12 )
 icon = ExtResource( 4 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
@@ -150,23 +187,11 @@ margin_bottom = 146.0
 hint_tooltip = "Keep"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 14 )
 icon = ExtResource( 6 )
 expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 12 )
-
-[node name="GameOver" type="Label" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -174.5
-margin_top = -191.0
-margin_right = 174.5
-margin_bottom = -123.0
-custom_fonts/font = SubResource( 7 )
-text = "Game Over"
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]

@@ -1,0 +1,66 @@
+{
+    "comments" : "Waves is the list of waves, which is made up of sublists for each group in the wave",
+    "waves":
+    [
+        [
+            {
+                "enemies" : ["Zombie"],
+                "count" : 2,
+                "direction" : "South",
+                "delay" : 0.5
+
+            }
+        ],
+        [
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "South",
+                "delay" : 1
+            },
+            {
+                "enemies" : ["Goblin"],
+                "count" : 1,
+                "direction" : "South",
+                "delay" : 0.5
+            }
+
+        ],
+        [
+            {
+                "enemies" : ["Wolf"],
+                "count" : 5,
+                "direction": "South",
+                "delay" : 0.25
+            },
+            {
+                "enemies" : ["Zombie", "Skeleton"],
+                "count" : 5,
+                "direction" : "South",
+                "delay" : 0.5
+            },
+            {
+                "enemies" : ["Troll"],
+                "count" : 1,
+                "direction" : "South",
+                "delay" : 0.5
+            }
+
+        ]
+    ],
+    "infinite_waves" :
+    {
+        
+        "wavegroups":
+        [
+            {
+                "enemies" : ["Zombie"],
+                "count" : 5,
+                "direction" : "Random",
+                "increase_amount" : 2,
+                "delay" : 0.5
+            }
+        ]
+    }
+    
+}

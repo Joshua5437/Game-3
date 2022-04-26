@@ -24,34 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/construction_stats.gd"
 }, {
-"base": "Object",
+"base": "Resource",
 "class": "EnemyType",
 "language": "GDScript",
 "path": "res://enemies/enemyType.gd"
-}, {
-"base": "Reference",
-"class": "Pathfinder",
-"language": "GDScript",
-"path": "res://scripts/pathfinder.gd"
-}, {
-"base": "Object",
-"class": "PriorityQueue",
-"language": "GDScript",
-"path": "res://scripts/priorityQueue.gd"
-}, {
-"base": "Reference",
-"class": "ReallyRandomFunctions",
-"language": "GDScript",
-"path": "res://scripts/reallyRandomFunctions.gd"
 } ]
 _global_script_class_icons={
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
-"EnemyType": "",
-"Pathfinder": "",
-"PriorityQueue": "",
-"ReallyRandomFunctions": ""
+"EnemyType": ""
 }
 
 [application]

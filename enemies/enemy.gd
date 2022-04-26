@@ -2,7 +2,7 @@ extends Area2D
 # TODO: Fix the target system where it should go to the next tower assuming
 # the next tower is next to the target that was destroyed
 
-const THRESHOLD = 16
+const THRESHOLD = 8
 const MAX_INT = 9223372036854775807
 # Enemy navigation
 var map = null
@@ -16,10 +16,10 @@ var target = null # Where the enemy goes
 var attacking = false
 onready var attack_timer = $AttackTimer
 
-export var health = 3
+var health : int
 var dead = false
 
-var enemy_type: EnemyType
+export(Resource) var enemy_type
 
 signal die(enemy)
 
@@ -27,15 +27,11 @@ func _ready():
 	
 	#sets up the enemytype
 	#TODO: change how this is set
-	
-	#now handled by set_enemy_type
-	#enemy_type = EnemyType.new("Skeleton", 3, 100, 1, 1, .5, [{"name": "towers", "weight": 1}])
+
 	health = enemy_type.max_health
 	attack_timer.wait_time = enemy_type.attack_delay
-	# Waits for other nodes to setup first
-	# Commented because of the wave system
-	#yield(get_tree(), "idle_frame")
-	
+	$DamageArea/CollisionShape2D.shape.radius = enemy_type.attack_range
+
 	# Get navigation node for navigation purposes
 	
 	map = get_tree().get_nodes_in_group("Map")[0]
@@ -75,7 +71,7 @@ func move_to_target(delta):
 		# Enemy moves towards the one of the path points
 		var direction = global_position.direction_to(path[0])
 		#if we want speed to be affected by the terrain
-		velocity = direction * (enemy_type.speed / map.get_cell_weight(global_position))
+		velocity = direction * (enemy_type.speed * map.get_cell_speed_modifier(global_position))
 		#otherwise
 		#velocity = direction * enemy_type.speed
 		#velocity = move_and_slide(velocity) 

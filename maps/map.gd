@@ -35,7 +35,17 @@ var map_weights = {
 	"enemy" : 1,
 	"base" : 1
 }
-
+var enemy_speed_weights = {
+	"grass" : 1,
+	"water" : .5,
+	"rock" : 1,
+	"farm" : .75,
+	"wall" : 1,
+	"mine" : 1,
+	"enemy" : 1,
+	"base" : 1
+}
+#enum EDGES {NORTH, EAST, SOUTH, WEST, RANDOM}
 func _ready():
 	_add_points()
 	_connect_points()
@@ -210,6 +220,15 @@ func get_cell_weight(world_position: Vector2):
 	
 	# Return tile weight using the tile name
 	return map_weights[cell_tile_name]
+func get_cell_speed_modifier(world_position):
+	var grid_pos = ground.world_to_map(world_position)
+	
+	# Find tile name by fetching and using the cell's tile id
+	var cell_id = ground.get_cellv(grid_pos)
+	var cell_tile_name = ground.tile_set.tile_get_name(cell_id)
+	
+	# Return tile weight using the tile name
+	return enemy_speed_weights[cell_tile_name]
 
 # Return random position on the map edge
 func randomize_edge_position():
@@ -240,3 +259,28 @@ func get_grid_center_position(world_position):
 # Returns unqiue id using cantor pairing function
 func id(vec : Vector2):
 	return (vec.x + vec.y) * (vec.x + vec.y + 1) / 2 + vec.y
+
+func preset_edge_position(edge):
+	var grid_pos : Vector2
+	
+	
+	match edge:
+		# North
+		"North":
+			grid_pos = Vector2(randi() % MAP_SIZE, 0)
+		# East
+		"East":
+			grid_pos = Vector2(MAP_SIZE - 1, randi() % MAP_SIZE)
+		# South
+		"South":
+			grid_pos = Vector2(randi() % MAP_SIZE, MAP_SIZE - 1)
+		# West
+		"West":
+			grid_pos = Vector2(0, randi() % MAP_SIZE)
+		_:
+			return randomize_edge_position()
+	
+	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
+	return world_pos
+	
+

@@ -2,43 +2,36 @@ extends Node2D
 
 signal gold_updated(gold)
 signal game_over
+signal paused
 
 onready var map = $Map
-
-# Used to place the towers on the map
-export(Array) var constructions
-var current_construction : ConstructionStats = null
 
 # Player stats
 # Represents player's cash balance
 export(int) var gold = 100 setget set_gold
-var wave := 1;
-
-# Enemy waves
-export(NodePath) var wave_spawn_position
-export(PackedScene) var wave_spawn_enemy
-var tracked_enemies = []
-var spawn_button_pressed = false
-
-
-
-var rng : RandomNumberGenerator
+var current_construction = null
 
 func _ready():
 	randomize()
-	rng = RandomNumberGenerator.new()
 	
 	GlobalSignals.connect("keep_destroyed", self, "game_over")
 	emit_signal("gold_updated", gold)
 
-	#ui.get_node("MarginContainer/StartWave").connect("pressed", self, "_spawn_wave")
-func _process(_delta):
-	# Get global mouse position
-	var global_mouse_position = get_global_mouse_position()
-	var num_constructions = len(constructions)
+func _unhandled_input(event):
+	if event.is_action_pressed("pause") and current_construction == null:
+		emit_signal("paused")
+		get_tree().paused = true
 	
-	if Input.is_action_just_pressed("deselect") and current_construction != null:
+	if event.is_action_pressed("deselect") and current_construction != null:
 		current_construction = null
+	
+	if event is InputEventMouseButton:
+		var global_mouse_position = get_global_mouse_position()
+		
+		# Places tower on the map if mosue left button is pressed
+		if event.pressed and event.button_index == BUTTON_LEFT \
+			and is_valid_placement(global_mouse_position):
+			map.place_building(global_mouse_position, current_construction.scene)
 	
 	# Choose a tower to construct based on the numeric keys
 	# TODO: Fix building shortcuts later
@@ -55,15 +48,6 @@ func _process(_delta):
 #		_spawn_wave()
 #	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
 #		spawn_button_pressed = false
-
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		var global_mouse_position = get_global_mouse_position()
-		
-		# Places tower on the map if mosue left button is pressed
-		if event.pressed and event.button_index == BUTTON_LEFT \
-			and is_valid_placement(global_mouse_position):
-			map.place_building(global_mouse_position, current_construction.scene)
 
 func is_valid_placement(world_position):
 	if current_construction == null:

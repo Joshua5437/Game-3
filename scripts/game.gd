@@ -32,22 +32,6 @@ func _unhandled_input(event):
 		if event.pressed and event.button_index == BUTTON_LEFT \
 			and is_valid_placement(global_mouse_position):
 			map.place_building(global_mouse_position, current_construction.scene)
-	
-	# Choose a tower to construct based on the numeric keys
-	# TODO: Fix building shortcuts later
-#	if Input.is_key_pressed(KEY_1) and num_constructions >= 1:
-#		_select_bow()
-#	if Input.is_key_pressed(KEY_2) and num_constructions >= 2:
-#		_select_farm()
-#	if Input.is_key_pressed(KEY_3) and num_constructions >= 3:
-#		current_construction = constructions[2]
-	
-	# Spawns enemies (meant for presentation and testing)
-	# TODO: Fix wave start shortcut later
-#	if Input.is_key_pressed(KEY_Q) and not spawn_button_pressed:
-#		_spawn_wave()
-#	elif not Input.is_key_pressed(KEY_Q) and spawn_button_pressed:
-#		spawn_button_pressed = false
 
 func is_valid_placement(world_position):
 	if current_construction == null:

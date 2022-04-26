@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -19,6 +19,13 @@
 size = 11
 font_data = ExtResource( 2 )
 
+[sub_resource type="InputEventKey" id=15]
+pressed = true
+scancode = 81
+
+[sub_resource type="ShortCut" id=16]
+shortcut = SubResource( 15 )
+
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 1 )
 
@@ -35,6 +42,34 @@ font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 7 )
+
+[sub_resource type="InputEventKey" id=7]
+pressed = true
+scancode = 49
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="InputEventKey" id=9]
+pressed = true
+scancode = 50
+
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
+
+[sub_resource type="InputEventKey" id=11]
+pressed = true
+scancode = 51
+
+[sub_resource type="ShortCut" id=12]
+shortcut = SubResource( 11 )
+
+[sub_resource type="InputEventKey" id=13]
+pressed = true
+scancode = 52
+
+[sub_resource type="ShortCut" id=14]
+shortcut = SubResource( 13 )
 
 [node name="mainUI" type="Control"]
 anchor_right = 1.0
@@ -56,6 +91,7 @@ margin_right = 100.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 1 )
 disabled = true
+shortcut = SubResource( 16 )
 
 [node name="Label" type="Label" parent="MarginContainer/StartWave"]
 anchor_right = 1.0
@@ -113,6 +149,7 @@ margin_bottom = 71.0
 hint_tooltip = "Archer Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 8 )
 icon = ExtResource( 3 )
 expand_icon = true
 script = ExtResource( 9 )
@@ -125,6 +162,7 @@ margin_bottom = 71.0
 hint_tooltip = "Farm"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 10 )
 icon = ExtResource( 5 )
 expand_icon = true
 script = ExtResource( 9 )
@@ -138,6 +176,7 @@ hint_tooltip = "Mage Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
 disabled = true
+shortcut = SubResource( 12 )
 icon = ExtResource( 4 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
@@ -148,6 +187,7 @@ margin_bottom = 146.0
 hint_tooltip = "Keep"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut = SubResource( 14 )
 icon = ExtResource( 6 )
 expand_icon = true
 script = ExtResource( 9 )

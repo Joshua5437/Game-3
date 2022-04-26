@@ -49,7 +49,7 @@ func _ready():
 func _spawn_wave():
 	var wave_groups: Array
 	var infinite = false
-	print(wave_data)
+	
 	if (wave_number < wave_data["waves"].size()):
 		wave_groups = wave_data["waves"][wave_number]
 	else:
@@ -86,7 +86,7 @@ func _spawn_wave_group(group, is_infinite):
 		group["count"] += group["increase_amount"]
 	#emit_signal("wave_group_completed")
 func _on_wave_started():
-	print("hu")
+	
 	_spawn_wave()
 	
 	# Increment the wave

@@ -26,7 +26,7 @@ func _on_construction_button_pressed(stats):
 func _on_StartWave_pressed():
 	emit_signal("wave_started")
 	start_wave_button.disabled = true
-	print("h")
+	
 
 func _on_wave_ended():
 	start_wave_button.disabled = false

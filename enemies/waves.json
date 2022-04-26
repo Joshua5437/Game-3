@@ -4,34 +4,46 @@
     [
         [
             {
-                "enemies" : ["Skeleton"],
+                "enemies" : ["Zombie"],
+                "count" : 2,
+                "direction" : "South",
+                "delay" : 0.5
+
+            }
+        ],
+        [
+            {
+                "enemies" : ["Zombie"],
                 "count" : 3,
                 "direction" : "South",
-                "delay" : 0.5
-
-            }
-        ],
-        [
-            {
-                "enemies" : ["Skeleton", "Kobold"],
-                "count" : 5,
-                "direction" : "South",
-                "delay" : 0.5
-            }
-
-        ],
-        [
-            {
-                "enemies" : ["Kobold"],
-                "count" : 5,
-                "direction": "South",
                 "delay" : 1
             },
             {
-                "enemies" : ["Skeleton"],
-                "count" : 10,
+                "enemies" : ["Goblin"],
+                "count" : 1,
                 "direction" : "South",
-                "delay" : 1
+                "delay" : 0.5
+            }
+
+        ],
+        [
+            {
+                "enemies" : ["Wolf"],
+                "count" : 5,
+                "direction": "South",
+                "delay" : 0.25
+            },
+            {
+                "enemies" : ["Zombie", "Skeleton"],
+                "count" : 5,
+                "direction" : "South",
+                "delay" : 0.5
+            },
+            {
+                "enemies" : ["Troll"],
+                "count" : 1,
+                "direction" : "South",
+                "delay" : 0.5
             }
 
         ]
@@ -42,10 +54,11 @@
         "wavegroups":
         [
             {
-                "enemies" : ["Skeleton"],
-                "count" : 2,
+                "enemies" : ["Zombie"],
+                "count" : 5,
                 "direction" : "Random",
-                "increase_amount" : 5
+                "increase_amount" : 2,
+                "delay" : 0.5
             }
         ]
     }

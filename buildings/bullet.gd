@@ -1,7 +1,7 @@
 extends Area2D
 
 
-export(float) var speed = 100
+export(float) var speed = 200
 var hit_damage = 1
 var direction = Vector2()
 

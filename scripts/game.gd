@@ -21,10 +21,7 @@ var tracked_enemies = []
 var spawn_button_pressed = false
 
 
-var enemy_types = [
-	EnemyType.new("Skeleton", 3, 100, 1, 1, .5, [{"name": "towers", "weight": 1}]),
-	EnemyType.new("Kobold", 1, 200, 1, 1, .5, [{"name": "towers", "weight": 1}]),
-]
+
 var rng : RandomNumberGenerator
 
 func _ready():
@@ -102,7 +99,8 @@ func _on_Map_placed_building(building):
 func _on_wave_ended():
 	var farms = get_tree().get_nodes_in_group("farm")
 	for farm in farms:
-		gold += farm.gold_production_amount
+		if (farm.destroyed != true):
+			gold += farm.gold_production_amount
 	emit_signal("gold_updated", gold)
 	game_over()
 

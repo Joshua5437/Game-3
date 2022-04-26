@@ -19,7 +19,7 @@ towers_to_target = [ {
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 14.0
+radius = 16.0
 
 [node name="Enemy" type="Area2D" groups=["enemies"]]
 collision_layer = 2

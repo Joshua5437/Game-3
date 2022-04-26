@@ -1,7 +1,7 @@
 extends Camera2D
 
 # Camera movement speed
-export (float) var move_speed = 100.0
+export (float) var move_speed = 200.0
 
 # Camera zoom bounds
 export (Vector2) var camera_range = Vector2(0.5, 1.0)

@@ -1,0 +1,53 @@
+{
+    "comments" : "Waves is the list of waves, which is made up of sublists for each group in the wave",
+    "waves":
+    [
+        [
+            {
+                "enemies" : ["Skeleton"],
+                "count" : 3,
+                "direction" : "South",
+                "delay" : 0.5
+
+            }
+        ],
+        [
+            {
+                "enemies" : ["Skeleton", "Kobold"],
+                "count" : 5,
+                "direction" : "South",
+                "delay" : 0.5
+            }
+
+        ],
+        [
+            {
+                "enemies" : ["Kobold"],
+                "count" : 5,
+                "direction": "South",
+                "delay" : 1
+            },
+            {
+                "enemies" : ["Skeleton"],
+                "count" : 10,
+                "direction" : "South",
+                "delay" : 1
+            }
+
+        ]
+    ],
+    "infinite_waves" :
+    {
+        
+        "wavegroups":
+        [
+            {
+                "enemies" : ["Skeleton"],
+                "count" : 2,
+                "direction" : "Random",
+                "increase_amount" : 5
+            }
+        ]
+    }
+    
+}

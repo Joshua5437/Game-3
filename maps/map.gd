@@ -35,7 +35,7 @@ var map_weights = {
 	"enemy" : 1,
 	"base" : 1
 }
-enum EDGES {NORTH, EAST, SOUTH, WEST}
+#enum EDGES {NORTH, EAST, SOUTH, WEST, RANDOM}
 func _ready():
 	_add_points()
 	_connect_points()
@@ -241,20 +241,25 @@ func get_grid_center_position(world_position):
 func id(vec : Vector2):
 	return (vec.x + vec.y) * (vec.x + vec.y + 1) / 2 + vec.y
 
-func preset_edge_postion(edge):
+func preset_edge_position(edge):
 	var grid_pos : Vector2
+	
+	
 	match edge:
 		# North
-		EDGES.NORTH:
+		"North":
 			grid_pos = Vector2(randi() % MAP_SIZE, 0)
 		# East
-		EDGES.EAST:
+		"East":
 			grid_pos = Vector2(MAP_SIZE - 1, randi() % MAP_SIZE)
 		# South
-		EDGES.SOUTH:
+		"South":
 			grid_pos = Vector2(randi() % MAP_SIZE, MAP_SIZE - 1)
 		# West
-		EDGES.WEST:
+		"West":
 			grid_pos = Vector2(0, randi() % MAP_SIZE)
+		_:
+			return randomize_edge_position()
 	
 	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
+	return world_pos

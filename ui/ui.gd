@@ -3,13 +3,15 @@ extends Control
 signal wave_started
 signal construction_selected(construction_stats)
 
+export(PackedScene) var return_menu_scene
+
 onready var gold_label = $TopPanel/CenterContainer/Gold
 onready var wave_label = $TopPanel/Wave
 
 onready var start_wave_button = $MarginContainer/StartWave
 onready var keep_construction_button = $Buildings/GridContainer/Tower
 
-onready var game_over_label = $GameOver
+onready var game_over = $GameOver
 
 func _ready():
 	GlobalSignals.connect("keep_placed", self, "_on_building_keep_placed")
@@ -36,4 +38,4 @@ func _on_building_keep_placed():
 	start_wave_button.disabled = false
 
 func display_game_over():
-	game_over_label.show()
+	game_over.show()

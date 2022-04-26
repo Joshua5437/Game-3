@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
 [ext_resource path="res://ui/pause.tscn" type="PackedScene" id=4]
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://art/side-border.png" type="Texture" id=6]
 [ext_resource path="res://ui/main_ui.tscn" type="PackedScene" id=7]
 [ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
+[ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
@@ -15,6 +17,7 @@ gold = 50
 [node name="Map" parent="." groups=["Map"] instance=ExtResource( 1 )]
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -2 )
 map_path = NodePath("../Map")
 
 [node name="WaveSystem" type="Node2D" parent="."]
@@ -29,6 +32,26 @@ mouse_filter = 2
 
 [node name="Pause" parent="GUI" instance=ExtResource( 4 )]
 visible = false
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="Left Border" type="Sprite" parent="Borders"]
+position = Vector2( -16, 512 )
+texture = ExtResource( 6 )
+
+[node name="Right Border" type="Sprite" parent="Borders"]
+position = Vector2( 1040, 512 )
+rotation = -3.14159
+texture = ExtResource( 6 )
+
+[node name="Top Border" type="Sprite" parent="Borders"]
+position = Vector2( 512, 16 )
+texture = ExtResource( 9 )
+
+[node name="Bottom Border" type="Sprite" parent="Borders"]
+position = Vector2( 512, 1008 )
+rotation = -3.14159
+texture = ExtResource( 9 )
 
 [connection signal="game_over" from="." to="GUI/Pause" method="_on_game_over"]
 [connection signal="gold_updated" from="." to="GUI/mainUI" method="update_gold_amount"]

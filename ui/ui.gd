@@ -4,6 +4,7 @@ signal wave_started
 signal construction_selected(construction_stats)
 
 export(PackedScene) var return_menu_scene
+export(Resource) var keep_construction
 
 onready var gold_label = $TopPanel/CenterContainer/Gold
 onready var wave_label = $TopPanel/Wave
@@ -11,6 +12,7 @@ onready var wave_label = $TopPanel/Wave
 onready var start_wave_button = $MarginContainer/StartWave
 onready var start_wave_label = $MarginContainer/StartWave/Label
 onready var keep_construction_button = $Buildings/GridContainer/Tower
+onready var notice_text = $NoticeText
 
 func _ready():
 	GlobalSignals.connect("keep_placed", self, "_on_building_keep_placed")
@@ -36,3 +38,11 @@ func _on_wave_ended():
 func _on_building_keep_placed():
 	keep_construction_button.disabled = true
 	start_wave_button.disabled = false
+	$PlaceKeep.queue_free()
+	notice_text.text = ""
+	start_wave_label.modulate.a = 1.0
+
+
+func _on_Place_Keep_pressed():
+	emit_signal("construction_selected", keep_construction)
+	pass # Replace with function body.

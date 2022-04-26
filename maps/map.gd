@@ -152,7 +152,8 @@ func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	# Check that there is no building in the grid position
 	if buildings.get_cellv(grid_pos) != TileMap.INVALID_CELL:
 		return false
-	
+	if grid_pos.x < 3 or grid_pos.x > (MAP_SIZE - 3 ) or grid_pos.y < 3 or grid_pos.y > (MAP_SIZE - 3 ):
+		return false 
 	# Assuming the cell size is 3x3, check the neighbors
 	if grid_size.x == 3 and grid_size.y == 3:
 		for neighbor in CELL_NEIGHBORS:

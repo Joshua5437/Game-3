@@ -55,6 +55,11 @@ window/size/test_height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
+[global]
+
+clear=false
+color=false
+
 [importer_defaults]
 
 texture={
@@ -123,4 +128,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 1, 0.890196, 0.619608, 1 )
 environment/default_environment="res://default_env.tres"

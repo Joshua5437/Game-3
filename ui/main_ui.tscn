@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -14,6 +14,15 @@
 [ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=12]
 [ext_resource path="res://ui/theme.tres" type="Theme" id=13]
 [ext_resource path="res://ui/main_menu/main_menu.tscn" type="PackedScene" id=14]
+[ext_resource path="res://buildings/keep/keep-temp.png" type="Texture" id=15]
+[ext_resource path="res://buildings/construction_stats.gd" type="Script" id=16]
+[ext_resource path="res://buildings/keep/keep.tscn" type="PackedScene" id=17]
+[ext_resource path="res://buildings/keep/keep_stats.tres" type="Resource" id=18]
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 16 )
+stats = ExtResource( 18 )
+scene = ExtResource( 17 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -77,6 +86,7 @@ anchor_bottom = 1.0
 theme = ExtResource( 13 )
 script = ExtResource( 8 )
 return_menu_scene = ExtResource( 14 )
+keep_construction = SubResource( 17 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -94,6 +104,7 @@ disabled = true
 shortcut = SubResource( 16 )
 
 [node name="Label" type="Label" parent="MarginContainer/StartWave"]
+modulate = Color( 1, 1, 1, 0.0980392 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 3 )
@@ -193,7 +204,32 @@ expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 12 )
 
+[node name="PlaceKeep" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -42.0
+margin_top = -120.0
+margin_right = 18.0
+margin_bottom = -66.0
+grow_horizontal = 2
+rect_scale = Vector2( 2, 2 )
+icon = ExtResource( 15 )
+
+[node name="NoticeText" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -93.0
+margin_top = 50.0
+margin_right = 93.0
+margin_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource( 13 )
+text = "Place your keep!"
+
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Tower" to="." method="_on_construction_button_pressed"]
+[connection signal="pressed" from="PlaceKeep" to="." method="_on_Place_Keep_pressed"]

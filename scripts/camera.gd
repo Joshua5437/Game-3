@@ -41,6 +41,8 @@ func _process(delta):
 	_movement_by_keys(delta)
 	_movement_by_edge_scroll(delta)
 	
+	
+	
 	var global_mouse_pos = get_global_mouse_position()
 	var new_highlight_pos = map.get_grid_center_position(global_mouse_pos)
 	highlight_sprite.global_position = new_highlight_pos

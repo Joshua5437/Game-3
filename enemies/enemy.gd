@@ -15,6 +15,7 @@ var target = null # Where the enemy goes
 # Enemy attack
 var attacking = false
 onready var attack_timer = $AttackTimer
+onready var attack_sound = $AttackSound
 
 var health : int
 var dead = false
@@ -48,6 +49,8 @@ func _process(delta):
 	if attacking and attack_timer.is_stopped() and target != null:
 		attack_timer.start()
 		target.damage(enemy_type.attack_amount)
+		attack_sound.play()
+		
 	
 	# Picks a new target if target is destroyed
 	if target != null and target.destroyed:

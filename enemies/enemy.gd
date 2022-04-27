@@ -15,6 +15,7 @@ var target = null # Where the enemy goes
 # Enemy attack
 var attacking = false
 onready var attack_timer = $AttackTimer
+onready var attack_sound = $AttackSound
 
 var health : int
 var dead = false
@@ -48,6 +49,8 @@ func _process(delta):
 	if attacking and attack_timer.is_stopped() and target != null:
 		attack_timer.start()
 		target.damage(enemy_type.attack_amount)
+		attack_sound.play()
+		
 	
 	# Picks a new target if target is destroyed
 	if target != null and target.destroyed:
@@ -128,8 +131,23 @@ func generate_new_path():
 func damage(hits):
 	health -= hits
 	if health <= 0 and not dead:
+		# Set one-shot death to be true (prevent going through death code twice)
 		dead = true
+		
+		# Stops the enemy from processing
+		pause_mode = Node.PAUSE_MODE_STOP
+		
+		# Hides the enemy from view
+		hide()
+		
+		# Emits signal for enemy death
 		emit_signal("die", self)
+		
+		# Waits for the attack sound to finish if playing
+		if attack_sound.playing:
+			yield(attack_sound, "finished")
+		
+		# Set the node on a queue to be free
 		queue_free()
 
 func _on_building_destruction():

@@ -7,7 +7,7 @@ signal paused
 signal deselect_construction
 
 onready var map = $Map
-
+onready var buildSound = $BuildSound
 # Player stats
 # Represents player's cash balance
 export(int) var gold = 100 setget set_gold
@@ -36,6 +36,7 @@ func _unhandled_input(event):
 		if event.pressed and event.button_index == BUTTON_LEFT \
 			and is_valid_placement(global_mouse_position):
 			map.place_building(global_mouse_position, current_construction.scene)
+			buildSound.play()
 
 func is_valid_placement(world_position):
 	if current_construction == null:

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://scripts/camera.gd" type="Script" id=1]
-[ext_resource path="res://art/tiles.png" type="Texture" id=2]
 
 [node name="Camera" type="Camera2D"]
 current = true
@@ -14,6 +13,5 @@ script = ExtResource( 1 )
 boundary_offset = 5
 
 [node name="Highlight" type="Sprite" parent="."]
-texture = ExtResource( 2 )
 hframes = 3
 vframes = 3

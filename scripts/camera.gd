@@ -89,12 +89,18 @@ func _movement_by_edge_scroll(delta):
 
 
 func _on_mainUI_construction_selected(construction):
+	
 	var sprite = construction.scene.instance().get_node("Sprite")
 	
+	
 	highlight_sprite.texture = sprite.texture
-	highlight_sprite.frame = sprite.frame
+	
 	highlight_sprite.hframes = sprite.hframes
 	highlight_sprite.vframes = sprite.vframes
+	highlight_sprite.frame = sprite.frame
+
+	
+	
 
 
 func _on_MainScene_deselect_construction():

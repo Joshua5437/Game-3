@@ -45,11 +45,11 @@ rotation = -3.14159
 texture = ExtResource( 6 )
 
 [node name="Top Border" type="Sprite" parent="Borders"]
-position = Vector2( 512, 16 )
+position = Vector2( 512, -16 )
 texture = ExtResource( 9 )
 
 [node name="Bottom Border" type="Sprite" parent="Borders"]
-position = Vector2( 512, 1008 )
+position = Vector2( 512, 1040 )
 rotation = -3.14159
 texture = ExtResource( 9 )
 

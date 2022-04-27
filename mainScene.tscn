@@ -45,14 +45,15 @@ rotation = -3.14159
 texture = ExtResource( 6 )
 
 [node name="Top Border" type="Sprite" parent="Borders"]
-position = Vector2( 512, 16 )
+position = Vector2( 512, -16 )
 texture = ExtResource( 9 )
 
 [node name="Bottom Border" type="Sprite" parent="Borders"]
-position = Vector2( 512, 1008 )
+position = Vector2( 512, 1040 )
 rotation = -3.14159
 texture = ExtResource( 9 )
 
+[connection signal="deselect_construction" from="." to="PlayerCamera" method="_on_MainScene_deselect_construction"]
 [connection signal="game_over" from="." to="GUI/Pause" method="_on_game_over"]
 [connection signal="gold_updated" from="." to="GUI/mainUI" method="update_gold_amount"]
 [connection signal="paused" from="." to="GUI/Pause" method="_on_paused"]
@@ -61,4 +62,5 @@ texture = ExtResource( 9 )
 [connection signal="wave_ended" from="WaveSystem" to="GUI/mainUI" method="_on_wave_ended"]
 [connection signal="wave_spawned" from="WaveSystem" to="GUI/mainUI" method="update_wave"]
 [connection signal="construction_selected" from="GUI/mainUI" to="." method="_on_mainUI_construction_selected"]
+[connection signal="construction_selected" from="GUI/mainUI" to="PlayerCamera" method="_on_mainUI_construction_selected"]
 [connection signal="wave_started" from="GUI/mainUI" to="WaveSystem" method="_on_wave_started"]

@@ -4,6 +4,8 @@ signal gold_updated(gold)
 signal game_over
 signal paused
 
+signal deselect_construction
+
 onready var map = $Map
 
 # Player stats
@@ -24,6 +26,8 @@ func _unhandled_input(event):
 	
 	if event.is_action_pressed("deselect") and current_construction != null:
 		current_construction = null
+		emit_signal("deselect_construction")
+		map.get_node("TooCloseToEdge").visible = false
 	
 	if event is InputEventMouseButton:
 		var global_mouse_position = get_global_mouse_position()
@@ -60,6 +64,8 @@ func _on_Map_placed_building(building):
 	# Deselect current construction if building is a keep
 	if building.is_in_group("keep"):
 		current_construction = null
+		emit_signal("deselect_construction")
+		map.get_node("TooCloseToEdge").visible = false
 		GlobalSignals.emit_signal("keep_placed")
 	
 	emit_signal("gold_updated", gold)
@@ -73,6 +79,7 @@ func _on_wave_ended():
 	game_over()
 
 func _on_mainUI_construction_selected(construction_stats):
+	map.get_node("TooCloseToEdge").visible = true
 	current_construction = construction_stats
 
 func game_over():

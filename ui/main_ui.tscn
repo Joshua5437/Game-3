@@ -226,6 +226,8 @@ margin_right = 93.0
 margin_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource( 13 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Place your keep!"
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]

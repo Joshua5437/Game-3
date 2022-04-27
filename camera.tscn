@@ -17,4 +17,3 @@ boundary_offset = 5
 texture = ExtResource( 2 )
 hframes = 3
 vframes = 3
-frame = 4

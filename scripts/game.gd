@@ -4,6 +4,8 @@ signal gold_updated(gold)
 signal game_over
 signal paused
 
+signal deselect_construction
+
 onready var map = $Map
 
 # Player stats
@@ -24,6 +26,7 @@ func _unhandled_input(event):
 	
 	if event.is_action_pressed("deselect") and current_construction != null:
 		current_construction = null
+		emit_signal("deselect_construction")
 	
 	if event is InputEventMouseButton:
 		var global_mouse_position = get_global_mouse_position()
@@ -60,6 +63,7 @@ func _on_Map_placed_building(building):
 	# Deselect current construction if building is a keep
 	if building.is_in_group("keep"):
 		current_construction = null
+		emit_signal("deselect_construction")
 		GlobalSignals.emit_signal("keep_placed")
 	
 	emit_signal("gold_updated", gold)

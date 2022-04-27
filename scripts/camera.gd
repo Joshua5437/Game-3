@@ -86,3 +86,16 @@ func _movement_by_edge_scroll(delta):
 		position += Vector2.UP * delta_speed
 	elif mouse_pos.y >= screen_size.y - edge_scroll_boundary:
 		position += Vector2.DOWN * delta_speed
+
+
+func _on_mainUI_construction_selected(construction):
+	var sprite = construction.scene.instance().get_node("Sprite")
+	
+	highlight_sprite.texture = sprite.texture
+	highlight_sprite.frame = sprite.frame
+	highlight_sprite.hframes = sprite.hframes
+	highlight_sprite.vframes = sprite.vframes
+
+
+func _on_MainScene_deselect_construction():
+	highlight_sprite.texture = null

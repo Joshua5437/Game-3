@@ -46,6 +46,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
 stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="DamageArea" to="." method="_on_DamageArea_area_entered"]

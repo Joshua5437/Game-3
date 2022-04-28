@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://art/atlas.png" type="Texture" id=1]
 [ext_resource path="res://enemies/enemy.gd" type="Script" id=2]
 [ext_resource path="res://enemies/enemyType.gd" type="Script" id=3]
 [ext_resource path="res://sounds/attack.wav" type="AudioStream" id=4]
 [ext_resource path="res://enemies/enemy_bullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://shaders/flash.gdshader" type="Shader" id=6]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 3 )
@@ -19,6 +20,11 @@ towers_to_target = [ {
 ranged = false
 atlas_frame = 0
 
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 6 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifer = 0.0
+
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
@@ -32,6 +38,7 @@ enemy_type = SubResource( 3 )
 enemy_bullet = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 4 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 8
@@ -49,9 +56,14 @@ shape = SubResource( 2 )
 wait_time = 0.5
 one_shot = true
 
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="DamageArea" to="." method="_on_DamageArea_area_entered"]
 [connection signal="area_exited" from="DamageArea" to="." method="_on_DamageArea_area_exited"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

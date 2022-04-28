@@ -145,6 +145,7 @@ func generate_new_path():
 # health reaches zero
 func damage(hits):
 	health -= hits
+	flash()
 	if health <= 0 and not dead:
 		# Set one-shot death to be true (prevent going through death code twice)
 		dead = true
@@ -190,3 +191,10 @@ func _on_DamageArea_area_exited(area):
 		target.disconnect("destroyed", self, "_on_building_destruction")
 		attacking = false
 		target = null
+
+func flash():
+	$Sprite.material.set_shader_param("flash_modifer", 1.0)
+	$FlashTimer.start()
+
+func _on_FlashTimer_timeout():
+	$Sprite.material.set_shader_param("flash_modifer", 0.0)

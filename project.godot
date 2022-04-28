@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/construction_stats.gd"
 }, {
+"base": "Area2D",
+"class": "EnemyBullet",
+"language": "GDScript",
+"path": "res://enemies/enemy_bullet.gd"
+}, {
 "base": "Resource",
 "class": "EnemyType",
 "language": "GDScript",
@@ -33,6 +38,7 @@ _global_script_class_icons={
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
+"EnemyBullet": "",
 "EnemyType": ""
 }
 

@@ -21,6 +21,7 @@ var health : int
 var dead = false
 
 export(Resource) var enemy_type
+export(PackedScene) var enemy_bullet
 
 signal die(enemy)
 
@@ -45,17 +46,27 @@ func set_enemy_type(new_enemy_type):
 	#health = enemy_type.max_health
 	#attack_timer.wait_time = enemy_type.attack_delay
 func _process(delta):
-	# Attacks the tower if the enemy is close
-	if attacking and attack_timer.is_stopped() and target != null:
-		attack_timer.start()
-		target.damage(enemy_type.attack_amount)
-		attack_sound.play()
-		
 	
 	# Picks a new target if target is destroyed
 	if target != null and target.destroyed:
 		attacking = false
 		pick_target()
+	# Attacks the tower if the enemy is close
+	if attacking and attack_timer.is_stopped() and target != null:
+		attack_timer.start()
+		if (enemy_type.ranged):
+			var bullet = enemy_bullet.instance()
+			bullet.global_position = global_position
+			bullet.hit_damage = enemy_type.attack_amount
+			bullet.direction = global_position.direction_to(target.global_position)
+			bullet.target = target
+			get_parent().add_child(bullet)
+		else:
+			target.damage(enemy_type.attack_amount)
+		attack_sound.play()
+		
+	
+	
 	
 	# Moves towards the tower to attack
 	if not attacking:

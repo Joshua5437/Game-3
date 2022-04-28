@@ -22,11 +22,11 @@ var wave_data : Dictionary
 #var infinite_wave_increase_amount: int
 #var current_infinite_increase := 0
 var enemy_types = {
-	"Zombie" : EnemyType.new("Skeleton", 3, 100, 16, 1, .5, [{"name": "towers", "weight": 1}]),
+	"Zombie" : EnemyType.new("Zombie", 3, 100, 16, 1, .5, [{"name": "towers", "weight": 1}]),
 	"Wolf" : EnemyType.new("Kobold", 1, 200, 16, 1, .5, [{"name": "towers", "weight": 1}]),
 	"Goblin" : EnemyType.new("Goblin", 2, 100, 16, 1, .25, [{"name": "econ", "weight": 1}]),
 	"Troll" : EnemyType.new("Troll", 5, 50, 16, 1, .25, [{"name" : "towers", "weight": 1}]),
-	"Skeleton" : EnemyType.new("Skeleton", 3, 100, 64, 1, .25, [{"name" : "towers", "weight" : 1}]),
+	"Skeleton" : EnemyType.new("Skeleton", 3, 100, 96, 1, 2, [{"name" : "towers", "weight" : 1}], true),
 }
 #if you want to do enemy types in the editor feel free, but my system relies on dicts and godot no like
 #basically a pain and kind of equally hard to tell whats going on once you add everything

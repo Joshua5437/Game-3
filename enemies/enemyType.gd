@@ -8,9 +8,9 @@ export (int) var attack_range: int setget ,get_attack_range
 export (int) var attack_amount: int setget ,get_attack_amount
 export (float) var attack_delay: float setget ,get_attack_delay
 export (Array, Dictionary) var towers_to_target: Array setget, get_towers_to_target
+export (bool) var ranged
 
-
-func _init(name = "default", max_health = 1, speed = 100, attack_range = 16, attack_amount = 1, attack_delay = 1, towers_to_target = []):
+func _init(name = "default", max_health = 1, speed = 100, attack_range = 16, attack_amount = 1, attack_delay = 1, towers_to_target = [], ranged=false):
 	self.name = name
 	self.max_health = max_health
 	self.speed = speed
@@ -18,6 +18,7 @@ func _init(name = "default", max_health = 1, speed = 100, attack_range = 16, att
 	self.attack_amount = attack_amount
 	self.attack_delay = attack_delay
 	self.towers_to_target = towers_to_target
+	self.ranged = ranged
 	
 
 func get_name():

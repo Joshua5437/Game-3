@@ -7,7 +7,7 @@
                 "enemies" : ["Zombie"],
                 "count" : 2,
                 "direction" : "South",
-                "delay" : 0.5
+                "delay" : 1
 
             }
         ],
@@ -54,7 +54,7 @@
         "wavegroups":
         [
             {
-                "enemies" : ["Zombie"],
+                "enemies" : ["Zombie", "Skeleton"],
                 "count" : 5,
                 "direction" : "Random",
                 "increase_amount" : 2,

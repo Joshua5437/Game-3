@@ -11,6 +11,7 @@ var target
 #var spent = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	look_at(target.global_position)
 	pass # Replace with function body.
 
 

@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Keep Defense"
-run/main_scene="res://mainScene.tscn"
+run/main_scene="res://ui/main_menu/main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

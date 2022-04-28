@@ -5,7 +5,9 @@ export(float) var speed = 200
 var hit_damage = 1
 var direction = Vector2()
 
-
+func _ready():
+	var pos = speed * direction + position
+	look_at(pos)
 func _process(delta):
 	# Moves the bullet in a specified direction and specifed speed
 	position += speed * direction * delta

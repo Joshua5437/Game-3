@@ -4,7 +4,7 @@
     [
         [
             {
-                "enemies" : ["Zombie"],
+                "enemies" : ["Skeleton"],
                 "count" : 2,
                 "direction" : "South",
                 "delay" : 1

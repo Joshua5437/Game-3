@@ -33,6 +33,8 @@ func _ready():
 	health = enemy_type.max_health
 	attack_timer.wait_time = enemy_type.attack_delay
 	$DamageArea/CollisionShape2D.shape.radius = enemy_type.attack_range
+	
+	$Sprite.frame = enemy_type.atlas_frame
 
 	# Get navigation node for navigation purposes
 	
@@ -53,6 +55,7 @@ func _process(delta):
 		pick_target()
 	# Attacks the tower if the enemy is close
 	if attacking and attack_timer.is_stopped() and target != null:
+		look_at(target.global_position)
 		attack_timer.start()
 		if (enemy_type.ranged):
 			var bullet = enemy_bullet.instance()
@@ -84,6 +87,7 @@ func move_to_target(delta):
 	else:
 		# Enemy moves towards the one of the path points
 		var direction = global_position.direction_to(path[0])
+		look_at(path[0])
 		#if we want speed to be affected by the terrain
 		velocity = direction * (enemy_type.speed * map.get_cell_speed_modifier(global_position))
 		#otherwise

@@ -48,6 +48,8 @@ func set_enemy_type(new_enemy_type):
 	#health = enemy_type.max_health
 	#attack_timer.wait_time = enemy_type.attack_delay
 func _process(delta):
+	if dead:
+		return
 	
 	# Picks a new target if target is destroyed
 	if target != null and target.destroyed:

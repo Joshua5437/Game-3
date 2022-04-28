@@ -12,6 +12,7 @@ export(Resource) var stats
 export(BuildingSize) var building_size = BuildingSize._1x1
 
 var destroyed = false
+onready var start_health = stats.health
 
 func damage(hits):
 	flash()
@@ -30,6 +31,7 @@ func die():
 func rebuild():
 	destroyed = false
 	$Sprite.modulate = Color.white
+	stats.health = start_health
 
 func get_grid_size():
 	# Enums start at zero, so the size has to be offset by one

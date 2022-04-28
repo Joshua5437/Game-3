@@ -1,9 +1,9 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://art/bow-icon.png" type="Texture" id=3]
-[ext_resource path="res://images/mageicon.png" type="Texture" id=4]
+[ext_resource path="res://art/mage-tower.png" type="Texture" id=4]
 [ext_resource path="res://art/farm-icon.png" type="Texture" id=5]
 [ext_resource path="res://art/keep-icon.png" type="Texture" id=6]
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=7]
@@ -18,6 +18,7 @@
 [ext_resource path="res://buildings/construction_stats.gd" type="Script" id=16]
 [ext_resource path="res://buildings/keep/keep.tscn" type="PackedScene" id=17]
 [ext_resource path="res://buildings/keep/keep_stats.tres" type="Resource" id=18]
+[ext_resource path="res://buildings/tower/mage_tower_construction_stats.tres" type="Resource" id=19]
 
 [sub_resource type="Resource" id=17]
 script = ExtResource( 16 )
@@ -186,9 +187,11 @@ margin_bottom = 146.0
 hint_tooltip = "Mage Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 shortcut = SubResource( 12 )
 icon = ExtResource( 4 )
+expand_icon = true
+script = ExtResource( 9 )
+construction = ExtResource( 19 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
@@ -233,5 +236,6 @@ text = "Place your keep!"
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Mage" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Tower" to="." method="_on_construction_button_pressed"]
 [connection signal="pressed" from="PlaceKeep" to="." method="_on_Place_Keep_pressed"]

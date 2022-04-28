@@ -14,6 +14,7 @@
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
 gold = 50
+wave_gold = 20
 
 [node name="Map" parent="." groups=["Map"] instance=ExtResource( 1 )]
 

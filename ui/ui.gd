@@ -42,6 +42,8 @@ func _on_building_keep_placed():
 	notice_text.text = ""
 	start_wave_label.modulate.a = 1.0
 
+func _on_final_boss_killed():
+	notice_text.text = "Congulations! You killed the evil sorcerer and his army!"
 
 func _on_Place_Keep_pressed():
 	emit_signal("construction_selected", keep_construction)

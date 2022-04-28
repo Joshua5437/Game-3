@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
 [ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 [ext_resource path="res://sounds/build.wav" type="AudioStream" id=10]
+[ext_resource path="res://enemies/boss.tscn" type="PackedScene" id=11]
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
@@ -30,6 +31,7 @@ map_path = NodePath("../Map")
 script = ExtResource( 8 )
 map_path = NodePath("../Map")
 wave_spawn_enemy = ExtResource( 5 )
+final_boss = ExtResource( 11 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
@@ -68,6 +70,7 @@ stream = ExtResource( 10 )
 [connection signal="gold_updated" from="." to="GUI/mainUI" method="update_gold_amount"]
 [connection signal="paused" from="." to="GUI/Pause" method="_on_paused"]
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]
+[connection signal="final_boss_killed" from="WaveSystem" to="GUI/mainUI" method="_on_final_boss_killed"]
 [connection signal="wave_ended" from="WaveSystem" to="." method="_on_wave_ended"]
 [connection signal="wave_ended" from="WaveSystem" to="GUI/mainUI" method="_on_wave_ended"]
 [connection signal="wave_spawned" from="WaveSystem" to="GUI/mainUI" method="update_wave"]

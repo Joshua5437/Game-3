@@ -12,7 +12,8 @@ export (bool) var ranged
 export (int) var atlas_frame
 
 func _init(name = "default", max_health = 1, speed = 100, attack_range = 16, 
-		attack_amount = 1, attack_delay = 1, towers_to_target = [], 
+		attack_amount = 1, attack_delay = 1, 
+		towers_to_target = [{"name" : "towers", "weight" : 1}], 
 		atlas_frame = 0, ranged=false):
 	self.name = name
 	self.max_health = max_health

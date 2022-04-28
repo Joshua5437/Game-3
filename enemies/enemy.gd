@@ -22,6 +22,7 @@ var dead = false
 
 export(Resource) var enemy_type
 export(PackedScene) var enemy_bullet
+export(bool) var not_use_altas = false
 
 signal die(enemy)
 
@@ -34,7 +35,8 @@ func _ready():
 	attack_timer.wait_time = enemy_type.attack_delay
 	$DamageArea/CollisionShape2D.shape.radius = enemy_type.attack_range
 	
-	$Sprite.frame = enemy_type.atlas_frame
+	if not not_use_altas:
+		$Sprite.frame = enemy_type.atlas_frame
 
 	# Get navigation node for navigation purposes
 	

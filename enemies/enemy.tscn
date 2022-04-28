@@ -10,14 +10,13 @@
 [sub_resource type="Resource" id=3]
 script = ExtResource( 3 )
 name = ""
-max_health = 0
+max_health = 50
 speed = 0
 attack_range = 0
-attack_amount = 0
-attack_delay = 0.0
-towers_to_target = [ {
-} ]
-ranged = false
+attack_amount = 5
+attack_delay = 0.5
+towers_to_target = [  ]
+ranged = true
 atlas_frame = 0
 
 [sub_resource type="ShaderMaterial" id=4]

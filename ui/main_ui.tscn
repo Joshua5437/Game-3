@@ -223,15 +223,16 @@ icon = ExtResource( 15 )
 [node name="NoticeText" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -93.0
+margin_left = -421.0
 margin_top = 50.0
-margin_right = 93.0
-margin_bottom = 23.0
+margin_right = 421.0
+margin_bottom = 73.0
 grow_horizontal = 2
 theme = ExtResource( 13 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Place your keep!"
+align = 1
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]

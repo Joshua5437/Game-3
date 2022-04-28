@@ -19,6 +19,3 @@ bullet = ExtResource( 5 )
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 2 )
 texture = ExtResource( 2 )
-hframes = 1
-vframes = 1
-frame = 0

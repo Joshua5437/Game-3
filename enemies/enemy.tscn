@@ -21,6 +21,7 @@ ranged = false
 atlas_frame = 0
 
 [sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifer = 0.0

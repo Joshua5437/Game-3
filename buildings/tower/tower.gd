@@ -26,7 +26,7 @@ func shoot(target : Vector2):
 	var new_bullet = bullet.instance()
 	
 	new_bullet.position = position
-	new_bullet.direction = global_position.direction_to(target)
+	new_bullet.target = target
 	get_parent().add_child(new_bullet)
 
 # Adds enemy to list of tracked enemies

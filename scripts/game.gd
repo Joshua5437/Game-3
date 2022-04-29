@@ -11,6 +11,7 @@ onready var buildSound = $BuildSound
 # Player stats
 # Represents player's cash balance
 export(int) var gold = 100 setget set_gold
+export(int) var wave_gold = 50
 var current_construction = null
 
 func _ready():
@@ -76,7 +77,14 @@ func _on_wave_ended():
 	for farm in farms:
 		if (farm.destroyed != true):
 			gold += farm.gold_production_amount
+	
+	# Gives some gold to the player for completing a wave
+	gold += wave_gold
+	
+	# Emit signal to show gold updated
 	emit_signal("gold_updated", gold)
+	
+	# Runs this to check if the game is actually over
 	game_over()
 
 func _on_mainUI_construction_selected(construction_stats):

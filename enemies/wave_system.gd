@@ -3,16 +3,19 @@ extends Node
 signal wave_spawned(wave_number)
 signal wave_ended
 signal wave_group_completed
+signal final_boss_killed
 
 export(NodePath) var map_path
 var map = null
 
-export(NodePath) var wave_spawn_position
 export(PackedScene) var wave_spawn_enemy
+export(PackedScene) var final_boss
+var final_boss_killed = false
+export(int) var final_wave_number = 10
 
 # Tracks whether there is wave happening right now
 var current_wave = false
-var wave_number = 0
+export var wave_number = 0
 
 var rng : RandomNumberGenerator
 
@@ -85,17 +88,35 @@ func _spawn_wave_group(group, is_infinite):
 	if (is_infinite):
 		group["count"] += group["increase_amount"]
 	#emit_signal("wave_group_completed")
+
+func _spawn_final_boss():
+	var new_position = map.randomize_edge_position()
+	var new_boss = final_boss.instance()
+	new_boss.position = new_position
+	new_boss.connect("die", self, "_on_enemy_death")
+	add_child(new_boss)
+
 func _on_wave_started():
-	
 	_spawn_wave()
 	
 	# Increment the wave
 	wave_number += 1
+	
+	if wave_number == final_wave_number:
+		_spawn_final_boss()
 	
 	# Emits signal for wave spawned
 	emit_signal("wave_spawned", wave_number)
 
 func _on_enemy_death(enemy):
 	tracked_enemies.erase(enemy)
+	print(enemy.get_groups())
+	if enemy.is_in_group("boss"):
+		print("killed boss")
+		final_boss_killed = true
 	if tracked_enemies.empty():
 		emit_signal("wave_ended")
+		if final_boss_killed:
+			emit_signal("final_boss_killed")
+			final_boss_killed = false
+	

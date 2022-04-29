@@ -28,6 +28,7 @@ func _on_Top_pressed():
 
 func _on_Bottom_pressed():
 	get_tree().change_scene_to(return_menu_scene)
+	get_tree().paused = false
 
 func _on_game_over():
 	show()

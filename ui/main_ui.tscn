@@ -234,6 +234,30 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Place your keep!"
 align = 1
 
+[node name="TowerInfo" type="Panel" parent="."]
+margin_left = 170.0
+margin_top = 565.0
+margin_right = 570.0
+margin_bottom = 712.0
+
+[node name="Title" type="Label" parent="TowerInfo"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 205.0
+margin_bottom = 65.0
+
+[node name="Price" type="Label" parent="TowerInfo"]
+margin_left = 295.0
+margin_top = 5.0
+margin_right = 395.0
+margin_bottom = 65.0
+
+[node name="Description" type="Label" parent="TowerInfo"]
+margin_left = 5.0
+margin_top = 65.0
+margin_right = 395.0
+margin_bottom = 140.0
+
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]

@@ -59,7 +59,7 @@ func _on_Map_placed_building(building):
 	var build_stats : BuildingStats = building.stats
 	
 	# Substracts balance if the building is not a keep
-	if not build_stats.is_keep():
+	if not build_stats.type == 2:
 		# Substract from balance
 		gold -= build_stats.price
 	

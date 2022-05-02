@@ -9,3 +9,5 @@ health = 10
 price = 100
 damage = 0
 type = 2
+name = 3
+gold_production_amount = 0

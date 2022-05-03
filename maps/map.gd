@@ -83,20 +83,21 @@ func is_building_there(world_position):
 # Places a building on the map (towers only, should be changed later)
 # world_position: Global position
 # building: PackedScene
+# Returns true if placement is sucessful. Otherwise, false
 func place_building(world_position, building):
 	# Convert into grid coords
 	var grid_coord = buildings.world_to_map(world_position)
 	
 	# Check that the cell is ground
 	if ground.get_cellv(grid_coord) == TileMap.INVALID_CELL:
-		return
+		return false
 	
 	# Instance a new building
 	var building_instance : Building = building.instance()
 	
 	# Validate building placement first
 	if not is_building_placement_valid(grid_coord, building_instance):
-		return
+		return false
 	
 	# Overwrite the tile with different building tile (to represent the type of building, useful
 	# for saving and loading data if we ever get there)
@@ -140,6 +141,8 @@ func place_building(world_position, building):
 	add_child(building_instance)
 	
 	emit_signal("placed_building", building_instance)
+	
+	return true
 
 func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	# Get the grid size of the building

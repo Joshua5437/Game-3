@@ -36,8 +36,10 @@ func _unhandled_input(event):
 		# Places tower on the map if mosue left button is pressed
 		if event.pressed and event.button_index == BUTTON_LEFT \
 			and is_valid_placement(global_mouse_position):
-			map.place_building(global_mouse_position, current_construction.scene)
-			buildSound.play()
+			var success = map.place_building(global_mouse_position, current_construction.scene)
+			
+			if success:
+				buildSound.play()
 
 func is_valid_placement(world_position):
 	if current_construction == null:

@@ -1,6 +1,4 @@
 extends "res://buildings/building.gd"
-# TODOs:
-# - Needs better texture for all
 
 onready var range_area = $Range
 onready var reload_timer = $ReloadTimer
@@ -19,6 +17,9 @@ func _process(delta):
 	if current_target != null and reload_timer.is_stopped() and not destroyed:
 		shoot(current_target.position)
 		reload_timer.start()
+
+func get_weapon_range():
+	return $Range/CollisionShape2D.shape.radius
 
 # Shoots at the position
 # target: target position

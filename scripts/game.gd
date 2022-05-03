@@ -99,4 +99,5 @@ func game_over():
 		return
 	if gold >= keep.stats.get_repair_price():
 		return
+	$LoseSound.play()
 	emit_signal("game_over")

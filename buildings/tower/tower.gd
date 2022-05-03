@@ -53,6 +53,7 @@ func shoot(target : Vector2):
 	new_bullet.position = position
 	new_bullet.target = target
 	get_parent().add_child(new_bullet)
+	$ShootSound.play()
 
 # Adds enemy to list of tracked enemies
 func _add_enemy(enemy : Node2D):

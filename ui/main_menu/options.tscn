@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/main_menu/options.gd" type="Script" id=1]
 [ext_resource path="res://ui/theme.tres" type="Theme" id=2]
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://ui/template_button.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 72
@@ -36,6 +37,7 @@ margin_top = -106.0
 margin_right = 171.0
 margin_bottom = -37.0
 text = "Go Back"
+script = ExtResource( 4 )
 
 [node name="Container" type="VBoxContainer" parent="."]
 anchor_left = 0.5

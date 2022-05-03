@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/pause.gd" type="Script" id=2]
 [ext_resource path="res://ui/theme.tres" type="Theme" id=3]
 [ext_resource path="res://ui/main_menu/main_menu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/template_button.gd" type="Script" id=5]
 
 [sub_resource type="InputEventAction" id=10]
 action = "pause"
@@ -60,6 +61,7 @@ margin_bottom = 90.0
 size_flags_vertical = 3
 shortcut = SubResource( 9 )
 text = "Resume"
+script = ExtResource( 5 )
 
 [node name="SpaceGap" type="Control" parent="Buttons"]
 margin_top = 94.0
@@ -74,6 +76,7 @@ margin_right = 336.0
 margin_bottom = 234.0
 size_flags_vertical = 3
 text = "Return to Menu"
+script = ExtResource( 5 )
 
 [connection signal="pressed" from="Buttons/Top" to="." method="_on_Top_pressed"]
 [connection signal="pressed" from="Buttons/Bottom" to="." method="_on_Bottom_pressed"]

@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "EnemyType",
 "language": "GDScript",
 "path": "res://enemies/enemyType.gd"
+}, {
+"base": "Button",
+"class": "TemplateButton",
+"language": "GDScript",
+"path": "res://ui/template_button.gd"
 } ]
 _global_script_class_icons={
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
 "EnemyBullet": "",
-"EnemyType": ""
+"EnemyType": "",
+"TemplateButton": ""
 }
 
 [application]
@@ -52,6 +58,7 @@ config/icon="res://icon.png"
 
 GlobalSignals="*res://scripts/global_signals.gd"
 Global="*res://scripts/global.gd"
+Sound="*res://sounds/sound_manager.tscn"
 
 [display]
 

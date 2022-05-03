@@ -83,20 +83,21 @@ func is_building_there(world_position):
 # Places a building on the map (towers only, should be changed later)
 # world_position: Global position
 # building: PackedScene
+# Returns true if placement is sucessful. Otherwise, false
 func place_building(world_position, building):
 	# Convert into grid coords
 	var grid_coord = buildings.world_to_map(world_position)
 	
 	# Check that the cell is ground
 	if ground.get_cellv(grid_coord) == TileMap.INVALID_CELL:
-		return
+		return false
 	
 	# Instance a new building
 	var building_instance : Building = building.instance()
 	
 	# Validate building placement first
 	if not is_building_placement_valid(grid_coord, building_instance):
-		return
+		return false
 	
 	# Overwrite the tile with different building tile (to represent the type of building, useful
 	# for saving and loading data if we ever get there)
@@ -140,38 +141,49 @@ func place_building(world_position, building):
 	add_child(building_instance)
 	
 	emit_signal("placed_building", building_instance)
+	
+	return true
 
 func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	# Get the grid size of the building
 	var grid_size = building.get_grid_size()
 	
+	# Check the placement is valid
+	if not validate_building_grid(grid_pos):
+		return false
+	
+	# Assuming the cell size is 3x3, check the neighbors
+	if grid_size.x == 3 and grid_size.y == 3:
+		for neighbor in CELL_NEIGHBORS:
+			var next_cell = grid_pos + neighbor
+			if not validate_building_grid(next_cell):
+				return false
+	
+	return true
+
+# Returns whether the building grid is valid or not
+func validate_building_grid(grid_pos):
+	# Get ground ID
+	var ground_id = ground.get_cellv(grid_pos)
+	
 	# Check that grid position is not outside of the map
-	if ground.get_cellv(grid_pos) == TileMap.INVALID_CELL:
+	if ground_id == TileMap.INVALID_CELL:
+		return false
+	
+	# Check that grid position is not on "implacable" position
+	if ground_id == ground.tile_set.find_tile_by_name("water"):
 		return false
 	
 	# Check that there is no building in the grid position
 	if buildings.get_cellv(grid_pos) != TileMap.INVALID_CELL:
 		return false
-		
 	
-	if grid_pos.x < 3 or grid_pos.x > (MAP_SIZE - 4 ) or grid_pos.y < 3 or grid_pos.y > (MAP_SIZE - 4 ):
+	# Checks the edges of the map
+	if grid_pos.x < 3 or \
+		grid_pos.x > (MAP_SIZE - 4 ) or \
+		grid_pos.y < 3 or \
+		grid_pos.y > (MAP_SIZE - 4 ):
 		return false 
-	# Assuming the cell size is 3x3, check the neighbors
-	if grid_size.x == 3 and grid_size.y == 3:
-		for neighbor in CELL_NEIGHBORS:
-			var next_cell = grid_pos + neighbor
-			
-			# Check if the neighbors have buildings placed
-			if buildings.get_cellv(next_cell) != TileMap.INVALID_CELL:
-				return false
-			
-			# Check if the neighbors are not outside of the map
-			if ground.get_cellv(next_cell) == TileMap.INVALID_CELL:
-				return false
-			
-			#check for 3x3 not too close to edge
-			if next_cell.x < 3 or next_cell.x > (MAP_SIZE - 4 ) or next_cell.y < 3 or next_cell.y > (MAP_SIZE - 4 ):
-				return false 
 	
 	return true
 
@@ -269,7 +281,6 @@ func id(vec : Vector2):
 
 func preset_edge_position(edge):
 	var grid_pos : Vector2
-	
 	
 	match edge:
 		# North

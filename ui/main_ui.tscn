@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -19,6 +19,10 @@
 [ext_resource path="res://buildings/keep/keep.tscn" type="PackedScene" id=17]
 [ext_resource path="res://buildings/keep/keep_stats.tres" type="Resource" id=18]
 [ext_resource path="res://buildings/tower/mage_tower_construction_stats.tres" type="Resource" id=19]
+[ext_resource path="res://sounds/farm-construction-selected.wav" type="AudioStream" id=20]
+[ext_resource path="res://sounds/mage-tower-construction-selected.wav" type="AudioStream" id=21]
+[ext_resource path="res://sounds/archer-tower-construction-selected.wav" type="AudioStream" id=22]
+[ext_resource path="res://sounds/keep-construction-selected.wav" type="AudioStream" id=23]
 
 [sub_resource type="Resource" id=17]
 script = ExtResource( 16 )
@@ -166,6 +170,7 @@ icon = ExtResource( 3 )
 expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 10 )
+selected_sound = ExtResource( 22 )
 
 [node name="Farm" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
@@ -179,6 +184,7 @@ icon = ExtResource( 5 )
 expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 11 )
+selected_sound = ExtResource( 20 )
 
 [node name="Mage" type="Button" parent="Buildings/GridContainer"]
 margin_top = 75.0
@@ -192,6 +198,7 @@ icon = ExtResource( 4 )
 expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 19 )
+selected_sound = ExtResource( 21 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
@@ -206,6 +213,7 @@ icon = ExtResource( 6 )
 expand_icon = true
 script = ExtResource( 9 )
 construction = ExtResource( 12 )
+selected_sound = ExtResource( 23 )
 
 [node name="PlaceKeep" type="Button" parent="."]
 anchor_left = 0.5
@@ -219,6 +227,8 @@ margin_bottom = -66.0
 grow_horizontal = 2
 rect_scale = Vector2( 2, 2 )
 icon = ExtResource( 15 )
+script = ExtResource( 9 )
+selected_sound = ExtResource( 23 )
 
 [node name="NoticeText" type="Label" parent="."]
 anchor_left = 0.5

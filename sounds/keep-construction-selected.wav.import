@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/keep-construction-selected.wav-12bbc557b62a9fd37260b24ae373f693.sample"
+
+[deps]
+
+source_file="res://sounds/keep-construction-selected.wav"
+dest_files=[ "res://.import/keep-construction-selected.wav-12bbc557b62a9fd37260b24ae373f693.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

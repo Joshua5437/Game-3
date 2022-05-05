@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://buildings/tower/tower.tscn" type="PackedScene" id=1]
-[ext_resource path="res://art/mage-tower.png" type="Texture" id=2]
-[ext_resource path="res://buildings/tower/mage_tower_stats.tres" type="Resource" id=3]
+[ext_resource path="res://buildings/defense/archer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://buildings/defense/mage-tower.png" type="Texture" id=2]
+[ext_resource path="res://buildings/defense/mage_stats.tres" type="Resource" id=3]
 [ext_resource path="res://shaders/flash.gdshader" type="Shader" id=4]
-[ext_resource path="res://buildings/tower/fire_spell.tscn" type="PackedScene" id=5]
+[ext_resource path="res://buildings/defense/projectiles/fire_spell.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sounds/magic-attack.wav" type="AudioStream" id=6]
 
 [sub_resource type="ShaderMaterial" id=2]
@@ -15,11 +15,14 @@ shader_param/flash_modifer = 0.0
 
 [node name="MageTower" instance=ExtResource( 1 )]
 stats = ExtResource( 3 )
-bullet = ExtResource( 5 )
+projectile = ExtResource( 5 )
 
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 2 )
 texture = ExtResource( 2 )
 
-[node name="ShootSound" parent="." index="6"]
+[node name="Weapon" parent="Sprite" index="0"]
+visible = false
+
+[node name="ShootSound" parent="." index="5"]
 stream = ExtResource( 6 )

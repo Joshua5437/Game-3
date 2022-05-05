@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://buildings/tower/tower.gd" type="Script" id=1]
-[ext_resource path="res://buildings/bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://buildings/defense/tower.gd" type="Script" id=1]
+[ext_resource path="res://buildings/defense/projectiles/arrow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://buildings/building.tscn" type="PackedScene" id=3]
-[ext_resource path="res://buildings/tower/tower_stats.tres" type="Resource" id=4]
+[ext_resource path="res://buildings/defense/archer_stats.tres" type="Resource" id=4]
 [ext_resource path="res://shaders/flash.gdshader" type="Shader" id=5]
-[ext_resource path="res://art/archer-tower.png" type="Texture" id=6]
+[ext_resource path="res://buildings/defense/archer-tower.png" type="Texture" id=6]
 [ext_resource path="res://sounds/attack.wav" type="AudioStream" id=7]
 
 [sub_resource type="ShaderMaterial" id=2]
@@ -20,7 +20,8 @@ radius = 104.0
 [node name="Tower" groups=["towers"] instance=ExtResource( 3 )]
 script = ExtResource( 1 )
 stats = ExtResource( 4 )
-bullet = ExtResource( 2 )
+projectile = ExtResource( 2 )
+weapon_angle_offset = 135.0
 
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 2 )
@@ -30,6 +31,7 @@ vframes = 1
 frame = 0
 
 [node name="Range" type="Area2D" parent="." index="2"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range" index="0"]
 shape = SubResource( 1 )
@@ -37,7 +39,7 @@ shape = SubResource( 1 )
 [node name="ReloadTimer" type="Timer" parent="." index="3"]
 one_shot = true
 
-[node name="ShootSound" type="AudioStreamPlayer2D" parent="." index="6"]
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." index="5"]
 stream = ExtResource( 7 )
 
 [connection signal="mouse_entered" from="." to="." method="_on_Tower_mouse_entered"]

@@ -171,8 +171,11 @@ func _on_mainUI_construction_selected(construction):
 	highlight_sprite.vframes = sprite.vframes
 	highlight_sprite.frame = sprite.frame
 	
+	# Grab the building stats
+	var building_stats : BuildingStats = current_construction.stats
+
 	# Make the building red if player's gold cannot pay for the building
-	if (get_tree().current_scene.gold - construction.get_price() >= 0) || construction.stats.type == BuildingStats.Type.Keep:
+	if (get_tree().current_scene.gold - building_stats.price >= 0) || building_stats.type == BuildingStats.Type.Keep:
 		highlight_sprite.modulate = Color(1,1,1)
 	else:
 		highlight_sprite.modulate = Color(1,0,0)
@@ -209,7 +212,7 @@ func _set_zoom_level(value: float) -> void:
 
 
 func _on_MainScene_gold_updated(gold):
-	if current_construction != null and (get_tree().current_scene.gold - current_construction.get_price() >= 0 or current_construction.stats.type == BuildingStats.Type.Keep):
+	if current_construction != null and (get_tree().current_scene.gold - current_construction.stats.price >= 0 or current_construction.stats.type == BuildingStats.Type.Keep):
 		
 		highlight_sprite.modulate = Color(1,1,1)
 	else:

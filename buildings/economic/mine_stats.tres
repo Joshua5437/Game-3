@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://buildings/economic/economic_stats.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Mine"
+health = 5
+price = 10
+type = 1
+accepted_tiles = [ "rock" ]
+gold_production = 15

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://buildings/building.gd" type="Script" id=1]
 [ext_resource path="res://art/tiles.png" type="Texture" id=2]
@@ -11,9 +11,6 @@ shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifer = 0.0
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 8 )
-
-[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
 [node name="Building" type="Area2D" groups=["buildings"]]
@@ -29,14 +26,9 @@ frame = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="ClickArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
-shape = SubResource( 2 )
-
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
 
-[connection signal="input_event" from="ClickArea" to="." method="_on_ClickArea_input_event"]
+[connection signal="input_event" from="." to="." method="_on_Building_input_event"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

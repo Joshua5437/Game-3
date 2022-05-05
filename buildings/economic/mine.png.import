@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fire.png-4b1bba03b0083d88345d5bf278afc689.stex"
+path="res://.import/mine.png-30713869de689bf4c72e2e54643fb518.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/fire.png"
-dest_files=[ "res://.import/fire.png-4b1bba03b0083d88345d5bf278afc689.stex" ]
+source_file="res://buildings/economic/mine.png"
+dest_files=[ "res://.import/mine.png-30713869de689bf4c72e2e54643fb518.stex" ]
 
 [params]
 

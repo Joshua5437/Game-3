@@ -3,16 +3,17 @@ class_name BuildingStats
 
 enum Type { Defense, Economic, Keep }
 
-enum Name { Farm, Archer, Mage, Keep }
-
-export(int) var health
-export(int) var price # How much to place a building down
-export(int) var damage
+export(String) var name = ""
+export(int) var health = 1
+export(int) var price = 0
 export(Type) var type
-export(Name) var name
-export(int) var gold_production_amount 
+export(Array, String) var accepted_tiles = []
 
 func get_repair_price():
 	if type == Type.Keep:
 		return price
 	return price / 2 
+
+
+func get_type_str():
+	return "Building"

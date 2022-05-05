@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/keep-temp.png-b1645eb92eacbceee59f5ea9569da74c.stex"
+path="res://.import/archer-tower.png-1b8d2c1d1fd2b3d8f2801c274ecc29ec.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://buildings/keep/keep-temp.png"
-dest_files=[ "res://.import/keep-temp.png-b1645eb92eacbceee59f5ea9569da74c.stex" ]
+source_file="res://buildings/defense/archer-tower.png"
+dest_files=[ "res://.import/archer-tower.png-1b8d2c1d1fd2b3d8f2801c274ecc29ec.stex" ]
 
 [params]
 

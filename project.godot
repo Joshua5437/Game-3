@@ -24,6 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/construction_stats.gd"
 }, {
+"base": "Resource",
+"class": "DefenseBuildingStats",
+"language": "GDScript",
+"path": "res://buildings/defense/defense_stats.gd"
+}, {
+"base": "Resource",
+"class": "EconomicBuildingStats",
+"language": "GDScript",
+"path": "res://buildings/economic/economic_stats.gd"
+}, {
 "base": "Area2D",
 "class": "EnemyBullet",
 "language": "GDScript",
@@ -34,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://enemies/enemyType.gd"
 }, {
+"base": "Area2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://buildings/defense/projectiles/projectile.gd"
+}, {
 "base": "Button",
 "class": "TemplateButton",
 "language": "GDScript",
@@ -43,8 +58,11 @@ _global_script_class_icons={
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
+"DefenseBuildingStats": "",
+"EconomicBuildingStats": "",
 "EnemyBullet": "",
 "EnemyType": "",
+"Projectile": "",
 "TemplateButton": ""
 }
 
@@ -140,11 +158,17 @@ zoom_out={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+repair={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [layer_names]
 
 2d_physics/layer_1="Buildings"
 2d_physics/layer_2="Enemies"
+2d_physics/layer_3="Projectiles"
 
 [physics]
 

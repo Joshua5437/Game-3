@@ -3,13 +3,17 @@ extends "res://buildings/building.gd"
 onready var range_area = $Range
 onready var reload_timer = $ReloadTimer
 
-export(PackedScene) var bullet
+export(PackedScene) var projectile
+export(float, -360, 360, .1) var weapon_angle_offset = 0
 
 var tracked_enemies = []
 var current_target : Node2D = null
 var show_range = false
 
-func _process(delta):
+func _ready():
+	assert(stats is DefenseBuildingStats, "Defense building's stats should be DefenseBuildingStats!")
+
+func _process(_delta):
 	# Picks a target to shoot if the target does not exist
 	if current_target == null and not tracked_enemies.empty():
 		current_target = tracked_enemies[0]
@@ -48,11 +52,9 @@ func get_weapon_range():
 # Shoots at the position
 # target: target position
 func shoot(target : Vector2):
-	var new_bullet = bullet.instance()
-	
-	new_bullet.position = position
-	new_bullet.target = target
-	get_parent().add_child(new_bullet)
+	var new_projectile : Projectile = projectile.instance()
+	new_projectile.setup(position, target, stats.damage)
+	get_parent().add_child(new_projectile)
 	$ShootSound.play()
 
 # Adds enemy to list of tracked enemies

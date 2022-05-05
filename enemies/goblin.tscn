@@ -10,6 +10,10 @@ shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifer = 0.0
 
 [node name="Enemy" instance=ExtResource( 1 )]
+building_weights = {
+"econ": 10000.0,
+"towers": -10000.0
+}
 
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 1 )

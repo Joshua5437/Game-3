@@ -97,7 +97,7 @@ func pick_target(override=false):
 		var building_group = all_buildings[i].get_groups()
 		for key in building_weights:
 			if key in building_group:
-				target_value -= building_weights[key]
+				target_value -= float(building_weights[key])
 		
 		building_values.append([target_value, i])
 	

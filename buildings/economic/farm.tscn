@@ -11,7 +11,7 @@ shader = ExtResource( 4 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifer = 0.0
 
-[node name="Farm" instance=ExtResource( 1 )]
+[node name="Farm" groups=["econ"] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 stats = ExtResource( 3 )
 

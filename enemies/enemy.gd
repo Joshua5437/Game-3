@@ -1,89 +1,45 @@
-extends Area2D
-# TODO: Fix the target system where it should go to the next tower assuming
-# the next tower is next to the target that was destroyed
+extends Actor
+class_name Enemy
 
 const THRESHOLD = 8
-const MAX_INT = 9223372036854775807
-# Enemy navigation
+const BUILDINGS_GROUP = "buildings"
+
+enum DamageType { Melee, Ranged, Mixed }
+
+# Enemy stats
+export var speed = 100
+export var damage_amount = 1
+export var building_weights = {}
+
+onready var attack_timer = $AttackTimer
+
 var map = null
+var target = null
+var in_range = false
 var path = []
 
-# Movement
-var velocity = Vector2.ZERO
-var target = null # Where the enemy goes
 
-# Enemy attack
-var attacking = false
-onready var attack_timer = $AttackTimer
-onready var attack_sound = $AttackSound
+# Setups variables with the Enemy class
+func setup(p_map):
+	map = p_map
 
-var health : int
-var dead = false
 
-export(Resource) var enemy_type
-export(PackedScene) var enemy_bullet
-export(bool) var not_use_altas = false
-
-signal die(enemy)
-
-func _ready():
-	
-	#sets up the enemytype
-	#TODO: change how this is set
-
-	health = enemy_type.max_health
-	attack_timer.wait_time = enemy_type.attack_delay
-	$DamageArea/CollisionShape2D.shape.radius = enemy_type.attack_range
-	
-	if not not_use_altas:
-		$Sprite.frame = enemy_type.atlas_frame
-
-	# Get navigation node for navigation purposes
-	
-	map = get_tree().get_nodes_in_group("Map")[0]
-	map.connect("pathfinding_changed", self, "_on_pathfinding_changed")
-	
-func set_enemy_type(new_enemy_type):
-	enemy_type = new_enemy_type
-	#i would really like to set what is below here, 
-	#but attacktimer may not be initialized yet apparently
-	#health = enemy_type.max_health
-	#attack_timer.wait_time = enemy_type.attack_delay
+# Processes during game time
 func _process(delta):
-	if dead:
-		return
-	
-	# Picks a new target if target is destroyed
-	if target != null and target.destroyed:
-		attacking = false
+	if target == null:
 		pick_target()
-	# Attacks the tower if the enemy is close
-	if attacking and attack_timer.is_stopped() and target != null:
-		look_at(target.global_position)
-		attack_timer.start()
-		if (enemy_type.ranged):
-			var bullet = enemy_bullet.instance()
-			bullet.global_position = global_position
-			bullet.hit_damage = enemy_type.attack_amount
-			bullet.direction = global_position.direction_to(target.global_position)
-			bullet.target = target
-			get_parent().add_child(bullet)
-		else:
-			target.damage(enemy_type.attack_amount)
-		attack_sound.play()
-		
-	
-	
-	
-	# Moves towards the tower to attack
-	if not attacking:
-		move_to_target(delta)
+	move_towards_target(delta)
 
-func move_to_target(delta):
-	# Generates a path if current path is already empty
-	if path.empty():
-		generate_new_path()
+	if is_attack_ready():
+		damage_target()
+
+
+# Moves towards the target if not in range
+func move_towards_target(delta):
+	if target == null or in_range:
 		return
+	if path.empty():
+		generate_path()
 	
 	if global_position.distance_to(path[0]) < THRESHOLD:
 		# Removes path node if the enemy is close enough
@@ -91,114 +47,100 @@ func move_to_target(delta):
 	else:
 		# Enemy moves towards the one of the path points
 		var direction = global_position.direction_to(path[0])
-		look_at(path[0])
+		#look_at(path[0])
 		#if we want speed to be affected by the terrain
-		velocity = direction * (enemy_type.speed * map.get_cell_speed_modifier(global_position))
+		var velocity = direction * (speed * map.get_cell_speed_modifier(global_position))
 		#otherwise
 		#velocity = direction * enemy_type.speed
 		#velocity = move_and_slide(velocity) 
 		position += velocity * delta
 
-func pick_target():
-	var towers = []
-	var tower_weights = []
-	for tower_type in enemy_type.towers_to_target:
-		var towers_to_add = get_tree().get_nodes_in_group(tower_type["name"])
-		#print(tower_type["name"])
-		towers += towers_to_add
-		#print(towers)
-		for i in range(towers_to_add.size()):
-			tower_weights.append(tower_type["weight"])
-		
-	#make sure that all enemies eventually target keep if they run out of other towers
-	#if (towers.size()== 0):
-	var towers_to_add = get_tree().get_nodes_in_group("keep")
-	towers += towers_to_add
-	for i in range(towers_to_add.size()):
-		#add a ridiculously high weight that basically guarantees that this will only be chosen if there are no other options.
-		tower_weights.append(MAX_INT/2)
-		
-	if towers.size() == 0:
-		target = null
-		return
-	# Reset target and path
-	target = null
-	path = []
-	var current_tower_weight = MAX_INT
-	for i in range(towers.size()):
-		#simply use raw distance for adding to the weight (arguably should switch to polling the astar cost)
-		var new_weight = tower_weights[i] + global_position.distance_squared_to(towers[i].global_position)
-		if not towers[i].destroyed and new_weight < current_tower_weight:
-			target = towers[i]
-			current_tower_weight = new_weight
-			
 
-func generate_new_path():
-	# Picks a target
-	pick_target()
+# Damages the target if in range
+func damage_target():
+	target.take_damage(damage_amount)
+	attack_timer.start()
+
+
+# Returns whether attacking the target is ready or not
+func is_attack_ready():
+	return target != null and in_range and attack_timer.is_stopped()
+
+
+# Overrides Actor's take_damage function
+func take_damage(amount):
+	flash()
+	.take_damage(amount)
+	if is_dead():
+		queue_free()
+
+
+# Picks a target
+func pick_target(override=false):
+	if target != null and not override:
+		return
+	target = null
+	in_range = false
+
+	var all_buildings = get_tree().get_nodes_in_group(BUILDINGS_GROUP)
+	if all_buildings.empty():
+		return
+
+	var building_values = []
 	
-	# Will not generate path since target is empty
+	for i in range(len(all_buildings)):
+		if all_buildings[i].is_dead():
+			continue
+
+		var target_value = global_position.distance_to(all_buildings[i].global_position)
+		
+		var building_group = all_buildings[i].get_groups()
+		for key in building_weights:
+			if key in building_group:
+				target_value -= building_weights[key]
+		
+		building_values.append([target_value, i])
+	
+	if building_values.empty():
+		return
+	
+	building_values.sort_custom(self, "target_sort")
+	target = all_buildings[building_values[0][1]]
+	
+	target.connect("die", self, "_on_Actor_death")
+	generate_path()
+
+
+# Generates path for the enemy to move through
+func generate_path():
 	if target == null:
 		return
 	
-	# Get path to the tower
-	
 	path = map.get_path_to_point(global_position, target.global_position)
 
-# Reduces the health based on amount of hits. Will queue free if 
-# health reaches zero
-func damage(hits):
-	health -= hits
-	flash()
-	if health <= 0 and not dead:
-		# Set one-shot death to be true (prevent going through death code twice)
-		dead = true
-		
-		# Stops the enemy from processing
-		pause_mode = Node.PAUSE_MODE_STOP
-		
-		# Hides the enemy from view
-		hide()
-		
-		# Emits signal for enemy death
-		emit_signal("die", self)
-		
-		# Waits for the attack sound to finish if playing
-		if attack_sound.playing:
-			yield(attack_sound, "finished")
-		
-		# Set the node on a queue to be free
-		queue_free()
 
-func _on_building_destruction():
-	target.disconnect("destroyed", self, "_on_building_destruction")
-	attacking = false
-	target = null
-	generate_new_path()
+# Handle any targets
+func _on_Range_area_entered(area:Area2D):
+	if area.is_in_group(BUILDINGS_GROUP) and area == target:
+		in_range = true
 
-func _on_pathfinding_changed():
-	generate_new_path()
 
-func _on_DamageArea_area_entered(area):
-	if area == self:
-		return
-	
-	if target == area:
-		target.connect("destroyed", self, "_on_building_destruction")
-		attacking = true
+# Generate a new target if actor is dead
+func _on_Actor_death(area:Actor):
+	pick_target(true)
 
-func _on_DamageArea_area_exited(area):
-	if area == self:
-		return
-	
-	if target == area:
-		target.disconnect("destroyed", self, "_on_building_destruction")
-		attacking = false
-		target = null
 
+# Custom ascending sorting for picking targets
+static func target_sort(a, b):
+	return a[0] < b[0]
+
+
+# Flashes the building using shader and starts the countdown
 func flash():
 	$Sprite.material.set_shader_param("flash_modifer", 1.0)
 	$FlashTimer.start()
 
+
+# Timeout function for flashing, and when it timeouts, the flash disappears
 func _on_FlashTimer_timeout():
 	$Sprite.material.set_shader_param("flash_modifer", 0.0)

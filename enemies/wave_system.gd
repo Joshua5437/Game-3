@@ -8,10 +8,11 @@ signal final_boss_killed
 export(NodePath) var map_path
 var map = null
 
-export(PackedScene) var wave_spawn_enemy
 export(PackedScene) var final_boss
 var final_boss_killed = false
 export(int) var final_wave_number = 10
+
+export(Dictionary) var enemies = {} 
 
 # Tracks whether there is wave happening right now
 var current_wave = false
@@ -24,13 +25,13 @@ var tracked_enemies = []
 var wave_data : Dictionary
 #var infinite_wave_increase_amount: int
 #var current_infinite_increase := 0
-var enemy_types = {
-	"Zombie" : EnemyType.new("Zombie", 3, 100, 16, 1, .5, [{"name": "towers", "weight": 1}], 11),
-	"Wolf" : EnemyType.new("Kobold", 1, 200, 16, 1, .5, [{"name": "towers", "weight": 1}], 19),
-	"Goblin" : EnemyType.new("Goblin", 2, 100, 16, 1, .25, [{"name": "econ", "weight": 1}], 20),
-	"Troll" : EnemyType.new("Troll", 5, 50, 16, 1, .25, [{"name" : "towers", "weight": 1}], 4),
-	"Skeleton" : EnemyType.new("Skeleton", 3, 100, 96, 1, 2, [{"name" : "towers", "weight" : 1}], 3, true),
-}
+#var enemy_types = {
+#	"Zombie" : EnemyType.new("Zombie", 3, 100, 16, 1, .5, [{"name": "towers", "weight": 1}], 11),
+#	"Wolf" : EnemyType.new("Kobold", 1, 200, 16, 1, .5, [{"name": "towers", "weight": 1}], 19),
+#	"Goblin" : EnemyType.new("Goblin", 2, 100, 16, 1, .25, [{"name": "econ", "weight": 1}], 20),
+#	"Troll" : EnemyType.new("Troll", 5, 50, 16, 1, .25, [{"name" : "towers", "weight": 1}], 4),
+#	"Skeleton" : EnemyType.new("Skeleton", 3, 100, 96, 1, 2, [{"name" : "towers", "weight" : 1}], 3, true),
+#}
 #if you want to do enemy types in the editor feel free, but my system relies on dicts and godot no like
 #basically a pain and kind of equally hard to tell whats going on once you add everything
 #probably easier to edit enemies, because the variables are clearer,
@@ -73,8 +74,8 @@ func _spawn_wave_group(group, is_infinite):
 	for i in range(group["count"]):
 		var enemy_choice = group["enemies"][rng.randi_range(0, group["enemies"].size()-1)]
 		
-		var new_enemy = wave_spawn_enemy.instance()
-		new_enemy.set_enemy_type(enemy_types[enemy_choice])
+		var new_enemy = enemies[enemy_choice].instance()
+		new_enemy.setup(map)
 		new_enemy.position = new_position
 		
 		tracked_enemies.push_back(new_enemy)
@@ -92,6 +93,7 @@ func _spawn_wave_group(group, is_infinite):
 func _spawn_final_boss():
 	var new_position = map.randomize_edge_position()
 	var new_boss = final_boss.instance()
+	new_boss.setup(map)
 	new_boss.position = new_position
 	new_boss.connect("die", self, "_on_enemy_death")
 	add_child(new_boss)
@@ -110,10 +112,11 @@ func _on_wave_started():
 
 func _on_enemy_death(enemy):
 	tracked_enemies.erase(enemy)
-	print(enemy.get_groups())
+
 	if enemy.is_in_group("boss"):
 		print("killed boss")
 		final_boss_killed = true
+	
 	if tracked_enemies.empty():
 		emit_signal("wave_ended")
 		if final_boss_killed:

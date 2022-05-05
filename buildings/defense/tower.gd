@@ -4,7 +4,6 @@ onready var range_area = $Range
 onready var reload_timer = $ReloadTimer
 
 export(PackedScene) var projectile
-export(float, -360, 360, .1) var weapon_angle_offset = 0
 
 var tracked_enemies = []
 var current_target : Node2D = null
@@ -59,7 +58,7 @@ func shoot(target : Vector2):
 
 # Adds enemy to list of tracked enemies
 func _add_enemy(enemy : Node2D):
-	if not enemy.is_in_group("enemies"):
+	if not enemy.is_in_group(Global.ENEMY_GROUP):
 		return
 	
 	tracked_enemies.push_back(enemy)
@@ -67,7 +66,7 @@ func _add_enemy(enemy : Node2D):
 
 # Removes enemy from list of track enemies
 func _remove_enemy(enemy : Node2D):
-	if not enemy.is_in_group("enemies"):
+	if not enemy.is_in_group(Global.ENEMY_GROUP):
 		return
 	
 	current_target = null

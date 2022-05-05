@@ -1,4 +1,4 @@
-extends Node2D
+extends Actor
 class_name Building
 
 signal destroyed
@@ -13,14 +13,20 @@ export(BuildingSize) var building_size = BuildingSize._1x1
 # Tracks whether the building is destroyed or not
 var destroyed = false
 
-# Store starting health first
-onready var health = stats.health
 
-func damage(hits):
+func _ready():
+	health = stats.health
+
+
+func take_damage(amount):
+	if is_dead():
+		return
+
 	flash()
-	health -= hits
-	if health <= 0:
+	.take_damage(amount)
+	if is_dead():
 		die()
+
 
 func die():
 	destroyed = true
@@ -29,15 +35,18 @@ func die():
 		GlobalSignals.emit_signal("keep_destroyed")
 	emit_signal("destroyed")
 
+
 func rebuild():
 	destroyed = false
 	$Sprite.modulate = Color.white
 	health = stats.health
 
+
 func get_grid_size():
 	# Enums start at zero, so the size has to be offset by one
 	var grid_size = building_size + 1
 	return Vector2(grid_size, grid_size)
+
 
 func _on_Building_input_event(_viewport:Node, event:InputEvent, _shape_idx:int):
 	# Repairs a damaged building by pressing repair action

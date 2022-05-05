@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://enemies/skeleton.png" type="Texture" id=2]
+[ext_resource path="res://enemies/ranged_enemy.gd" type="Script" id=3]
+[ext_resource path="res://projectiles/skeleton_arrow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://shaders/flash.gdshader" type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifer = 0.0
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 40.0
+
+[node name="Enemy" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+health = 5
+building_weights = {
+}
+projectile = ExtResource( 4 )
+
+[node name="Sprite" parent="." index="0"]
+material = SubResource( 2 )
+scale = Vector2( 1.20007, 1.20007 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="Range" index="0"]
+shape = SubResource( 1 )
+
+[node name="AttackTimer" parent="." index="3"]
+wait_time = 0.75

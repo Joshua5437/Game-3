@@ -9,7 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Area2D",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://scripts/actor.gd"
+}, {
+"base": "Actor",
 "class": "Building",
 "language": "GDScript",
 "path": "res://buildings/building.gd"
@@ -34,20 +39,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/economic/economic_stats.gd"
 }, {
-"base": "Area2D",
-"class": "EnemyBullet",
+"base": "Actor",
+"class": "Enemy",
 "language": "GDScript",
-"path": "res://enemies/enemy_bullet.gd"
-}, {
-"base": "Resource",
-"class": "EnemyType",
-"language": "GDScript",
-"path": "res://enemies/enemyType.gd"
+"path": "res://enemies/enemy.gd"
 }, {
 "base": "Area2D",
 "class": "Projectile",
 "language": "GDScript",
-"path": "res://buildings/defense/projectiles/projectile.gd"
+"path": "res://projectiles/projectile.gd"
+}, {
+"base": "Enemy",
+"class": "RangedEnemy",
+"language": "GDScript",
+"path": "res://enemies/ranged_enemy.gd"
 }, {
 "base": "Button",
 "class": "TemplateButton",
@@ -55,14 +60,15 @@ _global_script_classes=[ {
 "path": "res://ui/template_button.gd"
 } ]
 _global_script_class_icons={
+"Actor": "",
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
 "DefenseBuildingStats": "",
 "EconomicBuildingStats": "",
-"EnemyBullet": "",
-"EnemyType": "",
+"Enemy": "",
 "Projectile": "",
+"RangedEnemy": "",
 "TemplateButton": ""
 }
 

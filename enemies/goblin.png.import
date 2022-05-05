@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fireball.png-d26de282dd7a60b24c820a6cd9dc2a4a.stex"
+path="res://.import/goblin.png-6e941669d2adc445c801411bf8e64e40.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://buildings/defense/projectiles/fireball.png"
-dest_files=[ "res://.import/fireball.png-d26de282dd7a60b24c820a6cd9dc2a4a.stex" ]
+source_file="res://enemies/goblin.png"
+dest_files=[ "res://.import/goblin.png-6e941669d2adc445c801411bf8e64e40.stex" ]
 
 [params]
 

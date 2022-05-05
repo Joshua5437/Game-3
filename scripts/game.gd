@@ -51,7 +51,7 @@ func is_valid_placement(world_position):
 	if current_construction.stats.type == BuildingStats.Type.Keep:
 		return true
 	
-	return gold - current_construction.get_price() >= 0
+	return gold - current_construction.stats.price >= 0
 
 func set_gold(value):
 	gold = value
@@ -75,10 +75,10 @@ func _on_Map_placed_building(building):
 	emit_signal("gold_updated", gold)
 
 func _on_wave_ended():
-	var farms = get_tree().get_nodes_in_group("farm")
+	var farms = get_tree().get_nodes_in_group("econ")
 	for farm in farms:
 		if (farm.destroyed != true):
-			gold += farm.gold_production_amount
+			gold += farm.stats.gold_production
 	
 	# Gives some gold to the player for completing a wave
 	gold += wave_gold

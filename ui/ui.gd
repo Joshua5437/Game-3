@@ -3,9 +3,6 @@ extends Control
 signal wave_started
 signal construction_selected(construction_stats)
 
-export(PackedScene) var return_menu_scene
-export(Resource) var keep_construction
-
 onready var gold_label = $TopPanel/CenterContainer/Gold
 onready var wave_label = $TopPanel/Wave
 
@@ -15,7 +12,6 @@ onready var tower_description = $TowerInfo/Description
 
 onready var start_wave_button = $MarginContainer/StartWave
 onready var start_wave_label = $MarginContainer/StartWave/Label
-onready var keep_construction_button = $Buildings/GridContainer/Tower
 onready var notice_text = $NoticeText
 
 func _ready():
@@ -27,15 +23,19 @@ func update_gold_amount(amount):
 func update_wave(wave):
 	wave_label.text = "Wave: %s" % wave
 
-func _on_construction_button_pressed(stats):
-	emit_signal("construction_selected", stats)
-	var type = stats.get_type()
-	tower_title.text = "%s" % type
-	tower_price.text = "Cost: %s" % stats.get_price()
-	if type == "Economic":
-		tower_description.text = "%s Tower. Generates\n%s Gold per Wave." % [stats.get_name(), stats.get_gold()]
+func _on_construction_button_pressed(construction : ConstructionStats):
+	emit_signal("construction_selected", construction)
+	
+	var stats : BuildingStats = construction.stats
+
+	tower_title.text = "%s" % stats.get_type_str()
+	tower_price.text = "Cost: %s" % stats.price
+	if stats is EconomicBuildingStats:
+		tower_description.text = "%s. Generates\n%s Gold per Wave." % [stats.name, stats.gold_production]
+	elif stats is DefenseBuildingStats:
+		tower_description.text = "%s. Deals %s Damage." % [stats.name, stats.damage]
 	else:
-		tower_description.text = "%s Tower. Deals %s Damage." % [stats.get_name(), stats.get_damage()]
+		tower_description.text = "%s." % stats.name
 
 func _on_StartWave_pressed():
 	emit_signal("wave_started")
@@ -47,7 +47,6 @@ func _on_wave_ended():
 	start_wave_label.modulate.a = 1.0
 
 func _on_building_keep_placed():
-	keep_construction_button.disabled = true
 	start_wave_button.disabled = false
 	$PlaceKeep.queue_free()
 	notice_text.text = ""
@@ -55,7 +54,3 @@ func _on_building_keep_placed():
 
 func _on_final_boss_killed():
 	notice_text.text = "Congulations! You killed the evil sorcerer and his army!"
-
-func _on_Place_Keep_pressed():
-	emit_signal("construction_selected", keep_construction)
-	pass # Replace with function body.

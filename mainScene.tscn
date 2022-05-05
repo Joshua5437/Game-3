@@ -1,17 +1,21 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
 [ext_resource path="res://ui/pause.tscn" type="PackedScene" id=4]
-[ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://enemies/final_boss.tscn" type="PackedScene" id=5]
 [ext_resource path="res://art/side-border.png" type="Texture" id=6]
 [ext_resource path="res://ui/main_ui.tscn" type="PackedScene" id=7]
 [ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
 [ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 [ext_resource path="res://sounds/build.wav" type="AudioStream" id=10]
-[ext_resource path="res://enemies/boss.tscn" type="PackedScene" id=11]
 [ext_resource path="res://sounds/lose.wav" type="AudioStream" id=12]
+[ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=16]
+[ext_resource path="res://enemies/goblin.tscn" type="PackedScene" id=17]
+[ext_resource path="res://enemies/skeleton.tscn" type="PackedScene" id=18]
+[ext_resource path="res://enemies/zombie.tscn" type="PackedScene" id=19]
+[ext_resource path="res://enemies/troll.tscn" type="PackedScene" id=20]
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
@@ -29,10 +33,17 @@ map_path = NodePath("../Map")
 [node name="Tween" type="Tween" parent="PlayerCamera"]
 
 [node name="WaveSystem" type="Node2D" parent="."]
+position = Vector2( 0, -1 )
 script = ExtResource( 8 )
 map_path = NodePath("../Map")
-wave_spawn_enemy = ExtResource( 5 )
-final_boss = ExtResource( 11 )
+final_boss = ExtResource( 5 )
+enemies = {
+"Goblin": ExtResource( 17 ),
+"Skeleton": ExtResource( 18 ),
+"Troll": ExtResource( 20 ),
+"Wolf": ExtResource( 16 ),
+"Zombie": ExtResource( 19 )
+}
 
 [node name="GUI" type="CanvasLayer" parent="."]
 

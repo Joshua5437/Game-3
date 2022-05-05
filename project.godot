@@ -9,7 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Area2D",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://scripts/actor.gd"
+}, {
+"base": "Actor",
 "class": "Building",
 "language": "GDScript",
 "path": "res://buildings/building.gd"
@@ -24,15 +29,30 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://buildings/construction_stats.gd"
 }, {
-"base": "Area2D",
-"class": "EnemyBullet",
+"base": "Resource",
+"class": "DefenseBuildingStats",
 "language": "GDScript",
-"path": "res://enemies/enemy_bullet.gd"
+"path": "res://buildings/defense/defense_stats.gd"
 }, {
 "base": "Resource",
-"class": "EnemyType",
+"class": "EconomicBuildingStats",
 "language": "GDScript",
-"path": "res://enemies/enemyType.gd"
+"path": "res://buildings/economic/economic_stats.gd"
+}, {
+"base": "Actor",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://enemies/enemy.gd"
+}, {
+"base": "Area2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://projectiles/projectile.gd"
+}, {
+"base": "Enemy",
+"class": "RangedEnemy",
+"language": "GDScript",
+"path": "res://enemies/ranged_enemy.gd"
 }, {
 "base": "Button",
 "class": "TemplateButton",
@@ -40,11 +60,15 @@ _global_script_classes=[ {
 "path": "res://ui/template_button.gd"
 } ]
 _global_script_class_icons={
+"Actor": "",
 "Building": "",
 "BuildingStats": "",
 "ConstructionStats": "",
-"EnemyBullet": "",
-"EnemyType": "",
+"DefenseBuildingStats": "",
+"EconomicBuildingStats": "",
+"Enemy": "",
+"Projectile": "",
+"RangedEnemy": "",
 "TemplateButton": ""
 }
 
@@ -140,11 +164,17 @@ zoom_out={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+repair={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [layer_names]
 
 2d_physics/layer_1="Buildings"
 2d_physics/layer_2="Enemies"
+2d_physics/layer_3="Projectiles"
 
 [physics]
 

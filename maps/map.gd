@@ -149,20 +149,20 @@ func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	var grid_size = building.get_grid_size()
 	
 	# Check the placement is valid
-	if not validate_building_grid(grid_pos):
+	if not validate_building_grid(grid_pos, building.stats.accepted_tiles):
 		return false
 	
 	# Assuming the cell size is 3x3, check the neighbors
 	if grid_size.x == 3 and grid_size.y == 3:
 		for neighbor in CELL_NEIGHBORS:
 			var next_cell = grid_pos + neighbor
-			if not validate_building_grid(next_cell):
+			if not validate_building_grid(next_cell, building.stats.accepted_tiles):
 				return false
 	
 	return true
 
 # Returns whether the building grid is valid or not
-func validate_building_grid(grid_pos):
+func validate_building_grid(grid_pos, accepted_tiles):
 	# Get ground ID
 	var ground_id = ground.get_cellv(grid_pos)
 	
@@ -173,7 +173,19 @@ func validate_building_grid(grid_pos):
 	# Check that grid position is not on "implacable" position
 	if ground_id == ground.tile_set.find_tile_by_name("water"):
 		return false
-	
+
+	# If the building has no accepted tiles, it can assumed that can be placed anywhere
+	# Otherwise, this statement will go through to check
+	if not accepted_tiles.empty():
+		var found_acceptable_tile = false
+		for tile_name in accepted_tiles:
+			var temp_id = ground.tile_set.find_tile_by_name(tile_name)
+			if ground_id == temp_id:
+				found_acceptable_tile = true
+				break
+		if not found_acceptable_tile:
+			return false
+
 	# Check that there is no building in the grid position
 	if buildings.get_cellv(grid_pos) != TileMap.INVALID_CELL:
 		return false

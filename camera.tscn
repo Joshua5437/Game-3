@@ -10,6 +10,7 @@ limit_top = 0
 limit_right = 1024
 limit_bottom = 1024
 script = ExtResource( 1 )
+min_zoom = 0.25
 boundary_offset = 5
 
 [node name="Highlight" type="Sprite" parent="."]

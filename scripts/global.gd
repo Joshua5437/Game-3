@@ -1,5 +1,7 @@
 extends Node
 
+const ENEMY_GROUP = "enemy"
+
 # Returns unique id using cantor pairing function
 func cantor(x, y):
 	return (x + y) * (x + y + 1) / 2 + y

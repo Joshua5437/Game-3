@@ -3,9 +3,6 @@ extends Control
 signal wave_started
 signal construction_selected(construction_stats)
 
-export(PackedScene) var return_menu_scene
-export(Resource) var keep_construction
-
 onready var gold_label = $TopPanel/CenterContainer/Gold
 onready var wave_label = $TopPanel/Wave
 
@@ -55,7 +52,3 @@ func _on_building_keep_placed():
 
 func _on_final_boss_killed():
 	notice_text.text = "Congulations! You killed the evil sorcerer and his army!"
-
-func _on_Place_Keep_pressed():
-	emit_signal("construction_selected", keep_construction)
-	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -9,25 +9,20 @@
 [ext_resource path="res://ui/fonts/alagard.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://ui/ui.gd" type="Script" id=8]
 [ext_resource path="res://ui/construct_button.gd" type="Script" id=9]
-[ext_resource path="res://buildings/tower/tower_construction_stats.tres" type="Resource" id=10]
-[ext_resource path="res://buildings/farm/farm_construction_stats.tres" type="Resource" id=11]
-[ext_resource path="res://buildings/keep/keep_construction.tres" type="Resource" id=12]
+[ext_resource path="res://buildings/tower/mage_tower_stats.tres" type="Resource" id=10]
+[ext_resource path="res://buildings/farm/farm_stats.tres" type="Resource" id=11]
+[ext_resource path="res://buildings/tower/tower_stats.tres" type="Resource" id=12]
 [ext_resource path="res://ui/theme.tres" type="Theme" id=13]
-[ext_resource path="res://ui/main_menu/main_menu.tscn" type="PackedScene" id=14]
 [ext_resource path="res://buildings/keep/keep-temp.png" type="Texture" id=15]
-[ext_resource path="res://buildings/construction_stats.gd" type="Script" id=16]
 [ext_resource path="res://buildings/keep/keep.tscn" type="PackedScene" id=17]
 [ext_resource path="res://buildings/keep/keep_stats.tres" type="Resource" id=18]
-[ext_resource path="res://buildings/tower/mage_tower_construction_stats.tres" type="Resource" id=19]
+[ext_resource path="res://buildings/tower/tower.tscn" type="PackedScene" id=19]
 [ext_resource path="res://sounds/farm-construction-selected.wav" type="AudioStream" id=20]
 [ext_resource path="res://sounds/mage-tower-construction-selected.wav" type="AudioStream" id=21]
 [ext_resource path="res://sounds/archer-tower-construction-selected.wav" type="AudioStream" id=22]
 [ext_resource path="res://sounds/keep-construction-selected.wav" type="AudioStream" id=23]
-
-[sub_resource type="Resource" id=17]
-script = ExtResource( 16 )
-stats = ExtResource( 18 )
-scene = ExtResource( 17 )
+[ext_resource path="res://buildings/farm/farm.tscn" type="PackedScene" id=24]
+[ext_resource path="res://buildings/tower/mage_tower.tscn" type="PackedScene" id=25]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -90,8 +85,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 13 )
 script = ExtResource( 8 )
-return_menu_scene = ExtResource( 14 )
-keep_construction = SubResource( 17 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -169,7 +162,8 @@ shortcut = SubResource( 8 )
 icon = ExtResource( 3 )
 expand_icon = true
 script = ExtResource( 9 )
-construction = ExtResource( 10 )
+building = ExtResource( 19 )
+building_stats = ExtResource( 12 )
 selected_sound = ExtResource( 22 )
 
 [node name="Farm" type="Button" parent="Buildings/GridContainer"]
@@ -183,7 +177,8 @@ shortcut = SubResource( 10 )
 icon = ExtResource( 5 )
 expand_icon = true
 script = ExtResource( 9 )
-construction = ExtResource( 11 )
+building = ExtResource( 24 )
+building_stats = ExtResource( 11 )
 selected_sound = ExtResource( 20 )
 
 [node name="Mage" type="Button" parent="Buildings/GridContainer"]
@@ -197,7 +192,8 @@ shortcut = SubResource( 12 )
 icon = ExtResource( 4 )
 expand_icon = true
 script = ExtResource( 9 )
-construction = ExtResource( 19 )
+building = ExtResource( 25 )
+building_stats = ExtResource( 10 )
 selected_sound = ExtResource( 21 )
 
 [node name="Tower" type="Button" parent="Buildings/GridContainer"]
@@ -212,7 +208,8 @@ shortcut = SubResource( 14 )
 icon = ExtResource( 6 )
 expand_icon = true
 script = ExtResource( 9 )
-construction = ExtResource( 12 )
+building = ExtResource( 17 )
+building_stats = ExtResource( 18 )
 selected_sound = ExtResource( 23 )
 
 [node name="PlaceKeep" type="Button" parent="."]
@@ -228,6 +225,8 @@ grow_horizontal = 2
 rect_scale = Vector2( 2, 2 )
 icon = ExtResource( 15 )
 script = ExtResource( 9 )
+building = ExtResource( 17 )
+building_stats = ExtResource( 18 )
 selected_sound = ExtResource( 23 )
 
 [node name="NoticeText" type="Label" parent="."]
@@ -273,4 +272,4 @@ margin_bottom = 140.0
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Mage" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Tower" to="." method="_on_construction_button_pressed"]
-[connection signal="pressed" from="PlaceKeep" to="." method="_on_Place_Keep_pressed"]
+[connection signal="construction_button_pressed" from="PlaceKeep" to="." method="_on_construction_button_pressed"]

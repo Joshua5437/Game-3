@@ -2,7 +2,8 @@ extends Button
 
 signal construction_button_pressed(construction)
 
-export(Resource) var construction
+export(PackedScene) var building
+export(Resource) var building_stats
 export(AudioStream) var selected_sound
 
 onready var selected_stream = AudioStreamPlayer.new()
@@ -14,4 +15,4 @@ func _ready():
 
 func _on_button_pressed():
 	selected_stream.play()
-	emit_signal("construction_button_pressed", construction)
+	emit_signal("construction_button_pressed", ConstructionStats.new(building_stats, building))

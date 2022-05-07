@@ -78,7 +78,7 @@ stream = ExtResource( 10 )
 
 [node name="LoseSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
-stream = ExtResource( 12 )
+stream = ExtResource( 11 )
 
 [connection signal="deselect_construction" from="." to="PlayerCamera" method="_on_MainScene_deselect_construction"]
 [connection signal="game_over" from="." to="PlayerCamera" method="_on_game_over"]

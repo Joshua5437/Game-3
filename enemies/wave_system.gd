@@ -72,6 +72,8 @@ func _spawn_wave_group(group, is_infinite):
 	var new_position = map.preset_edge_position(group["direction"])
 	#loops through every enemy in the group and spawns it
 	for i in range(group["count"]):
+		if group["spread_type"] == "Random":
+			new_position = map.preset_edge_position(group["direction"])
 		var enemy_choice = group["enemies"][rng.randi_range(0, group["enemies"].size()-1)]
 		
 		var new_enemy = enemies[enemy_choice].instance()

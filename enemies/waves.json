@@ -4,46 +4,142 @@
     [
         [
             {
-                "enemies" : ["Skeleton"],
+                "comments:" : "Basic wave to show the most basic enemy",
+                "enemies" : ["Zombie"],
                 "count" : 2,
                 "direction" : "South",
-                "delay" : 1
+                "delay" : 1,
+                "spread_type" : "Line"
 
             }
         ],
         [
             {
+                "comments:" : "Throws a few more at the player, plus a goblin to show the economic hitters, but still not painful",
                 "enemies" : ["Zombie"],
                 "count" : 3,
                 "direction" : "South",
-                "delay" : 1
+                "delay" : 1,
+                "spread_type" : "Random"
             },
             {
                 "enemies" : ["Goblin"],
                 "count" : 1,
                 "direction" : "South",
-                "delay" : 0.5
+                "delay" : 0.5,
+                "spread_type" : "Random"
             }
 
         ],
         [
+            
             {
+                "comments:" : "Introduces the ranged enemy, plus a healthier number of zombies from three seperate directions",
+                "enemies" : ["Skeleton"],
+                "count" : 2,
+                "direction" : "South",
+                "delay" : 0.5,
+                "spread_type" : "Random"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "South",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "East",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "West",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            }
+            
+
+        ],
+        [
+            {
+                "comments:" : "Introduces dashing wolves that can sneak by slower defenses, especially mage towers, zombies now come from all 4 directions",
                 "enemies" : ["Wolf"],
                 "count" : 5,
                 "direction": "South",
-                "delay" : 0.25
+                "delay" : 0.25,
+                "spread_type" : "Line"
             },
             {
-                "enemies" : ["Zombie", "Skeleton"],
-                "count" : 5,
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "North",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "East",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
+                "direction" : "West",
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie"],
+                "count" : 3,
                 "direction" : "South",
-                "delay" : 0.5
-            },
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            }
+        ],
+        [
             {
+                "comments" :"A troll headline this wave, mixed skeleton zombie waves back it up",
                 "enemies" : ["Troll"],
                 "count" : 1,
                 "direction" : "South",
-                "delay" : 0.5
+                "delay" : 0.25,
+                "spread_type" : "Line"
+            },
+            {
+                "comments" : "Specifying Zombie twice and skeleton once causes the random choice to favor zombies 2-1",
+                "enemies" : ["Zombie", "Zombie", "Skeleton"],
+                "count" : 4,
+                "direction" : "West",
+                "delay" : 0.15,
+                "spread_type" : "Line"
+            },
+            {
+                "enemies" : ["Zombie", "Zombie", "Skeleton"],
+                "count" : 4,
+                "direction" : "North",
+                "delay" : 0.15,
+                "spread_type" : "Random"
+            },
+            {
+                "enemies" : ["Zombie", "Zombie", "Skeleton"],
+                "count" : 4,
+                "direction" : "South",
+                "delay" : 0.15,
+                "spread_type" : "Random"
+            },
+            {
+                "enemies" : ["Zombie", "Zombie", "Skeleton"],
+                "count" : 4,
+                "direction" : "West",
+                "delay" : 0.15,
+                "spread_type" : "Line"
             }
 
         ]
@@ -54,12 +150,38 @@
         "wavegroups":
         [
             {
+                "enemies" : ["Troll"],
+                "count" : 1,
+                "direction" : "Random",
+                "increase_amount" : 1,
+                "delay" : 0.25,
+                "spread_type" : "Random"
+            },
+            {
                 "enemies" : ["Zombie", "Skeleton"],
-                "count" : 5,
+                "count" : 10,
+                "direction" : "Random",
+                "increase_amount" : 4,
+                "delay" : 0.1,
+                "spread_type" : "Random"
+            },
+            {
+                "enemies" : ["Goblin"],
+                "count" : 3,
                 "direction" : "Random",
                 "increase_amount" : 2,
-                "delay" : 0.5
+                "delay" : 0.15,
+                "spread_type" : "Random"
+            },
+            {
+                "enemies" : ["Wolf"],
+                "count" : 2,
+                "direction" : "Random",
+                "increase_amount" : 2,
+                "delay" : 0.1,
+                "spread_type" : "Random"
             }
+            
         ]
     }
     

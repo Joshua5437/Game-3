@@ -11,8 +11,8 @@ shader_param/flash_modifer = 0.0
 
 [node name="Enemy" instance=ExtResource( 1 )]
 building_weights = {
-"econ": 10000.0,
-"towers": -10000.0
+"econ": 200.0,
+"towers": -200.0
 }
 
 [node name="Sprite" parent="." index="0"]

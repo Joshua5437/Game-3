@@ -10,8 +10,8 @@
 [ext_resource path="res://enemies/wave_system.gd" type="Script" id=8]
 [ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 [ext_resource path="res://sounds/build.wav" type="AudioStream" id=10]
+[ext_resource path="res://enemies/wolf.tscn" type="PackedScene" id=11]
 [ext_resource path="res://sounds/lose.wav" type="AudioStream" id=12]
-[ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=16]
 [ext_resource path="res://enemies/goblin.tscn" type="PackedScene" id=17]
 [ext_resource path="res://enemies/skeleton.tscn" type="PackedScene" id=18]
 [ext_resource path="res://enemies/zombie.tscn" type="PackedScene" id=19]
@@ -41,7 +41,7 @@ enemies = {
 "Goblin": ExtResource( 17 ),
 "Skeleton": ExtResource( 18 ),
 "Troll": ExtResource( 20 ),
-"Wolf": ExtResource( 16 ),
+"Wolf": ExtResource( 11 ),
 "Zombie": ExtResource( 19 )
 }
 

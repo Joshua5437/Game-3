@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sounds/sound_manager.gd" type="Script" id=1]
 [ext_resource path="res://sounds/button-click.wav" type="AudioStream" id=2]
 [ext_resource path="res://sounds/button-hover.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/medievalish-loop.ogg" type="AudioStream" id=4]
 
 [node name="SoundManager" type="Node"]
 pause_mode = 2
@@ -13,3 +14,7 @@ stream = ExtResource( 2 )
 
 [node name="button_hover" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="loop_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true

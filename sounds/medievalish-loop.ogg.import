@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/medievalish-loop.ogg-ea5dfdb0634a11054a87636d963c1d14.oggstr"
+
+[deps]
+
+source_file="res://sounds/medievalish-loop.ogg"
+dest_files=[ "res://.import/medievalish-loop.ogg-ea5dfdb0634a11054a87636d963c1d14.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

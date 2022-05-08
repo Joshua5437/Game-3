@@ -1,6 +1,5 @@
 extends Node2D
 
-signal gold_updated(gold)
 signal game_over
 signal paused
 
@@ -8,21 +7,20 @@ signal deselect_construction
 
 onready var map = $Map
 onready var buildSound = $BuildSound
-# Player stats
-# Represents player's cash balance
-export(int) var gold = 100 setget set_gold
+
 export(int) var wave_gold = 50
 var current_construction = null
 
 func _ready():
-	_setup()
+	PlayerData.reset()
+	setup()
 
 
-func _setup():
+func setup():
 	randomize()
+	map.setup()
 	
 	GlobalSignals.connect("keep_destroyed", self, "game_over")
-	emit_signal("gold_updated", gold)
 
 
 func _unhandled_input(event):
@@ -56,19 +54,16 @@ func is_valid_placement(world_position):
 	if current_construction.stats.type == BuildingStats.Type.Keep:
 		return true
 	
-	return gold - current_construction.stats.price >= 0
-
-func set_gold(value):
-	gold = value
-	emit_signal("gold_updated", gold)
+	return PlayerData.gold - current_construction.stats.price >= 0
 
 func _on_Map_placed_building(building):
 	var build_stats : BuildingStats = building.stats
+	var new_gold = PlayerData.gold
 	
 	# Substracts balance if the building is not a keep
 	if not build_stats.type == 2:
 		# Substract from balance
-		gold -= build_stats.price
+		new_gold -= build_stats.price
 	
 	# Deselect current construction if building is a keep
 	if building.is_in_group("keep"):
@@ -77,32 +72,35 @@ func _on_Map_placed_building(building):
 		map.get_node("TooCloseToEdge").visible = false
 		GlobalSignals.emit_signal("keep_placed")
 	
-	emit_signal("gold_updated", gold)
+	PlayerData.gold = new_gold
 
 func _on_wave_ended():
 	var farms = get_tree().get_nodes_in_group("econ")
+	var new_gold = PlayerData.gold
 	for farm in farms:
 		if (farm.destroyed != true):
-			gold += farm.stats.gold_production
+			new_gold += farm.stats.gold_production
 	
 	# Gives some gold to the player for completing a wave
-	gold += wave_gold
+	new_gold += wave_gold
 	
 	# Emit signal to show gold updated
-	emit_signal("gold_updated", gold)
+	PlayerData.gold = new_gold
 	
 	# Runs this to check if the game is actually over
 	game_over()
+
 
 func _on_mainUI_construction_selected(construction_stats):
 	map.get_node("TooCloseToEdge").visible = true
 	current_construction = construction_stats
 
+
 func game_over():
 	var keep = get_tree().get_nodes_in_group("keep")[0]
 	if not keep.destroyed:
 		return
-	if gold >= keep.stats.get_repair_price():
+	if PlayerData.gold >= keep.stats.get_repair_price():
 		return
 	$LoseSound.play()
 	emit_signal("game_over")

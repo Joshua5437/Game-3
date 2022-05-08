@@ -9,7 +9,6 @@ const NEIGHOR_CELLS = [
 
 var procedural_generate_map = false
 
-
 # Returns unique id using cantor pairing function
 static func cantor(x, y):
 	return (x + y) * (x + y + 1) / 2 + y

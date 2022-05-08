@@ -45,12 +45,9 @@ var enemy_speed_weights = {
 	"enemy" : 1,
 	"base" : 1
 }
-#enum EDGES {NORTH, EAST, SOUTH, WEST, RANDOM}
-func _ready():
-	_setup()
 
 
-func _setup():
+func setup():
 	_add_points()
 	_connect_points()
 	$Pretty.pretty()
@@ -257,6 +254,7 @@ func get_cell_weight(world_position: Vector2):
 	
 	# Return tile weight using the tile name
 	return map_weights[cell_tile_name]
+
 func get_cell_speed_modifier(world_position):
 	var grid_pos = ground.world_to_map(world_position)
 	

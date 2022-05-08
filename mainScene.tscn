@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera/camera.tscn" type="PackedScene" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 [ext_resource path="res://sounds/build.wav" type="AudioStream" id=10]
 [ext_resource path="res://enemies/wolf.tscn" type="PackedScene" id=11]
-[ext_resource path="res://sounds/lose.wav" type="AudioStream" id=12]
 [ext_resource path="res://enemies/goblin.tscn" type="PackedScene" id=17]
 [ext_resource path="res://enemies/skeleton.tscn" type="PackedScene" id=18]
 [ext_resource path="res://enemies/zombie.tscn" type="PackedScene" id=19]
@@ -19,7 +18,6 @@
 
 [node name="MainScene" type="Node2D" groups=["main"]]
 script = ExtResource( 3 )
-gold = 50
 wave_gold = 20
 
 [node name="Map" parent="." groups=["Map"] instance=ExtResource( 1 )]
@@ -76,13 +74,10 @@ stream = ExtResource( 10 )
 
 [node name="LoseSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
-stream = ExtResource( 11 )
 
 [connection signal="deselect_construction" from="." to="PlayerCamera" method="_on_MainScene_deselect_construction"]
 [connection signal="game_over" from="." to="PlayerCamera" method="_on_game_over"]
 [connection signal="game_over" from="." to="GUI/Pause" method="_on_game_over"]
-[connection signal="gold_updated" from="." to="PlayerCamera" method="_on_MainScene_gold_updated"]
-[connection signal="gold_updated" from="." to="GUI/mainUI" method="update_gold_amount"]
 [connection signal="paused" from="." to="GUI/Pause" method="_on_paused"]
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]
 [connection signal="final_boss_killed" from="WaveSystem" to="GUI/mainUI" method="_on_final_boss_killed"]

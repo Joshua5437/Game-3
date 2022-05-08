@@ -6,7 +6,7 @@ export (float) var move_speed = 200.0
 # Camera zoom bounds
 export (Vector2) var camera_range = Vector2(0.5, 1.0)
 
-#camera zoom code copied from https://www.gdquest.com/tutorial/godot/2d/camera-zoom/
+# camera zoom code copied from https://www.gdquest.com/tutorial/godot/2d/camera-zoom/
 # Lower cap for the `_zoom_level`.
 export var min_zoom := 0.5
 # Upper cap for the `_zoom_level`.
@@ -21,6 +21,7 @@ var _zoom_level := 1.0 setget _set_zoom_level
 
 # We store a reference to the scene's tween node.
 onready var tween: Tween = $Tween
+
 # Edge scroll boundary
 export (bool) var edge_scroll_enabled = false
 export (float) var edge_scroll_boundary = 12
@@ -140,7 +141,3 @@ func _set_zoom_level(value: float) -> void:
 		tween.EASE_OUT
 	)
 	tween.start()
-
-
-func _on_MainScene_gold_updated(gold):
-	highlight_sprite.check_gold_price(gold)

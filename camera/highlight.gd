@@ -10,6 +10,8 @@ onready var tile_map = TileMap.new()
 
 func _ready():
 	tile_map.cell_size = Vector2(16, 16)
+	
+	PlayerData.connect("gold_changed", self, "_on_gold_changed")
 
 
 func update_position():
@@ -77,7 +79,7 @@ func select_construction(construction : ConstructionStats):
 	var building_stats : BuildingStats = current_construction.stats
 
 	# Make the building red if player's gold cannot pay for the building
-	check_gold_price(get_tree().current_scene.gold)
+	_on_gold_changed(PlayerData.gold)
 	
 	# Queue free the building instance
 	building.queue_free()
@@ -92,7 +94,7 @@ func deselect_construction():
 	update()
 
 
-func check_gold_price(gold):
+func _on_gold_changed(gold):
 	if current_construction == null:
 		return
 	var stats = current_construction.stats

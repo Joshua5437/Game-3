@@ -16,6 +16,9 @@ onready var notice_text = $NoticeText
 
 func _ready():
 	GlobalSignals.connect("keep_placed", self, "_on_building_keep_placed")
+	
+	PlayerData.connect("gold_changed", self, "update_gold_amount")
+	update_gold_amount(PlayerData.gold)
 
 func update_gold_amount(amount):
 	gold_label.text = "Gold: %s" % amount
@@ -37,20 +40,24 @@ func _on_construction_button_pressed(construction : ConstructionStats):
 	else:
 		tower_description.text = "%s." % stats.name
 
+
 func _on_StartWave_pressed():
 	emit_signal("wave_started")
 	start_wave_button.disabled = true
 	start_wave_label.modulate.a = 0.1
 
+
 func _on_wave_ended():
 	start_wave_button.disabled = false
 	start_wave_label.modulate.a = 1.0
+
 
 func _on_building_keep_placed():
 	start_wave_button.disabled = false
 	$PlaceKeep.queue_free()
 	notice_text.text = ""
 	start_wave_label.modulate.a = 1.0
+
 
 func _on_final_boss_killed():
 	notice_text.text = "Congulations! You killed the evil sorcerer and his army!"

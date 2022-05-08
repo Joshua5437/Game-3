@@ -2,15 +2,14 @@ extends "res://maps/map.gd"
 
 const TILE_NAMES = ["grass", "rock"]
 
-
-func _setup():
+func generate_map():
 	ground.clear()
-	generate_map()
+	_generate_map()
 	$Pretty.pretty()
 
 
 # Procedurally generate a map
-func generate_map():
+func _generate_map():
 	var rng = RandomNumberGenerator.new()
 	var tile_set = ground.tile_set
 	
@@ -35,7 +34,7 @@ func generate_map():
 	
 	# Generate rock clusters
 	#warning-ignore:unused_variable
-	for n in range((randi() % 6) + 3):
+	for n in range(rng.randi_range(2, 7)):
 		for cell in ground.get_used_cells_by_id(rock_id):
 			for neighbor in Global.NEIGHOR_CELLS:
 				var next_cell = cell + neighbor
@@ -48,7 +47,7 @@ func generate_map():
 	
 	# Generate a river
 	var offset_amount = 7 # in cells
-	var start_point = Vector2(0, rng.randi_range(0, MAP_SIZE-1))
+	var start_point = Vector2(0, rng.randi_range(floor(MAP_SIZE * 0.25), floor(MAP_SIZE * 0.75)))
 	var river_points = [start_point]
 	for n in range(1, 5):
 		var x = int(MAP_SIZE * n * 0.25)
@@ -58,7 +57,15 @@ func generate_map():
 		var new_point = Vector2(x, y)
 		river_points.append(new_point)
 	
-	print(river_points)
-	
+	var river_width = 4
 	for i in range(len(river_points) - 1):
-		Global.plot_linev(river_points[i], river_points[i+1])
+		var line = Global.plot_linev(river_points[i], river_points[i+1])
+		for point in line:
+			ground.set_cellv(point, water_id)
+			
+			# Widens the river
+			for j in range(-river_width / 2, river_width / 2 + 1):
+				var new_point = point + Vector2(0, j)
+				if ground.get_cellv(new_point) == TileMap.INVALID_CELL:
+					continue
+				ground.set_cellv(new_point, water_id)

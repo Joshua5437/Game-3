@@ -47,8 +47,14 @@ var enemy_speed_weights = {
 }
 #enum EDGES {NORTH, EAST, SOUTH, WEST, RANDOM}
 func _ready():
+	_setup()
+
+
+func _setup():
 	_add_points()
 	_connect_points()
+	$Pretty.pretty()
+
 
 func _add_points():
 	# Add all ground cells to AStar

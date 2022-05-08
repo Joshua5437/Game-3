@@ -15,10 +15,15 @@ export(int) var wave_gold = 50
 var current_construction = null
 
 func _ready():
+	_setup()
+
+
+func _setup():
 	randomize()
 	
 	GlobalSignals.connect("keep_destroyed", self, "game_over")
 	emit_signal("gold_updated", gold)
+
 
 func _unhandled_input(event):
 	if event.is_action_pressed("pause") and current_construction == null:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
-[ext_resource path="res://camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://camera/camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
 [ext_resource path="res://ui/pause.tscn" type="PackedScene" id=4]
 [ext_resource path="res://enemies/final_boss.tscn" type="PackedScene" id=5]
@@ -29,8 +29,6 @@ position = Vector2( 512, 512 )
 max_zoom = 1.25
 boundary_offset = 20
 map_path = NodePath("../Map")
-
-[node name="Tween" type="Tween" parent="PlayerCamera"]
 
 [node name="WaveSystem" type="Node2D" parent="."]
 position = Vector2( 0, -1 )

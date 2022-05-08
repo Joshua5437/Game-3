@@ -43,6 +43,7 @@ one_shot = true
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="." index="5"]
 stream = ExtResource( 7 )
+bus = "Effects"
 
 [connection signal="mouse_entered" from="." to="." method="_on_Tower_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Tower_mouse_exited"]

@@ -17,7 +17,7 @@ shader_param/flash_modifer = 0.0
 [sub_resource type="CircleShape2D" id=1]
 radius = 104.0
 
-[node name="Tower" groups=["towers"] instance=ExtResource( 3 )]
+[node name="Tower" groups=["defenses", "towers"] instance=ExtResource( 3 )]
 collision_mask = 0
 script = ExtResource( 1 )
 stats = ExtResource( 4 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -25,6 +25,14 @@
 [ext_resource path="res://sounds/keep-construction-selected.wav" type="AudioStream" id=23]
 [ext_resource path="res://buildings/economic/farm.tscn" type="PackedScene" id=24]
 [ext_resource path="res://buildings/defense/mage.tscn" type="PackedScene" id=25]
+[ext_resource path="res://buildings/defense/wall_stats.tres" type="Resource" id=26]
+[ext_resource path="res://buildings/defense/wall.tscn" type="PackedScene" id=27]
+[ext_resource path="res://icon.png" type="Texture" id=28]
+[ext_resource path="res://buildings/economic/market_stats.tres" type="Resource" id=29]
+[ext_resource path="res://buildings/economic/market.tscn" type="PackedScene" id=30]
+[ext_resource path="res://sounds/wall-construction-selected.wav" type="AudioStream" id=31]
+[ext_resource path="res://sounds/market-construction-selected.wav" type="AudioStream" id=32]
+[ext_resource path="res://buildings/economic/market.png" type="Texture" id=33]
 
 [sub_resource type="DynamicFont" id=1]
 size = 11
@@ -142,7 +150,7 @@ text = "Wave: 1"
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_top = -155.0
+margin_top = -250.0
 margin_right = 166.0
 margin_bottom = -9.0
 __meta__ = {
@@ -156,7 +164,7 @@ columns = 2
 
 [node name="Bow" type="Button" parent="Buildings/GridContainer"]
 margin_right = 76.0
-margin_bottom = 71.0
+margin_bottom = 77.0
 hint_tooltip = "Archer Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -171,7 +179,7 @@ selected_sound = ExtResource( 22 )
 [node name="Farm" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
 margin_right = 156.0
-margin_bottom = 71.0
+margin_bottom = 77.0
 hint_tooltip = "Farm"
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -184,9 +192,9 @@ building_stats = ExtResource( 11 )
 selected_sound = ExtResource( 20 )
 
 [node name="Mage" type="Button" parent="Buildings/GridContainer"]
-margin_top = 75.0
+margin_top = 81.0
 margin_right = 76.0
-margin_bottom = 146.0
+margin_bottom = 158.0
 hint_tooltip = "Mage Tower"
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -200,9 +208,9 @@ selected_sound = ExtResource( 21 )
 
 [node name="Mine" type="Button" parent="Buildings/GridContainer"]
 margin_left = 80.0
-margin_top = 75.0
+margin_top = 81.0
 margin_right = 156.0
-margin_bottom = 146.0
+margin_bottom = 158.0
 hint_tooltip = "Keep"
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -213,6 +221,37 @@ script = ExtResource( 9 )
 building = ExtResource( 6 )
 building_stats = ExtResource( 16 )
 selected_sound = ExtResource( 23 )
+
+[node name="Wall" type="Button" parent="Buildings/GridContainer"]
+margin_top = 162.0
+margin_right = 76.0
+margin_bottom = 239.0
+hint_tooltip = "Keep"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 14 )
+icon = ExtResource( 28 )
+expand_icon = true
+script = ExtResource( 9 )
+building = ExtResource( 27 )
+building_stats = ExtResource( 26 )
+selected_sound = ExtResource( 31 )
+
+[node name="Market" type="Button" parent="Buildings/GridContainer"]
+margin_left = 80.0
+margin_top = 162.0
+margin_right = 156.0
+margin_bottom = 239.0
+hint_tooltip = "Keep"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 14 )
+icon = ExtResource( 33 )
+expand_icon = true
+script = ExtResource( 9 )
+building = ExtResource( 30 )
+building_stats = ExtResource( 29 )
+selected_sound = ExtResource( 32 )
 
 [node name="PlaceKeep" type="Button" parent="."]
 anchor_left = 0.5
@@ -274,4 +313,6 @@ margin_bottom = 140.0
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Farm" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Mage" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Mine" to="." method="_on_construction_button_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Wall" to="." method="_on_construction_button_pressed"]
+[connection signal="construction_button_pressed" from="Buildings/GridContainer/Market" to="." method="_on_construction_button_pressed"]
 [connection signal="construction_button_pressed" from="PlaceKeep" to="." method="_on_construction_button_pressed"]

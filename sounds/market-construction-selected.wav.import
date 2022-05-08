@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/market-construction-selected.wav-2a059874194c41c783aa8da15d143783.sample"
+
+[deps]
+
+source_file="res://sounds/market-construction-selected.wav"
+dest_files=[ "res://.import/market-construction-selected.wav-2a059874194c41c783aa8da15d143783.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

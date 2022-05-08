@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/medievalish.mp3-9924cfbb262609610631dc793999ae2b.mp3str"
+
+[deps]
+
+source_file="res://sounds/medievalish.mp3"
+dest_files=[ "res://.import/medievalish.mp3-9924cfbb262609610631dc793999ae2b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

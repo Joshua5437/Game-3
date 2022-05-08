@@ -19,6 +19,7 @@ radius = 40.0
 script = ExtResource( 3 )
 health = 5
 building_weights = {
+"towers": 200
 }
 projectile = ExtResource( 4 )
 

@@ -13,7 +13,7 @@ shader = ExtResource( 4 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_modifer = 0.0
 
-[node name="MageTower" instance=ExtResource( 1 )]
+[node name="MageTower" groups=["defenses"] instance=ExtResource( 1 )]
 stats = ExtResource( 3 )
 projectile = ExtResource( 5 )
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://maps/map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://camera/camera.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://art/top-bottom-border.png" type="Texture" id=9]
 [ext_resource path="res://sounds/build.wav" type="AudioStream" id=10]
 [ext_resource path="res://enemies/wolf.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sounds/lose.wav" type="AudioStream" id=12]
 [ext_resource path="res://enemies/goblin.tscn" type="PackedScene" id=17]
 [ext_resource path="res://enemies/skeleton.tscn" type="PackedScene" id=18]
 [ext_resource path="res://enemies/zombie.tscn" type="PackedScene" id=19]
@@ -71,9 +72,12 @@ texture = ExtResource( 9 )
 
 [node name="BuildSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
+bus = "Effects"
 
 [node name="LoseSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
+stream = ExtResource( 12 )
+bus = "Effects"
 
 [connection signal="deselect_construction" from="." to="PlayerCamera" method="_on_MainScene_deselect_construction"]
 [connection signal="game_over" from="." to="PlayerCamera" method="_on_game_over"]

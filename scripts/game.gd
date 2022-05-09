@@ -24,7 +24,7 @@ func setup():
 
 
 func _unhandled_input(event):
-	if event.is_action_pressed("pause") and current_construction == null:
+	if event.is_action_pressed("pause") and current_construction == null and not PlayerData.game_over:
 		emit_signal("paused")
 		get_tree().paused = true
 	
@@ -103,4 +103,4 @@ func game_over():
 	if PlayerData.gold >= keep.stats.get_repair_price():
 		return
 	$LoseSound.play()
-	emit_signal("game_over")
+	PlayerData.declare_game_over()

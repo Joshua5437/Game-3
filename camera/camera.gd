@@ -41,6 +41,8 @@ var screen_start_pos = Vector2()
 onready var highlight_sprite = $Highlight
 
 func _ready():
+	PlayerData.connect("game_over", self, "_on_game_over")
+	
 	# Establishes boundaries where the camera can move
 	var new_boundary = boundary_offset * 16
 	limit_top = -new_boundary
@@ -52,10 +54,15 @@ func _ready():
 
 
 func _input(event):
+	if PlayerData.game_over:
+		return
 	_movement_by_middle_mouse_button(event)
 
 
 func _process(delta):
+	if PlayerData.game_over:
+		return
+	
 	_movement_by_keys(delta)
 	_movement_by_edge_scroll(delta)
 	$Highlight.update_position()
@@ -141,3 +148,7 @@ func _set_zoom_level(value: float) -> void:
 		tween.EASE_OUT
 	)
 	tween.start()
+
+
+func _on_game_over():
+	$Highlight.hide()

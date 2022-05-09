@@ -30,13 +30,15 @@ func take_damage(amount):
 
 func die():
 	destroyed = true
-	$Sprite.modulate = Color.red
+	#$Sprite.modulate = Color.red
+	$AnimationPlayer.play("Destroyed")
 	if is_in_group("keep"):
 		GlobalSignals.emit_signal("keep_destroyed")
 	emit_signal("destroyed")
 
 
 func rebuild():
+	$AnimationPlayer.play("Rebuild")
 	destroyed = false
 	$Sprite.modulate = Color.white
 	health = stats.health

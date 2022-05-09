@@ -13,6 +13,7 @@ var top_func_ref = funcref(self, "_unpause_game")
 var is_paused = false # Keep seperate variable for tracking pauses
 
 func _ready():
+	PlayerData.connect("game_over", self, "_on_game_over")
 	top_button.shortcut = unpause_shortcut
 
 func _restart_game():

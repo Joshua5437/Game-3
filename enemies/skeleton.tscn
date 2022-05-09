@@ -80,5 +80,5 @@ shape = SubResource( 1 )
 [node name="AttackTimer" parent="." index="3"]
 wait_time = 0.75
 
-[node name="DeathParticles" parent="." index="5"]
+[node name="DeathParticles" parent="." index="6"]
 process_material = SubResource( 7 )

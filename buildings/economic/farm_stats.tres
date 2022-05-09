@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Farm"
-health = 1
-price = 5
+health = 2
+price = 3
 type = 1
 accepted_tiles = [ "grass" ]
-gold_production = 3
+gold_production = 5

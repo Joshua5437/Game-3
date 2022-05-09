@@ -9,4 +9,4 @@ health = 5
 price = 10
 type = 1
 accepted_tiles = [ "rock" ]
-gold_production = 8
+gold_production = 15

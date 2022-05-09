@@ -56,6 +56,8 @@ scale = 4.0
 scale_random = 1.0
 
 [node name="Enemy" instance=ExtResource( 1 )]
+health = 2
+speed = 200
 building_weights = {
 "econ": 200.0,
 "towers": -200.0

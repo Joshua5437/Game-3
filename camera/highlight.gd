@@ -14,6 +14,14 @@ func _ready():
 	PlayerData.connect("gold_changed", self, "_on_gold_changed")
 
 
+func _process(_delta):
+	var map = get_tree().get_nodes_in_group("Map")[0]
+	if map == null:
+		return
+	if current_construction == null:
+		return
+
+
 func update_position():
 	var new_position = get_global_mouse_position()
 	#global_mouse_position.x = stepify(global_mouse_position.x, CELL_SIZE)

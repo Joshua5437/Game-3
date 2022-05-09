@@ -45,7 +45,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	emit_signal("wave_spawned", wave_number)
 	var file = File.new()
-	if file.open("res://enemies/waves.json", File.READ) != OK:
+	if file.open("res://data/waves.json", File.READ) != OK:
 		return
 	wave_data = JSON.parse(file.get_as_text()).result
 	#infinite_wave_increase_amount = wave_data["infinite_waves"]["increase_amount"]

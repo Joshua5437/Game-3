@@ -45,10 +45,13 @@ var enemy_speed_weights = {
 	"enemy" : 1,
 	"base" : 1
 }
-#enum EDGES {NORTH, EAST, SOUTH, WEST, RANDOM}
-func _ready():
+
+
+func setup():
 	_add_points()
 	_connect_points()
+	$Pretty.pretty()
+
 
 func _add_points():
 	# Add all ground cells to AStar
@@ -57,6 +60,7 @@ func _add_points():
 		var tile_id = ground.get_cellv(cell)
 		var tile_name = ground.tile_set.tile_get_name(tile_id)
 		astar.add_point(id(cell), cell, map_weights[tile_name])
+
 
 func _connect_points():
 	var used_cells = ground.get_used_cells()
@@ -72,6 +76,7 @@ func _connect_points():
 				# Connect the cell and the neighbor
 				astar.connect_points(id(cell), id(next_cell))
 
+
 # Returns if there is a building on the map
 # world_position: Global position
 func is_building_there(world_position):
@@ -79,6 +84,7 @@ func is_building_there(world_position):
 	var grid_coord = buildings.world_to_map(world_position)
 	
 	return buildings.get_cellv(grid_coord) == NO_BUILDING
+
 
 # Places a building on the map (towers only, should be changed later)
 # world_position: Global position
@@ -137,12 +143,17 @@ func place_building(world_position, building):
 	# Setup new global position
 	building_instance.global_position = world_coord
 	
+	# Connect signal so we can add back the point later
+	building_instance.connect("die", self, "_on_building_destroyed")
+	building_instance.connect("rebuilt", self, "_on_building_rebuilt")
+	
 	# Add building to the world
 	add_child(building_instance)
 	
 	emit_signal("placed_building", building_instance)
 	
 	return true
+
 
 func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	# Get the grid size of the building
@@ -161,6 +172,7 @@ func is_building_placement_valid(grid_pos : Vector2, building : Building):
 	
 	return true
 
+
 # Returns whether the building grid is valid or not
 func validate_building_grid(grid_pos, accepted_tiles):
 	# Get ground ID
@@ -174,6 +186,7 @@ func validate_building_grid(grid_pos, accepted_tiles):
 	if ground_id == ground.tile_set.find_tile_by_name("water"):
 		return false
 
+
 	# If the building has no accepted tiles, it can assumed that can be placed anywhere
 	# Otherwise, this statement will go through to check
 	if not accepted_tiles.empty():
@@ -185,6 +198,7 @@ func validate_building_grid(grid_pos, accepted_tiles):
 				break
 		if not found_acceptable_tile:
 			return false
+
 
 	# Check that there is no building in the grid position
 	if buildings.get_cellv(grid_pos) != TileMap.INVALID_CELL:
@@ -199,6 +213,7 @@ func validate_building_grid(grid_pos, accepted_tiles):
 	
 	return true
 
+
 # Removes grid point from A* pathfinding
 func remove_point(grid_pos):
 	# Convert to proper point id for A*
@@ -210,7 +225,7 @@ func remove_point(grid_pos):
 		var neighbor_id = id(grid_pos + neighbor)
 		
 		# Skip if neighboring point does not exist
-		if astar.has_point(neighbor_id):
+		if not astar.has_point(neighbor_id):
 			continue
 		
 		# Disconnect between the point and neighbor
@@ -221,6 +236,35 @@ func remove_point(grid_pos):
 	
 	# Emit signal since A* pathfinding has changed
 	emit_signal("pathfinding_changed")
+
+
+# Adds grid point to A* pathfinding
+func add_point(grid_pos):
+	# Convert to proper point id for A*
+	var vec_id = id(grid_pos)
+	
+	# Get the tile name from the cell for weight
+	var tile_id = ground.get_cellv(grid_pos)
+	var tile_name = ground.tile_set.tile_get_name(tile_id)
+	
+	# Adds point to A* pathfinding
+	astar.add_point(vec_id, grid_pos, map_weights[tile_name])
+	
+	# Remove any neighboring points to the point
+	for neighbor in CELL_NEIGHBORS:
+		# Convert to proper neighbor id for A*
+		var neighbor_id = id(grid_pos + neighbor)
+		
+		# Skip if neighboring point does not exist
+		if not astar.has_point(neighbor_id):
+			continue
+		
+		# Connect between the point and neighbor
+		astar.connect_points(vec_id, neighbor_id)
+	
+	# Emit signal since A* pathfinding has changed
+	emit_signal("pathfinding_changed")
+
 
 # Returns A* path using from and to positions
 func get_path_to_point(from: Vector2, to: Vector2):
@@ -240,7 +284,8 @@ func get_path_to_point(from: Vector2, to: Vector2):
 		path[i] = ground.map_to_world(path[i]) + CENTER_OFFSET
 	
 	return path
-	
+
+
 func get_cell_weight(world_position: Vector2):
 	# Convert world position to grid position
 	var grid_pos = ground.world_to_map(world_position)
@@ -251,6 +296,8 @@ func get_cell_weight(world_position: Vector2):
 	
 	# Return tile weight using the tile name
 	return map_weights[cell_tile_name]
+
+
 func get_cell_speed_modifier(world_position):
 	var grid_pos = ground.world_to_map(world_position)
 	
@@ -260,6 +307,7 @@ func get_cell_speed_modifier(world_position):
 	
 	# Return tile weight using the tile name
 	return enemy_speed_weights[cell_tile_name]
+
 
 # Return random position on the map edge
 func randomize_edge_position():
@@ -282,14 +330,17 @@ func randomize_edge_position():
 	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
 	return world_pos
 
+
 func get_grid_center_position(world_position):
 	var grid_pos = ground.world_to_map(world_position)
 	var new_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
 	return new_pos
 
+
 # Returns unqiue id using cantor pairing function
 func id(vec : Vector2):
 	return (vec.x + vec.y) * (vec.x + vec.y + 1) / 2 + vec.y
+
 
 func preset_edge_position(edge):
 	var grid_pos : Vector2
@@ -312,5 +363,27 @@ func preset_edge_position(edge):
 	
 	var world_pos = ground.map_to_world(grid_pos) + CENTER_OFFSET
 	return world_pos
-	
 
+
+# Once a building is destroyed, we should add back the point
+func _on_building_destroyed(building : Building):
+	var grid_pos = ground.world_to_map(building.global_position)
+	add_point(grid_pos)
+	
+	# Add points if size bigger than 1x1
+	match building.building_size:
+		Building.BuildingSize._3x3:
+			for neighbor in CELL_NEIGHBORS:
+				add_point(grid_pos + neighbor)
+
+
+# Once a building is rebuilt, we should remove point
+func _on_building_rebuilt(building : Building):
+	var grid_pos = ground.world_to_map(building.global_position)
+	remove_point(grid_pos)
+	
+	# Remove points if size bigger than 1x1
+	match building.building_size:
+		Building.BuildingSize._3x3:
+			for neighbor in CELL_NEIGHBORS:
+				remove_point(grid_pos + neighbor)

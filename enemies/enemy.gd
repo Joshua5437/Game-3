@@ -18,10 +18,14 @@ var target = null
 var in_range = false
 var path = []
 
+func _ready():
+	$HealthBar.max_value = health
+	$HealthBar.value = health
 
 # Setups variables with the Enemy class
 func setup(p_map):
 	map = p_map
+	map.connect("pathfinding_changed", self, "generate_path")
 
 
 # Processes during game time
@@ -34,12 +38,26 @@ func _process(delta):
 		damage_target()
 
 
+func _physics_process(_delta):
+	if target == null:
+		return
+	var areas = $Range.get_overlapping_areas()
+	if target in areas:
+		in_range = true
+	
+
+
 # Moves towards the target if not in range
 func move_towards_target(delta):
 	if target == null or in_range:
 		return
 	if path.empty():
 		generate_path()
+	
+	# Double check if they do not have a path
+	if path.empty():
+		print("Cannot pathfind")
+		return
 	
 	if global_position.distance_to(path[0]) < THRESHOLD:
 		# Removes path node if the enemy is close enough
@@ -69,10 +87,11 @@ func is_attack_ready():
 
 # Overrides Actor's take_damage function
 func take_damage(amount):
-	flash()
+	$AnimationPlayer.play("TakeDamage")
 	.take_damage(amount)
+	$HealthBar.value = health
 	if is_dead():
-		queue_free()
+		$AnimationPlayer.play("Die")
 
 
 # Picks a target
@@ -105,10 +124,13 @@ func pick_target(override=false):
 		return
 	
 	building_values.sort_custom(self, "target_sort")
-	target = all_buildings[building_values[0][1]]
 	
+	for valuable_building in building_values:
+		target = all_buildings[valuable_building[1]]
+		generate_path()
+		if not path.empty():
+			break
 	target.connect("die", self, "_on_Actor_death")
-	generate_path()
 
 
 # Generates path for the enemy to move through
@@ -133,14 +155,3 @@ func _on_Actor_death(area:Actor):
 # Custom ascending sorting for picking targets
 static func target_sort(a, b):
 	return a[0] < b[0]
-
-
-# Flashes the building using shader and starts the countdown
-func flash():
-	$Sprite.material.set_shader_param("flash_modifer", 1.0)
-	$FlashTimer.start()
-
-
-# Timeout function for flashing, and when it timeouts, the flash disappears
-func _on_FlashTimer_timeout():
-	$Sprite.material.set_shader_param("flash_modifer", 0.0)

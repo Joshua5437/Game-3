@@ -6,7 +6,7 @@ export (float) var move_speed = 200.0
 # Camera zoom bounds
 export (Vector2) var camera_range = Vector2(0.5, 1.0)
 
-#camera zoom code copied from https://www.gdquest.com/tutorial/godot/2d/camera-zoom/
+# camera zoom code copied from https://www.gdquest.com/tutorial/godot/2d/camera-zoom/
 # Lower cap for the `_zoom_level`.
 export var min_zoom := 0.5
 # Upper cap for the `_zoom_level`.
@@ -21,6 +21,7 @@ var _zoom_level := 1.0 setget _set_zoom_level
 
 # We store a reference to the scene's tween node.
 onready var tween: Tween = $Tween
+
 # Edge scroll boundary
 export (bool) var edge_scroll_enabled = false
 export (float) var edge_scroll_boundary = 12
@@ -39,10 +40,9 @@ var screen_start_pos = Vector2()
 
 onready var highlight_sprite = $Highlight
 
-var current_construction = null
-var weapon_range = 0
-
 func _ready():
+	PlayerData.connect("game_over", self, "_on_game_over")
+	
 	# Establishes boundaries where the camera can move
 	var new_boundary = boundary_offset * 16
 	limit_top = -new_boundary
@@ -54,20 +54,18 @@ func _ready():
 
 
 func _input(event):
+	if PlayerData.game_over:
+		return
 	_movement_by_middle_mouse_button(event)
 
 
 func _process(delta):
+	if PlayerData.game_over:
+		return
+	
 	_movement_by_keys(delta)
 	_movement_by_edge_scroll(delta)
-	
-	var global_mouse_pos = get_global_mouse_position()
-	var new_highlight_pos = map.get_grid_center_position(global_mouse_pos)
-	highlight_sprite.global_position = new_highlight_pos
-	
-	# Update drawing if the player has construction selected
-	if current_construction != null:
-		update()
+	$Highlight.update_position()
 
 
 func _unhandled_input(event):
@@ -77,30 +75,6 @@ func _unhandled_input(event):
 		_set_zoom_level(_zoom_level - zoom_factor)
 	if event.is_action_pressed("zoom_out"):
 		_set_zoom_level(_zoom_level + zoom_factor)
-
-
-func _draw():
-	# Zero out the weapon range if the current construction is not selected
-	if current_construction == null:
-		weapon_range = 0
-	
-	# Draws a circle arc
-	draw_circle_arc(highlight_sprite.position, weapon_range, 0, 360, Color.green)
-
-
-# Draws circle arc without filling in the circle
-func draw_circle_arc(center, radius, angle_from, angle_to, color):
-	var nb_points = 32
-	var points_arc = PoolVector2Array()
-
-	# Calculate all points on the circle arc
-	for i in range(nb_points + 1):
-		var angle_point = deg2rad(angle_from + i * (angle_to-angle_from) / nb_points - 90)
-		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
-
-	# Draws the circle arc
-	for index_point in range(nb_points):
-		draw_line(points_arc[index_point], points_arc[index_point + 1], color)
 
 
 # Moves the camera by using the movement keys
@@ -151,46 +125,11 @@ func _movement_by_edge_scroll(delta):
 
 # Handles signal when construction has been selected
 func _on_mainUI_construction_selected(construction):
-	# Assign the construction to the current construction
-	current_construction = construction
-	
-	# Instance the building scene to fetch important values
-	var building = construction.scene.instance()
-	var sprite = building.get_node("Sprite")
-	
-	# Fetches the range of the weapon and queues draw request
-	if building.has_method("get_weapon_range"):
-		weapon_range = building.get_weapon_range()
-	else:
-		weapon_range = 0
-	update()
-	
-	# Fill out the values for the highlight sprite
-	highlight_sprite.texture = sprite.texture
-	highlight_sprite.hframes = sprite.hframes
-	highlight_sprite.vframes = sprite.vframes
-	highlight_sprite.frame = sprite.frame
-	
-	# Grab the building stats
-	var building_stats : BuildingStats = current_construction.stats
-
-	# Make the building red if player's gold cannot pay for the building
-	if (get_tree().current_scene.gold - building_stats.price >= 0) || building_stats.type == BuildingStats.Type.Keep:
-		highlight_sprite.modulate = Color(1,1,1)
-	else:
-		highlight_sprite.modulate = Color(1,0,0)
-	
-	# Queue free the building instance
-	building.queue_free()
+	highlight_sprite.select_construction(construction)
 
 
 func _on_MainScene_deselect_construction():
-	current_construction = null
-	highlight_sprite.texture = null
-	
-	# Zero the weapon range and queue a draw call
-	weapon_range = 0
-	update()
+	highlight_sprite.deselect_construction()
 
 
 func _set_zoom_level(value: float) -> void:
@@ -211,9 +150,5 @@ func _set_zoom_level(value: float) -> void:
 	tween.start()
 
 
-func _on_MainScene_gold_updated(gold):
-	if current_construction != null and (get_tree().current_scene.gold - current_construction.stats.price >= 0 or current_construction.stats.type == BuildingStats.Type.Keep):
-		
-		highlight_sprite.modulate = Color(1,1,1)
-	else:
-		highlight_sprite.modulate = Color(1,0,0)
+func _on_game_over():
+	$Highlight.hide()

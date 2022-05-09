@@ -48,11 +48,73 @@ margin_left = -164.0
 margin_top = -200.0
 margin_right = 164.0
 margin_bottom = 200.0
+custom_constants/separation = 20
 
 [node name="FullscreenCheckBox" type="CheckBox" parent="Container"]
 margin_right = 328.0
 margin_bottom = 31.0
 text = "Fullscreen"
 
+[node name="MasterVolume" type="VBoxContainer" parent="Container"]
+margin_top = 51.0
+margin_right = 328.0
+margin_bottom = 94.0
+
+[node name="Label" type="Label" parent="Container/MasterVolume"]
+margin_right = 328.0
+margin_bottom = 23.0
+text = "Master Volume"
+
+[node name="HSlider" type="HSlider" parent="Container/MasterVolume"]
+margin_top = 27.0
+margin_right = 328.0
+margin_bottom = 43.0
+min_value = -80.0
+max_value = 8.0
+
+[node name="EffectsVolume" type="VBoxContainer" parent="Container"]
+margin_top = 114.0
+margin_right = 328.0
+margin_bottom = 157.0
+
+[node name="Label" type="Label" parent="Container/EffectsVolume"]
+margin_right = 328.0
+margin_bottom = 23.0
+text = "Effects Volume"
+
+[node name="HSlider" type="HSlider" parent="Container/EffectsVolume"]
+margin_top = 27.0
+margin_right = 328.0
+margin_bottom = 43.0
+min_value = -80.0
+max_value = 8.0
+
+[node name="MusicVolume" type="VBoxContainer" parent="Container"]
+margin_top = 177.0
+margin_right = 328.0
+margin_bottom = 220.0
+
+[node name="Label" type="Label" parent="Container/MusicVolume"]
+margin_right = 328.0
+margin_bottom = 23.0
+text = "Music Volume"
+
+[node name="HSlider" type="HSlider" parent="Container/MusicVolume"]
+margin_top = 27.0
+margin_right = 328.0
+margin_bottom = 43.0
+min_value = -80.0
+max_value = 8.0
+
+[node name="Default" type="Button" parent="Container"]
+margin_top = 240.0
+margin_right = 328.0
+margin_bottom = 269.0
+text = "Reset Defaults"
+
 [connection signal="pressed" from="GoBackButton" to="." method="_on_GoBackButton_pressed"]
 [connection signal="toggled" from="Container/FullscreenCheckBox" to="." method="_on_FullscreenCheckBox_toggled"]
+[connection signal="value_changed" from="Container/MasterVolume/HSlider" to="." method="_on_Volume_value_changed" binds= [ "Master" ]]
+[connection signal="value_changed" from="Container/EffectsVolume/HSlider" to="." method="_on_Volume_value_changed" binds= [ "Effects" ]]
+[connection signal="value_changed" from="Container/MusicVolume/HSlider" to="." method="_on_Volume_value_changed" binds= [ "Music" ]]
+[connection signal="pressed" from="Container/Default" to="." method="_on_Default_pressed"]

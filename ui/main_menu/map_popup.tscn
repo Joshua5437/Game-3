@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/main_menu/map_popup.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme.tres" type="Theme" id=2]
+
+[node name="Popup" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="Popup" type="Popup" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -327.0
+margin_top = -29.0
+margin_right = 327.0
+margin_bottom = 102.0
+
+[node name="ColorRect" type="ColorRect" parent="Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.203922, 0.203922, 0.203922, 1 )
+
+[node name="Label" type="Label" parent="Popup"]
+anchor_right = 1.0
+margin_bottom = 75.0
+text = "Choose type of map to play:"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Popup"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -62.0
+
+[node name="DesignMap" type="Button" parent="Popup/HBoxContainer"]
+margin_right = 325.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+text = "Designed"
+
+[node name="ProceduralMap" type="Button" parent="Popup/HBoxContainer"]
+margin_left = 329.0
+margin_right = 654.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+text = "Procedural Generated"
+
+[connection signal="popup_hide" from="Popup" to="." method="_on_Popup_popup_hide"]
+[connection signal="pressed" from="Popup/HBoxContainer/DesignMap" to="." method="_on_DesignMap_pressed"]
+[connection signal="pressed" from="Popup/HBoxContainer/ProceduralMap" to="." method="_on_ProceduralMap_pressed"]

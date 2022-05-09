@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://enemies/enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/atlas.png" type="Texture" id=2]
+[ext_resource path="res://shaders/flash.gdshader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifer = 0.0
 
 [node name="Enemy" instance=ExtResource( 1 )]
 speed = 200
@@ -10,6 +17,7 @@ building_weights = {
 }
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource( 1 )
 texture = ExtResource( 2 )
 hframes = 8
 vframes = 8

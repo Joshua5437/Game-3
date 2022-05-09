@@ -80,8 +80,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GlobalSignals="*res://scripts/global_signals.gd"
-Global="*res://scripts/global.gd"
+PlayerData="*res://global/player_data.gd"
+GlobalSignals="*res://global/global_signals.gd"
+Global="*res://global/global.gd"
 Sound="*res://sounds/sound_manager.tscn"
 
 [display]

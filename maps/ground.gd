@@ -4,8 +4,11 @@ export(NodePath) var ground_path
 
 onready var ground : TileMap = get_node(ground_path)
 
-func _ready():
+
+func pretty():
+	clear()
 	pretty_grass("grass", 4)
+
 
 func pretty_grass(grass_name, variation_num):
 	var grass_id = ground.tile_set.find_tile_by_name(grass_name)

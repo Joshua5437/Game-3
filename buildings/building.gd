@@ -2,6 +2,7 @@ extends Actor
 class_name Building
 
 signal destroyed
+signal rebuilt(building)
 
 const CELL_SIZE = 16
 
@@ -15,6 +16,8 @@ var destroyed = false
 
 
 func _ready():
+	$HealthBar.max_value = stats.health
+	$HealthBar.value = stats.health
 	health = stats.health
 
 
@@ -22,24 +25,30 @@ func take_damage(amount):
 	if is_dead():
 		return
 
-	flash()
+	$AnimationPlayer.play("TakeDamage")
 	.take_damage(amount)
+	$HealthBar.value = health
 	if is_dead():
 		die()
 
 
 func die():
 	destroyed = true
-	$Sprite.modulate = Color.red
+	#$Sprite.modulate = Color.red
+	$AnimationPlayer.play("Destroyed")
 	if is_in_group("keep"):
 		GlobalSignals.emit_signal("keep_destroyed")
 	emit_signal("destroyed")
 
 
 func rebuild():
+	$AnimationPlayer.play("Rebuild")
 	destroyed = false
 	$Sprite.modulate = Color.white
 	health = stats.health
+	$HealthBar.value = health
+	
+	emit_signal("rebuilt", self)
 
 
 func get_grid_size():
@@ -51,21 +60,13 @@ func get_grid_size():
 func _on_Building_input_event(_viewport:Node, event:InputEvent, _shape_idx:int):
 	# Repairs a damaged building by pressing repair action
 	if destroyed and event.is_action_pressed("repair"):
-		var game = get_tree().get_nodes_in_group("main")[0]
 		var repair_price = stats.get_repair_price()
-		var afford_repair = game.gold - repair_price >= 0
+		var afford_repair = PlayerData.gold - repair_price >= 0
 		
 		if destroyed and afford_repair:
-			game.gold -= repair_price
+			PlayerData.gold -= repair_price
 			rebuild()
 
 
-# Flashes the building using shader and starts the countdown
-func flash():
-	$Sprite.material.set_shader_param("flash_modifer", 1.0)
-	$FlashTimer.start()
-
-
-# Timeout function for flashing, and when it timeouts, the flash disappears
-func _on_FlashTimer_timeout():
-	$Sprite.material.set_shader_param("flash_modifer", 0.0)
+func _enter_tree():
+	$AnimationPlayer.play("PlaceBuilding")

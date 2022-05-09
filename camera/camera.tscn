@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://camera/camera.gd" type="Script" id=1]
+[ext_resource path="res://camera/highlight.tscn" type="PackedScene" id=2]
+
+[node name="Camera" type="Camera2D"]
+current = true
+zoom = Vector2( 0.75, 0.75 )
+limit_left = 0
+limit_top = 0
+limit_right = 1024
+limit_bottom = 1024
+script = ExtResource( 1 )
+min_zoom = 0.25
+boundary_offset = 5
+
+[node name="Highlight" parent="." instance=ExtResource( 2 )]
+
+[node name="Tween" type="Tween" parent="."]

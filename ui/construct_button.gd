@@ -11,6 +11,7 @@ onready var selected_stream = AudioStreamPlayer.new()
 
 func _ready():
 	selected_stream.stream = selected_sound
+	selected_stream.bus = "Effects"
 	add_child(selected_stream)
 	connect("pressed", self, "_on_button_pressed")
 

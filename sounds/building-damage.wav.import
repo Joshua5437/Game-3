@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/building-damage.wav-2cc2010d24194ce9b73f71b28836301f.sample"
+
+[deps]
+
+source_file="res://sounds/building-damage.wav"
+dest_files=[ "res://.import/building-damage.wav-2cc2010d24194ce9b73f71b28836301f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

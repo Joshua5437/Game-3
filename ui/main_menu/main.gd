@@ -4,7 +4,9 @@ signal how_to_play_pressed
 signal options_pressed
 
 func _on_PlayButton_pressed():
-	get_tree().change_scene("res://mainScene.tscn")
+	#get_tree().change_scene("res://mainScene.tscn")
+	$Popup.show()
+	$Popup.popup()
 
 func _on_HowToPlayButton_pressed():
 	emit_signal("how_to_play_pressed")

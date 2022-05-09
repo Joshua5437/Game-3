@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://ui/fonts/Merriweather-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/fonts/Merriweather-Bold.ttf" type="DynamicFontData" id=2]
@@ -34,6 +34,10 @@
 [ext_resource path="res://sounds/market-construction-selected.wav" type="AudioStream" id=32]
 [ext_resource path="res://buildings/economic/market.png" type="Texture" id=33]
 
+[sub_resource type="DynamicFont" id=17]
+size = 36
+font_data = ExtResource( 7 )
+
 [sub_resource type="DynamicFont" id=1]
 size = 11
 font_data = ExtResource( 2 )
@@ -57,9 +61,6 @@ font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 30
-font_data = ExtResource( 7 )
-
-[sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 7 )
 
 [sub_resource type="InputEventKey" id=7]
@@ -90,11 +91,87 @@ scancode = 52
 [sub_resource type="ShortCut" id=14]
 shortcut = SubResource( 13 )
 
+[sub_resource type="Animation" id=18]
+resource_name = "Moving"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("NoticeText:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 45 ), Vector2( 0, 60 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("NoticeText:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 45 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("NoticeText:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "ShowAndHide"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("NoticeText:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 9, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -48 ), Vector2( 0, 45 ), Vector2( 0, 45 ), Vector2( 0, -48 ) ]
+}
+
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 13 )
 script = ExtResource( 8 )
+
+[node name="NoticeText" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -640.0
+margin_top = 45.0
+margin_right = 640.0
+margin_bottom = 90.002
+grow_horizontal = 2
+theme = ExtResource( 13 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "Place your Keep!"
+align = 1
+valign = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -139,12 +216,14 @@ custom_fonts/font = SubResource( 5 )
 text = "Gold: 50"
 
 [node name="Wave" type="Label" parent="TopPanel"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 40.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 6 )
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -14.0
+margin_right = 113.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 5 )
 text = "Wave: 1"
+align = 2
 
 [node name="Buildings" type="Panel" parent="."]
 anchor_top = 1.0
@@ -270,21 +349,8 @@ building = ExtResource( 17 )
 building_stats = ExtResource( 18 )
 selected_sound = ExtResource( 23 )
 
-[node name="NoticeText" type="Label" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -421.0
-margin_top = 50.0
-margin_right = 421.0
-margin_bottom = 73.0
-grow_horizontal = 2
-theme = ExtResource( 13 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Place your keep!"
-align = 1
-
 [node name="TowerInfo" type="Panel" parent="."]
+visible = false
 margin_left = 170.0
 margin_top = 565.0
 margin_right = 570.0
@@ -307,6 +373,13 @@ margin_left = 5.0
 margin_top = 65.0
 margin_right = 395.0
 margin_bottom = 140.0
+autowrap = true
+
+[node name="NoticeAnimation" type="AnimationPlayer" parent="."]
+autoplay = "Moving"
+anims/Moving = SubResource( 18 )
+anims/RESET = SubResource( 19 )
+anims/ShowAndHide = SubResource( 20 )
 
 [connection signal="pressed" from="MarginContainer/StartWave" to="." method="_on_StartWave_pressed"]
 [connection signal="construction_button_pressed" from="Buildings/GridContainer/Bow" to="." method="_on_construction_button_pressed"]

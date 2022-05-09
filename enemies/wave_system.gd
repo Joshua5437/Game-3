@@ -98,6 +98,7 @@ func _spawn_final_boss():
 	new_boss.setup(map)
 	new_boss.position = new_position
 	new_boss.connect("die", self, "_on_enemy_death")
+	tracked_enemies.push_back(new_boss)
 	add_child(new_boss)
 
 func _on_wave_started():

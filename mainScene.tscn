@@ -80,6 +80,7 @@ stream = ExtResource( 12 )
 bus = "Effects"
 
 [connection signal="deselect_construction" from="." to="PlayerCamera" method="_on_MainScene_deselect_construction"]
+[connection signal="deselect_construction" from="." to="GUI/mainUI" method="_on_deselect_construction"]
 [connection signal="game_over" from="." to="PlayerCamera" method="_on_game_over"]
 [connection signal="game_over" from="." to="GUI/Pause" method="_on_game_over"]
 [connection signal="paused" from="." to="GUI/Pause" method="_on_paused"]

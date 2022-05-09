@@ -33,6 +33,11 @@ script = ExtResource( 2 )
 return_menu_scene = ExtResource( 4 )
 unpause_shortcut = SubResource( 11 )
 
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.8 )
+
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5

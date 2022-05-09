@@ -109,7 +109,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 input_pass_on_modal_close_click = false
-color = Color( 0, 0, 0, 0.8 )
+color = Color( 0, 0, 0, 0.917647 )
 
 [node name="Options" parent="OptionsBG" instance=ExtResource( 6 )]
 
@@ -122,7 +122,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 input_pass_on_modal_close_click = false
-color = Color( 0, 0, 0, 0.8 )
+color = Color( 0, 0, 0, 0.917647 )
 
 [node name="HowToPlay" parent="HowToPlayBG" instance=ExtResource( 7 )]
 

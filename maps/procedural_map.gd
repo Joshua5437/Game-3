@@ -2,6 +2,7 @@ extends "res://maps/map.gd"
 
 const TILE_NAMES = ["grass", "rock"]
 
+
 func generate_map():
 	ground.clear()
 	_generate_map()

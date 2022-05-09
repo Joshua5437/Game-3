@@ -20,6 +20,3 @@ texture = ExtResource( 4 )
 hframes = 1
 vframes = 1
 frame = 0
-
-[node name="HealthBar" parent="." index="4"]
-visible = false

@@ -4,6 +4,7 @@ signal game_over
 signal paused
 
 signal deselect_construction
+signal keep_rebuilt
 
 onready var map = $Map
 onready var buildSound = $BuildSound
@@ -101,6 +102,10 @@ func game_over():
 	if not keep.destroyed:
 		return
 	if PlayerData.gold >= keep.stats.get_repair_price():
-		return
-	$LoseSound.play()
-	PlayerData.declare_game_over()
+		# Substract from player's gold
+		PlayerData.gold -= keep.stats.get_repair_price()
+		keep.rebuild()
+		emit_signal("keep_rebuilt")
+	else:
+		$LoseSound.play()
+		PlayerData.declare_game_over()

@@ -76,3 +76,9 @@ func _on_final_boss_killed():
 
 func _on_deselect_construction():
 	$TowerInfo.hide()
+
+
+func _on_keep_rebuilt():
+	var keep = get_tree().get_nodes_in_group("keep")[0]
+	notice_text.text = "Keep destroyed but rebuilt again. Lost %s gold." % keep.stats.get_repair_price()
+	$NoticeAnimation.play("ShowAndHide")

@@ -8,6 +8,10 @@ const BASE_GOLD = 50
 var gold = 50 setget set_gold
 var game_over = false setget ,is_game_over
 
+
+func _ready():
+	gold = BASE_GOLD
+
 func reset():
 	game_over = false
 	gold = BASE_GOLD

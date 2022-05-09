@@ -2,6 +2,7 @@ extends Actor
 class_name Building
 
 signal destroyed
+signal rebuilt(building)
 
 const CELL_SIZE = 16
 
@@ -46,6 +47,8 @@ func rebuild():
 	$Sprite.modulate = Color.white
 	health = stats.health
 	$HealthBar.value = health
+	
+	emit_signal("rebuilt", self)
 
 
 func get_grid_size():

@@ -41,3 +41,23 @@ func _on_game_over():
 func _on_paused():
 	show()
 	is_paused = true
+
+
+func _on_Options_go_back():
+	top_button.shortcut = unpause_shortcut
+	$OptionsBG.hide()
+
+
+func _on_Options_pressed():
+	top_button.shortcut = null
+	$OptionsBG.show()
+
+
+func _on_HowToPlay_pressed():
+	top_button.shortcut = null
+	$HowToPlayBG.show()
+
+
+func _on_HowToPlay_go_back_pressed():
+	top_button.shortcut = unpause_shortcut
+	$HowToPlayBG.hide()

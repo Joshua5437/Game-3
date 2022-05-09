@@ -26,3 +26,6 @@ enemies = {
 "Wolf": ExtResource( 3 ),
 "Zombie": ExtResource( 6 )
 }
+
+[node name="Pause" parent="GUI" index="1"]
+unpause_shortcut = null

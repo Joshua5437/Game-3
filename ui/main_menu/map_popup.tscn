@@ -49,7 +49,7 @@ margin_left = 329.0
 margin_right = 654.0
 margin_bottom = 62.0
 size_flags_horizontal = 3
-text = "Procederual Generated"
+text = "Procedural Generated"
 
 [connection signal="popup_hide" from="Popup" to="." method="_on_Popup_popup_hide"]
 [connection signal="pressed" from="Popup/HBoxContainer/DesignMap" to="." method="_on_DesignMap_pressed"]

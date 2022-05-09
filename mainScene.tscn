@@ -49,6 +49,7 @@ mouse_filter = 2
 
 [node name="Pause" parent="GUI" instance=ExtResource( 4 )]
 visible = false
+unpause_shortcut = null
 
 [node name="Borders" type="Node2D" parent="."]
 
@@ -83,6 +84,7 @@ bus = "Effects"
 [connection signal="deselect_construction" from="." to="GUI/mainUI" method="_on_deselect_construction"]
 [connection signal="game_over" from="." to="PlayerCamera" method="_on_game_over"]
 [connection signal="game_over" from="." to="GUI/Pause" method="_on_game_over"]
+[connection signal="keep_rebuilt" from="." to="GUI/mainUI" method="_on_keep_rebuilt"]
 [connection signal="paused" from="." to="GUI/Pause" method="_on_paused"]
 [connection signal="placed_building" from="Map" to="." method="_on_Map_placed_building"]
 [connection signal="final_boss_killed" from="WaveSystem" to="GUI/mainUI" method="_on_final_boss_killed"]

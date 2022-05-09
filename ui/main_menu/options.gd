@@ -53,3 +53,10 @@ func _on_Volume_value_changed(value : float, bus_name : String):
 	var bus_index = AudioServer.get_bus_index(bus_name)
 	AudioServer.set_bus_volume_db(bus_index, value)
 	config.set_value("Audio", bus_name.to_lower(), value)
+
+
+func _on_Default_pressed():
+	fullscreen_checkbox.pressed = false	
+	master_volume.value = 0.0
+	effects_volume.value = 0.0
+	music_volume.value = 0.0

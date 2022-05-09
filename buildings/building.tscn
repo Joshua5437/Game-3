@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://buildings/building.gd" type="Script" id=1]
 [ext_resource path="res://art/tiles.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sounds/building-destruction.wav" type="AudioStream" id=4]
 [ext_resource path="res://sounds/repair.wav" type="AudioStream" id=5]
 [ext_resource path="res://sounds/building-damage.wav" type="AudioStream" id=6]
+[ext_resource path="res://art/health-bar.png" type="Texture" id=7]
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
@@ -194,5 +195,17 @@ anims/TakeDamage = SubResource( 5 )
 [node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 bus = "Effects"
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = 2.0
+margin_right = 8.0
+margin_bottom = 18.0
+rect_scale = Vector2( 1, 0.5 )
+mouse_filter = 2
+value = 100.0
+texture_progress = ExtResource( 7 )
 
 [connection signal="input_event" from="." to="." method="_on_Building_input_event"]

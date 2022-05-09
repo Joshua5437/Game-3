@@ -18,6 +18,9 @@ var target = null
 var in_range = false
 var path = []
 
+func _ready():
+	$HealthBar.max_value = health
+	$HealthBar.value = health
 
 # Setups variables with the Enemy class
 func setup(p_map):
@@ -71,6 +74,7 @@ func is_attack_ready():
 func take_damage(amount):
 	$AnimationPlayer.play("TakeDamage")
 	.take_damage(amount)
+	$HealthBar.value = health
 	if is_dead():
 		$AnimationPlayer.play("Die")
 

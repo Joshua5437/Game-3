@@ -15,6 +15,8 @@ var destroyed = false
 
 
 func _ready():
+	$HealthBar.max_value = stats.health
+	$HealthBar.value = stats.health
 	health = stats.health
 
 
@@ -24,6 +26,7 @@ func take_damage(amount):
 
 	$AnimationPlayer.play("TakeDamage")
 	.take_damage(amount)
+	$HealthBar.value = health
 	if is_dead():
 		die()
 
@@ -42,6 +45,7 @@ func rebuild():
 	destroyed = false
 	$Sprite.modulate = Color.white
 	health = stats.health
+	$HealthBar.value = health
 
 
 func get_grid_size():

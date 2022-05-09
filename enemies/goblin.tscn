@@ -64,5 +64,5 @@ building_weights = {
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 1 )
 
-[node name="DeathParticles" parent="." index="5"]
+[node name="DeathParticles" parent="." index="6"]
 process_material = SubResource( 6 )

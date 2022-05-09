@@ -69,10 +69,10 @@ func is_attack_ready():
 
 # Overrides Actor's take_damage function
 func take_damage(amount):
-	flash()
+	$AnimationPlayer.play("TakeDamage")
 	.take_damage(amount)
 	if is_dead():
-		queue_free()
+		$AnimationPlayer.play("Die")
 
 
 # Picks a target
@@ -133,14 +133,3 @@ func _on_Actor_death(area:Actor):
 # Custom ascending sorting for picking targets
 static func target_sort(a, b):
 	return a[0] < b[0]
-
-
-# Flashes the building using shader and starts the countdown
-func flash():
-	$Sprite.material.set_shader_param("flash_modifer", 1.0)
-	$FlashTimer.start()
-
-
-# Timeout function for flashing, and when it timeouts, the flash disappears
-func _on_FlashTimer_timeout():
-	$Sprite.material.set_shader_param("flash_modifer", 0.0)
